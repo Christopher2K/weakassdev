@@ -1,11 +1,17 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "../../tsconfig.root.json",
   "compilerOptions": {
     "baseUrl": "./src",
+    "noEmit": false,
+    "outDir": "./dist",
     "paths": {
-      "@app": ["./*"],
-      "@shared": ["../../../libs/shared/src/*"]
-    }
+      "@app": [
+        "./*"
+      ]
+    },
+    "sourceMap": true,
+    "types": ["node"]
   },
-  "include": ["src", "../../libs/shared/**/*.ts"]
+  "include": ["**/*.ts"]
 }

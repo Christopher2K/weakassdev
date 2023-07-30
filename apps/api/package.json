@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "bun --watch src/main.ts"
+    "dev": "tsc && node dist/main.js",
+    "build": "tsc"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "~20.4.5",
+    "typescript": "~5.1.6"
+  },
   "dependencies": {
     "@weakassdev/shared": "workspace:*",
     "fastify": "~4.21.0"

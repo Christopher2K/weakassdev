@@ -1,7 +1,12 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "../../tsconfig.root.json",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "baseUrl": "./src",
+    "declaration": true,
+    "declarationMap": true,
+    "moduleResolution": "NodeNext",
     "paths": {
       "@shared": ["./*"]
     }

@@ -1,13 +1,13 @@
 import process from 'node:process';
 import Fastify from 'fastify';
-import { EXAMPLE } from '@weakassdev/shared/example';
+import { EXAMPLE } from '@weakassdev/shared';
 
 const fastify = Fastify({
   logger: true,
 });
 
 // Declare a route
-fastify.get('/', async function handler(request, reply) {
+fastify.get('/', async function handler() {
   return { hello: EXAMPLE };
 });
 

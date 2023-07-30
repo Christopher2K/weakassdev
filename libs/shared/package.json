@@ -1,5 +1,13 @@
 {
   "name": "@weakassdev/shared",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
   "version": "1.0.0",
-  "scripts": {}
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "~5.1.6"
+  }
 }

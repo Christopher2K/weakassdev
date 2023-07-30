@@ -1,20 +1,14 @@
 {
-  "name": "weakassdev",
+  "name": "@weakassdev/core",
   "version": "1.0.0",
   "description": "",
-  "workspaces": [
-    "apps/*",
-    "libs/*"
-  ],
   "scripts": {
     "lint:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
-    "web": "cd apps/web && bun",
-    "api": "cd apps/api && bun",
-    "shared": "cd libs/shared && bun"
+    "web": "pnpm --filter=@weakassdev/web",
+    "api": "pnpm --filter=@weakassdev/api",
+    "shared": "pnpm --filter=@weakassdev/shared"
   },
-  "license": "ISC",
   "devDependencies": {
-    "prettier": "~3.0.0",
-    "typescript": "~5.1.6"
+    "prettier": "~3.0.0"
   }
 }

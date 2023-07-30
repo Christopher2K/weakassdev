@@ -1,5 +1,4 @@
 # Build artifacts
-target/
 dist/
-build/
 node_modules/
+.turbo

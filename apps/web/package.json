@@ -1,15 +1,12 @@
 {
   "name": "@weakassdev/web",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "serve": "vite preview"
   },
-  "license": "MIT",
   "devDependencies": {
     "solid-devtools": "~0.27.6",
     "typescript": "~5.1.6",

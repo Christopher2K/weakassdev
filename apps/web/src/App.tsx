@@ -2,7 +2,7 @@ import type { Component } from 'solid-js';
 
 import logo from './logo.svg';
 import styles from './App.module.css';
-import { EXAMPLE } from '@weakassdev/shared/example';
+import { EXAMPLE } from '@weakassdev/shared';
 
 const App: Component = () => {
   return (

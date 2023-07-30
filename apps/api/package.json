@@ -1,0 +1,13 @@
+{
+  "name": "@weakassdev/api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "bun --watch src/main.ts"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@weakassdev/shared": "workspace:*",
+    "fastify": "~4.21.0"
+  }
+}

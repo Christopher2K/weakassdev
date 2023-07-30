@@ -1,0 +1,23 @@
+{
+  "name": "@weakassdev/web",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "solid-devtools": "~0.27.6",
+    "typescript": "~5.1.6",
+    "vite": "~4.3.9",
+    "vite-plugin-solid": "~2.7.0"
+  },
+  "dependencies": {
+    "@weakassdev/shared": "workspace:*",
+    "solid-js": "~1.7.8"
+  }
+}

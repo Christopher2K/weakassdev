@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.root.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "types": ["vite/client"],
+    "paths": {
+      "@app": ["./*"],
+      "@shared": ["../../../libs/shared/src/*"]
+    }
+  },
+  "include": ["src", "../../libs/shared/**/*.ts"]
+}

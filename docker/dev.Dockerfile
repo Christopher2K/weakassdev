@@ -1,13 +1,10 @@
 FROM node:18.15-bullseye-slim
 
-ARG TURBO_VERSION=1.10.12
-
 ENV SHELL=bash
 ENV PNPM_HOME=/root/.local/share/pnpm
 ENV PATH="${PATH}:${PNPM_HOME}"
 
 RUN corepack enable
-RUN pnpm i -g turbo@${TURBO_VERSION}
 
 WORKDIR /code
 

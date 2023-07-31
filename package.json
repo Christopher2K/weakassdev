@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "compose": "docker compose -f ./docker/docker-compose.dev.yaml",
+    "compose:up": "pnpm run compose up",
+    "compose:down": "pnpm run compose down",
+    "compose:exec": "pnpm run compose exec apps",
+    "dev": "dotenv -- turbo dev",
     "lint:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
     "web": "pnpm --filter=@weakassdev/web",
     "api": "pnpm --filter=@weakassdev/api",
     "shared": "pnpm --filter=@weakassdev/shared"
   },
   "devDependencies": {
-    "prettier": "~3.0.0"
+    "dotenv-cli": "~7.2.1",
+    "prettier": "~3.0.0",
+    "turbo": "~1.10.12"
   }
 }

@@ -12,10 +12,10 @@ export default defineConfig({
     solidPlugin(),
   ],
   server: {
-    port: 8001,
+    port: +process.env.VITE_APP_PORT!,
   },
   build: {
-    target: 'esnext',
+    target: 'modules',
     outDir: './dist'
   },
 });

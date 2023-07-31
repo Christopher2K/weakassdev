@@ -15,8 +15,8 @@ services:
       - shared_turbo:/code/libs/shared/.turbo
     ports:
       - '8001:8001'
-      - '3001:3001'
-    command: turbo dev
+      - '8000:8000'
+    command: pnpm dev 
 
   proxy:
     image: caddy:2.6.4-alpine

@@ -1,0 +1,16 @@
+:80 {
+    root * /srv
+    encode gzip
+
+    file_server {
+        hide .git
+    }
+
+    log {
+        output file /var/log/caddy/my-static-site.log
+    }
+
+    header {
+        ?Cache-Control "max-age=1800"
+    }
+}

@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "compose": "docker compose -f ./docker/docker-compose.dev.yaml",
+    "compose": "docker compose -f ./docker/dev/docker-compose.yaml",
     "compose:up": "pnpm run compose up",
     "compose:down": "pnpm run compose down",
     "compose:exec": "pnpm run compose exec apps",
+    "compose:build": "pnpm run compose build",
     "dev": "dotenv -- turbo dev",
     "build:web": "turbo build --filter=@weakassdev/web",
     "build:api": "turbo build --filter=@weakassdev/api",

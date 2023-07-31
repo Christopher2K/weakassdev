@@ -23,5 +23,3 @@ COPY libs/shared/package.json /code/libs/shared/package.json
 COPY libs/shared/pnpm-*.yaml /code/libs/shared/
 
 RUN pnpm install
-
-EXPOSE 8001 3001

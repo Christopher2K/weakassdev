@@ -1,0 +1,27 @@
+version: "3"
+services:
+  web:
+    build: 
+      context: ..
+      dockerfile: ./docker/dev.Dockerfile
+    volumes:
+      - ../:/code
+      - /code/node_modules
+      - /code/apps/web/node_modules
+      - /code/apps/web/.turbo
+      - /code/apps/api/node_modules
+      - /code/apps/api/.turbo
+      - /code/libs/shared/node_modules
+      - /code/libs/shared/.turbo
+    ports:
+      - "8001:8001"
+      - "3001:3001"
+    command: turbo dev
+  # api:
+  #   image: oven/bun:0.7.1
+  #   volumes:
+  #     - .:/code
+  #
+  #
+  # proxy:
+  #   image: caddy/2.6.4-alpine

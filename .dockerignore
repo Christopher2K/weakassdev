@@ -1,0 +1,5 @@
+node_modules
+apps/api/node_modules
+apps/web/node_modules
+libs/shared/node_modules
+.turbo

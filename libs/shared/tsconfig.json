@@ -2,13 +2,16 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "../../tsconfig.root.json",
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
     "baseUrl": "./src",
     "declaration": true,
     "declarationMap": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Node",
+    "noEmit": false,
+    "outDir": "./dist",
     "paths": {
       "@shared": ["./*"]
     }
-  }
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist/"]
 }

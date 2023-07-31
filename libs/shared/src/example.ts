@@ -1,1 +1,1 @@
-export const EXAMPLE = 'Hello, World!';
+export const EXAMPLE = '20';

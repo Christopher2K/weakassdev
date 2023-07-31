@@ -6,9 +6,7 @@
     "noEmit": false,
     "outDir": "./dist",
     "paths": {
-      "@app": [
-        "./*"
-      ]
+      "@app": ["./*"]
     },
     "sourceMap": true,
     "types": ["node"]

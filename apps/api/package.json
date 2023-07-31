@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"tsc --watch\" \"nodemon dist/main.js\"",
-    "build": "tsc"
+    "dev": "nodemon",
+    "build": "node build.js",
+    "start": "node dist/main.js"
   },
   "devDependencies": {
     "@types/node": "~20.4.5",
-    "concurrently": "~8.2.0",
+    "esbuild": "~0.18.17",
     "nodemon": "~3.0.1",
     "typescript": "~5.1.6"
   },

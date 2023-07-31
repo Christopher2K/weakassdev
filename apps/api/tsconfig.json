@@ -3,12 +3,15 @@
   "extends": "../../tsconfig.root.json",
   "compilerOptions": {
     "baseUrl": "./src",
+    "lib": ["ESNext"],
+    "module": "esnext",
     "noEmit": false,
     "outDir": "./dist",
     "paths": {
       "@app": ["./*"]
     },
     "sourceMap": true,
+    "target": "esnext",
     "types": ["node"]
   },
   "include": ["**/*.ts"]

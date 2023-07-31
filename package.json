@@ -8,6 +8,8 @@
     "compose:down": "pnpm run compose down",
     "compose:exec": "pnpm run compose exec apps",
     "dev": "dotenv -- turbo dev",
+    "build:web": "turbo build --filter=@weakassdev/web",
+    "build:api": "turbo build --filter=@weakassdev/api",
     "lint:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
     "web": "pnpm --filter=@weakassdev/web",
     "api": "pnpm --filter=@weakassdev/api",

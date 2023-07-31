@@ -14,9 +14,11 @@ fastify.get('/', async function handler() {
 });
 
 // Run the server!
-try {
-  await fastify.listen({ port: APP_PORT, host: '0.0.0.0' });
-} catch (err) {
-  fastify.log.error(err);
-  process.exit(1);
-}
+(() => {
+  try {
+    fastify.listen({ port: APP_PORT, host: '0.0.0.0' });
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+})();

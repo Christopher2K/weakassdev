@@ -1,21 +1,26 @@
 {
   "name": "@weakassdev/web",
-  "version": "1.0.0",
-  "description": "",
-  "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "serve": "vite preview"
+    "dev": "solid-start dev",
+    "build": "solid-start build",
+    "start": "solid-start start"
   },
+  "type": "module",
   "devDependencies": {
-    "solid-devtools": "~0.27.6",
-    "typescript": "~5.1.6",
-    "vite": "~4.3.9",
-    "vite-plugin-solid": "~2.7.0"
+    "@types/node": "~18.11.18",
+    "esbuild": "~0.14.54",
+    "postcss": "~8.4.21",
+    "solid-start-node": "~0.2.19",
+    "vite": "~4.4.6"
   },
   "dependencies": {
-    "@weakassdev/shared": "workspace:*",
-    "solid-js": "~1.7.8"
+    "@solidjs/meta": "~0.28.2",
+    "@solidjs/router": "~0.8.2",
+    "solid-js": "~1.7.8",
+    "solid-start": "~0.2.30",
+    "undici": "~5.15.1"
+  },
+  "engines": {
+    "node": ">=16.8"
   }
 }

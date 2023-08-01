@@ -1,0 +1,26 @@
+ARG PORT=80
+
+FROM node:18.15-bullseye-slim as builder
+
+RUN corepack enable
+RUN mkdir -p /usr/app
+WORKDIR /usr/app
+COPY package.json /usr/app
+COPY pnpm-*.yaml /usr/app
+COPY apps/api/package.json /usr/app/apps/api/package.json
+COPY apps/api/pnpm-*.yaml /usr/app/apps/api
+COPY apps/web/package.json /usr/app/apps/web/package.json
+COPY apps/web/pnpm-*.yaml /usr/app/apps/web
+COPY libs/shared/package.json /usr/app/libs/shared/package.json
+COPY libs/shared/pnpm-*.yaml /usr/app/libs/shared/
+RUN pnpm install
+COPY . /usr/app
+RUN pnpm build:api
+
+FROM node:18.15-alpine3.17 as runner
+
+ENV PORT=${PORT}
+EXPOSE ${PORT}
+
+COPY --from=builder /usr/app/apps/api/dist/main.js /usr/app/main.mjs
+CMD ["node", "/usr/app/main.mjs"]

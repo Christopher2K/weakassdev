@@ -1,12 +1,13 @@
 import { Title } from "solid-start";
 import Counter from "@app/components/Counter";
+import { EXAMPLE } from "@weakassdev/shared"
 
 export default function Home() {
   return (
     <main>
       <Title>Hello World</Title>
-      <h1>Hello world!</h1>
       <Counter />
+      <h1>{EXAMPLE}</h1>
       <p>
         Visit{" "}
         <a href="https://start.solidjs.com" target="_blank">

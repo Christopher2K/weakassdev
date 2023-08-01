@@ -1,6 +1,7 @@
 ARG PORT=80
 
 FROM node:18.15-bullseye-slim as builder
+ENV PORT=${PORT}
 
 RUN corepack enable
 RUN mkdir -p /usr/app
@@ -15,12 +16,10 @@ COPY libs/shared/package.json /usr/app/libs/shared/package.json
 COPY libs/shared/pnpm-*.yaml /usr/app/libs/shared/
 RUN pnpm install
 COPY . /usr/app
+
+ENV NODE_ENV=production
 RUN pnpm build:web
 
-FROM caddy:2.7-alpine as runner
-
-ENV PORT=${PORT}
-
-COPY --from=builder /usr/app/apps/web/dist /srv
-COPY ./docker/Caddyfile.frontend /etc/caddy/Caddyfile
 EXPOSE ${PORT}
+
+CMD ["node", "/usr/app/apps/web/dist/server.js"]

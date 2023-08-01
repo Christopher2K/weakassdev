@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 importers:
 
   .:
@@ -48,6 +44,9 @@ importers:
       '@solidjs/router':
         specifier: ~0.8.2
         version: 0.8.2(solid-js@1.7.8)
+      '@weakassdev/shared':
+        specifier: workspace:*
+        version: link:../../libs/shared
       solid-js:
         specifier: ~1.7.8
         version: 1.7.8
@@ -3960,3 +3959,7 @@ packages:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

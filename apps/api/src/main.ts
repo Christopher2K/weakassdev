@@ -2,7 +2,7 @@ import process from 'node:process';
 import Fastify from 'fastify';
 import { EXAMPLE } from '@weakassdev/shared';
 
-const APP_PORT = +process.env.PORT!;
+const APP_PORT = +process.env.PORT! || +process.env.API_PORT!;
 
 const fastify = Fastify({
   logger: true,

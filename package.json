@@ -5,6 +5,7 @@
   "scripts": {
     "compose": "docker compose -f ./docker/dev/docker-compose.yaml",
     "compose:up": "pnpm run compose up",
+    "compose:up:rebuild": "docker compose -f ./docker/dev/docker-compose.yaml --force-recreate --build",
     "compose:down": "pnpm run compose down",
     "compose:exec": "pnpm run compose exec apps",
     "compose:build": "pnpm run compose build",
@@ -19,6 +20,6 @@
   "devDependencies": {
     "dotenv-cli": "~7.2.1",
     "prettier": "~3.0.0",
-    "turbo": "~1.10.12"
+    "turbo": "1.10.12"
   }
 }

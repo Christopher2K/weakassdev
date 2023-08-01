@@ -1,7 +1,7 @@
 {
   "name": "@weakassdev/web",
   "scripts": {
-    "dev": "solid-start dev",
+    "dev": "solid-start dev --port $APP_PORT",
     "build": "solid-start build",
     "start": "solid-start start"
   },

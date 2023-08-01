@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -11,7 +15,7 @@ importers:
         specifier: ~3.0.0
         version: 3.0.0
       turbo:
-        specifier: ~1.10.12
+        specifier: 1.10.12
         version: 1.10.12
 
   apps/api:

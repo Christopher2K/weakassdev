@@ -1,6 +1,5 @@
-ARG PORT=80
-
 FROM node:18.15-bullseye-slim as builder
+ARG PORT=80
 ENV PORT=${PORT}
 
 RUN corepack enable
@@ -16,6 +15,7 @@ COPY libs/shared/package.json /usr/app/libs/shared/package.json
 COPY libs/shared/pnpm-*.yaml /usr/app/libs/shared/
 RUN pnpm install --ignore-scripts
 COPY . /usr/app
+RUN pnpm web prepare
 
 ENV NODE_ENV=production
 RUN pnpm build:web

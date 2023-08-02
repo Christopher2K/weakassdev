@@ -9,17 +9,19 @@
   "devDependencies": {
     "@types/node": "~18.11.18",
     "esbuild": "~0.14.54",
-    "postcss": "~8.4.21",
+    "postcss": "~8.4.27",
     "solid-start-node": "~0.2.19",
     "vite": "~4.4.6"
   },
   "dependencies": {
     "@solidjs/meta": "~0.28.2",
     "@solidjs/router": "~0.8.2",
+    "@weakassdev/shared": "workspace:*",
+    "autoprefixer": "~10.4.14",
     "solid-js": "~1.7.8",
     "solid-start": "~0.2.30",
-    "undici": "~5.15.1",
-    "@weakassdev/shared": "workspace:*"
+    "tailwindcss": "~3.3.3",
+    "undici": "~5.15.1"
   },
   "engines": {
     "node": ">=16.8"

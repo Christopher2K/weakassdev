@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "prepare": "husky install",
     "clean": "rm -rf ./apps/web/true",
     "compose": "pnpm run clean; docker compose -f ./docker/dev/docker-compose.yaml",
     "compose:up": "pnpm run compose up",
@@ -21,7 +22,14 @@
   },
   "devDependencies": {
     "dotenv-cli": "~7.2.1",
+    "husky": "~8.0.3",
+    "lint-staged": "~13.2.3",
     "prettier": "~3.0.0",
     "turbo": "1.10.12"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md,css,html}": [
+      "prettier --write"
+    ]
   }
 }

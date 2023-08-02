@@ -22,4 +22,4 @@ COPY apps/web/pnpm-*.yaml /code/apps/web/
 COPY libs/shared/package.json /code/libs/shared/package.json
 COPY libs/shared/pnpm-*.yaml /code/libs/shared/
 
-RUN pnpm install
+RUN pnpm install --ignore-scripts

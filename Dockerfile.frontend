@@ -14,7 +14,7 @@ COPY apps/web/package.json /usr/app/apps/web/package.json
 COPY apps/web/pnpm-*.yaml /usr/app/apps/web
 COPY libs/shared/package.json /usr/app/libs/shared/package.json
 COPY libs/shared/pnpm-*.yaml /usr/app/libs/shared/
-RUN pnpm install
+RUN pnpm install --ignore-scripts
 COPY . /usr/app
 
 ENV NODE_ENV=production

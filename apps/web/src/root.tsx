@@ -12,7 +12,7 @@ import {
   Scripts,
   Title,
 } from 'solid-start';
-import './root.css';
+
 import '@app/styles/base.css';
 
 export default function Root() {

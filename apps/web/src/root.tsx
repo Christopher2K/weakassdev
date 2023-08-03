@@ -1,7 +1,6 @@
 // @refresh reload
 import { Suspense } from 'solid-js';
 import {
-  A,
   Body,
   ErrorBoundary,
   FileRoutes,
@@ -14,20 +13,20 @@ import {
 } from 'solid-start';
 
 import '@app/styles/base.css';
+import { Navbar } from '@app/components';
 
 export default function Root() {
   return (
     <Html lang="en">
       <Head>
-        <Title>SolidStart - Bare</Title>
+        <Title>WeakAssDev: Mauvaises aventures de dev'</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Body>
         <Suspense>
           <ErrorBoundary>
-            <A href="/">Index</A>
-            <A href="/about">About</A>
+            <Navbar />
             <Routes>
               <FileRoutes />
             </Routes>

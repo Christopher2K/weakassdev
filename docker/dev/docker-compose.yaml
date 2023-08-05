@@ -1,6 +1,7 @@
 version: '3'
 services:
   apps:
+    env_file: ../../.env
     build:
       context: ../../
       dockerfile: ./docker/dev/Dockerfile
@@ -14,12 +15,12 @@ services:
       - /code/apps/api/.turbo
       - /code/libs/shared/node_modules
       - /code/libs/shared/.turbo
-    ports:
-      - '8001:8001'
-      - '8000:8000'
-    command: pnpm dev 
+    depends_on:
+      - db
+    command: pnpm dev
 
   proxy:
+    env_file: ../../.env
     image: caddy:2.6.4-alpine
     ports:
       - '80:80'
@@ -30,6 +31,21 @@ services:
       - caddy_data:/data
       - caddy_config:/config
 
+  db:
+    env_file: ../../.env
+    image: postgres:15.3-alpine3.18
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/posgresql/data
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: /usr/bin/pg_isready
+      interval: 5s
+      timeout: 10s
+      retries: 120
+
 volumes:
   caddy_data:
   caddy_config:
+  postgres_data:

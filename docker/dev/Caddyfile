@@ -1,7 +1,7 @@
 weakassdev.local {
-  reverse_proxy apps:8000
+  reverse_proxy apps:{$APP_PORT}
 }
 
 api.weakassdev.local {
-  reverse_proxy apps:8001
+  reverse_proxy apps:{$API_PORT}
 }

@@ -4,17 +4,22 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon -L",
-    "build": "node build.js",
-    "start": "node dist/main.js"
+    "build": "node scripts/build.js",
+    "start": "node dist/main.js",
+    "db:gen:migrations": "drizzle-kit generate:pg --schema=./src/db/index.ts",
+    "db:migrate": "node scripts/migrate.js"
   },
   "devDependencies": {
     "@types/node": "~20.4.5",
+    "drizzle-kit": "~0.19.12",
     "esbuild": "~0.18.17",
     "nodemon": "~3.0.1",
     "typescript": "~5.1.6"
   },
   "dependencies": {
     "@weakassdev/shared": "workspace:*",
-    "fastify": "~4.21.0"
+    "drizzle-orm": "~0.27.2",
+    "fastify": "~4.21.0",
+    "postgres": "~3.3.5"
   }
 }

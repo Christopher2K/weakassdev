@@ -1,4 +1,5 @@
 ARG PORT=80
+ARG DATABASE_URL
 
 FROM node:18.15-bullseye-slim as builder
 
@@ -20,7 +21,13 @@ RUN pnpm build:api
 FROM node:18.15-alpine3.17 as runner
 
 ENV PORT=${PORT}
+ENV NODE_ENV=production
+ENV DATABASE_URL=${DATABASE_URL}
+ENV DRIZZLE_FOLDER=/usr/app/drizzle
+
 EXPOSE ${PORT}
 
-COPY --from=builder /usr/app/apps/api/dist/main.js /usr/app/main.mjs
+COPY --from=builder /usr/app/apps/api/dist/main.mjs /usr/app/main.mjs
+COPY --from=builder /usr/app/apps/api/drizzle ${DRIZZLE_FOLDER}
+
 CMD ["node", "/usr/app/main.mjs"]

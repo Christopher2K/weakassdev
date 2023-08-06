@@ -1,6 +1,11 @@
 import process from 'node:process';
 import Fastify from 'fastify';
+
 import { EXAMPLE } from '@weakassdev/shared';
+
+import { dbInitialize } from '@app/db/initialize';
+
+dbInitialize();
 
 const APP_PORT = +process.env.PORT! || +process.env.API_PORT!;
 

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon -L",
     "build": "node scripts/build.js",
-    "start": "node dist/main.js",
+    "start": "node dist/main.mjs",
     "db:gen:migrations": "drizzle-kit generate:pg --schema=./src/db/index.ts",
     "db:migrate": "node scripts/migrate.js"
   },

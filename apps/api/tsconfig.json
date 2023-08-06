@@ -8,7 +8,7 @@
     "noEmit": false,
     "outDir": "./dist",
     "paths": {
-      "@app": ["./*"]
+      "@app/*": ["./*"]
     },
     "sourceMap": true,
     "target": "esnext",

@@ -12,7 +12,7 @@
     "compose:exec": "pnpm run compose exec apps",
     "compose:build": "pnpm run compose build",
     "compose:install": "pnpm run exec pnpm i --force",
-    "dev": "pnpm run:clean; dotenv -- turbo dev",
+    "dev": "pnpm run clean; dotenv -- turbo dev",
     "build:web": "turbo build --filter=@weakassdev/web",
     "build:api": "turbo build --filter=@weakassdev/api",
     "lint:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",

@@ -1,6 +1,6 @@
 import esbuild from 'esbuild';
 import esbuildPluginPino from 'esbuild-plugin-pino';
-import { rename, mkdir } from 'fs/promises';
+import { rename, mkdir, copyFile } from 'fs/promises';
 
 await esbuild.build({
   entryPoints: ['src/main.ts'],
@@ -22,5 +22,6 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 });
 
 await mkdir('./dist/lib', { recursive: true });
-await rename('./dist/thread-stream-worker.js', './dist/lib/worker.js');
-await rename('./dist/pino-pretty.js', './dist/pino-pretty-transport.js');
+await copyFile('./dist/thread-stream-worker.js', './dist/lib/worker.js');
+await copyFile('./dist/pino-pretty.js', './dist/pino-pretty-transport.js');
+await rename('./dist/main.js', './dist/main.mjs');

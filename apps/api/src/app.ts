@@ -2,8 +2,7 @@ import fastify, { FastifyServerOptions } from 'fastify';
 
 import { drizzlePlugin } from '@app/plugins';
 import { type Env, env } from '@app/env';
-
-import { EXAMPLE } from '@weakassdev/shared';
+import { V1 } from '@app/controllers/v1';
 
 const logConfig: Record<Env['NODE_ENV'], FastifyServerOptions['logger']> = {
   development: {
@@ -31,9 +30,7 @@ export function buildApp({}: BuildAppArgs) {
   app.register(drizzlePlugin);
 
   // CONTROLLERS
-  app.get('/', async function handler() {
-    return { hello6: EXAMPLE };
-  });
+  app.register(V1, { prefix: '/v1' });
 
   return app;
 }

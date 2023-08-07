@@ -1,4 +1,4 @@
-FROM node:18.15-bullseye-slim
+FROM node:18.15-bullseye
 
 ENV SHELL=bash
 ENV PNPM_HOME=/root/.local/share/pnpm

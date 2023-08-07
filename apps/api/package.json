@@ -6,7 +6,7 @@
     "dev": "nodemon -L",
     "build": "node scripts/build.js",
     "start": "node dist/main.mjs",
-    "db:gen:migrations": "drizzle-kit generate:pg --schema=./src/db/index.ts",
+    "db:gen:migrations": "drizzle-kit generate:pg --schema=./src/db/schema.ts",
     "db:migrate": "node scripts/migrate.js"
   },
   "devDependencies": {
@@ -19,10 +19,14 @@
     "typescript": "~5.1.6"
   },
   "dependencies": {
+    "@fastify/cookie": "~9.0.4",
+    "@fastify/cors": "~8.3.0",
+    "@fastify/jwt": "~7.2.0",
     "@weakassdev/shared": "workspace:*",
+    "argon2": "~0.31.0",
     "drizzle-orm": "~0.27.2",
     "fastify": "~4.21.0",
     "postgres": "~3.3.5",
-    "zod": "~3.21.4"
+    "zod": "~3.20.0"
   }
 }

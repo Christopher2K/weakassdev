@@ -21,3 +21,5 @@ try {
   console.error(e);
   process.exit(1);
 }
+
+export const isProduction = env.NODE_ENV === 'production';

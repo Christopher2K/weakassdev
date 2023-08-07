@@ -7,6 +7,7 @@ import { initialize } from '@app/db/initialize';
  * Keep the return type in sync with [src/@types/fastify.d.ts](../@types/fastify.d.ts)
  */
 export const drizzlePlugin: FastifyPluginAsync<{}> = async (fastify, _options) => {
-  const db = await initialize();
+  const logger = fastify.log;
+  const db = await initialize(logger);
   fastify.decorate('db', db);
 };

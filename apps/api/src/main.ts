@@ -1,17 +1,18 @@
 import process from 'node:process';
 import Fastify from 'fastify';
 
+import { drizzlePlugin } from '@app/plugins';
+
 import { EXAMPLE } from '@weakassdev/shared';
-
-import { dbInitialize } from '@app/db/initialize';
-
-dbInitialize();
 
 const APP_PORT = +process.env.PORT! || +process.env.API_PORT!;
 
 const fastify = Fastify({
   logger: true,
+  ignoreTrailingSlash: true,
 });
+
+fastify.register(drizzlePlugin);
 
 // Declare a route
 fastify.get('/', async function handler() {

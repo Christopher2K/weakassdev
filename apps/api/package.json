@@ -13,13 +13,16 @@
     "@types/node": "~20.4.5",
     "drizzle-kit": "~0.19.12",
     "esbuild": "~0.18.17",
+    "esbuild-plugin-pino": "~2.0.0",
     "nodemon": "~3.0.1",
+    "pino-pretty": "~10.2.0",
     "typescript": "~5.1.6"
   },
   "dependencies": {
     "@weakassdev/shared": "workspace:*",
     "drizzle-orm": "~0.27.2",
     "fastify": "~4.21.0",
-    "postgres": "~3.3.5"
+    "postgres": "~3.3.5",
+    "zod": "~3.21.4"
   }
 }

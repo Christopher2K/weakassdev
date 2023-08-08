@@ -1,6 +1,0 @@
-{
-  "verbose": true,
-  "ext": "ts, js, jsx, tsx, json",
-  "watch": ["../../libs/shared/dist/*.js", "src"],
-  "exec": "echo '\nRecompiling...\n' && pnpm run build && echo '\nReady!\n' && pnpm run start"
-}

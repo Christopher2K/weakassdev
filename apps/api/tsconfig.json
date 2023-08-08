@@ -1,19 +1,17 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "../../tsconfig.root.json",
+  "extends": "adonis-preset-ts/tsconfig.json",
+  "include": ["**/*"],
+  "exclude": ["node_modules", "build"],
   "compilerOptions": {
-    "baseUrl": "./src",
-    "lib": ["ESNext"],
-    "module": "esnext",
-    "noEmit": false,
-    "outDir": "./dist",
-    "paths": {
-      "@app/*": ["./*"],
-      "@weakassdev/shared/*": ["../../../libs/shared/src/*"]
-    },
+    "outDir": "dist",
+    "rootDir": "./",
     "sourceMap": true,
-    "target": "esnext",
-    "types": ["node"]
-  },
-  "include": ["**/*.ts"]
+    "paths": {
+      "App/*": ["./app/*"],
+      "Config/*": ["./config/*"],
+      "Contracts/*": ["./contracts/*"],
+      "Database/*": ["./database/*"]
+    },
+    "types": ["@adonisjs/core", "@adonisjs/repl", "@japa/preset-adonis/build/adonis-typings"]
+  }
 }

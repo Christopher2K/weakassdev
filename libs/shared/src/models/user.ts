@@ -2,7 +2,6 @@ import { type InferModel } from 'drizzle-orm';
 import { pgTable, pgEnum, varchar, text, jsonb } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
-import type {} from 'zod';
 
 import { idField, timestampFields } from './utils';
 
@@ -29,11 +28,19 @@ export const user = pgTable('User', {
   role: userRole('role').default('USER').notNull(),
   status: userStatus('status').default('ACTIVE').notNull(),
 });
+export const selectUserSchema = createSelectSchema(user);
 
 export const insertUserSchema = createInsertSchema(user, {
   email: () => z.string().email(),
+  username: () => z.string(),
+  password: () => z.string(),
 });
-export const selectUserSchema = createSelectSchema(user);
+
+export const signupSchema = insertUserSchema.pick({
+  username: true,
+  email: true,
+  password: true,
+});
 
 export type User = InferModel<typeof user>;
 export type UserRole = User['role'];

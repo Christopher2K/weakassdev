@@ -6,8 +6,7 @@
     "jsxImportSource": "solid-js",
     "jsx": "preserve",
     "paths": {
-      "@app/*": ["*"],
-      "@style/*": ["../styled-system/*"]
+      "@app/*": ["*"]
     },
     "types": ["solid-start/env"]
   }

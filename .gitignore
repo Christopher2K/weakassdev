@@ -3,6 +3,8 @@
 dist
 .solid
 .output
+.yarn
+yarn-error.log
 
 # Environment
 .env
@@ -24,6 +26,8 @@ styled-system-static
 
 # Temp
 gitignore
+temp
+tmp
 
 # System Files
 .DS_Store

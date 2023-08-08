@@ -3,11 +3,9 @@
   "extends": "../../tsconfig.root.json",
   "compilerOptions": {
     "baseUrl": "./src",
-    "declaration": true,
-    "declarationMap": true,
-    "moduleResolution": "Node",
     "noEmit": false,
     "outDir": "./dist",
+    "target": "ES5",
     "paths": {
       "@shared": ["./*"]
     }

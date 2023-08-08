@@ -2,23 +2,30 @@
   "name": "@weakassdev/core",
   "version": "1.0.0",
   "description": "",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "libs/*"
+    ]
+  },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky install && yarn workspaces run prepare",
     "clean": "rm -rf ./apps/web/true",
-    "compose": "pnpm run clean; docker compose -f ./docker/dev/docker-compose.yaml",
-    "compose:up": "pnpm run compose up",
-    "compose:up:rebuild": "pnpm run compose up --force-recreate --build",
-    "compose:down": "pnpm run compose down",
-    "compose:exec": "pnpm run compose exec apps",
-    "compose:build": "pnpm run compose build",
-    "compose:install": "pnpm run exec pnpm i --force",
-    "dev": "pnpm run clean; dotenv -- turbo dev",
+    "compose": "yarn run clean; docker compose -f ./docker/dev/docker-compose.yaml",
+    "compose:up": "yarn compose up",
+    "compose:up:rebuild": "yarn compose up --force-recreate --build",
+    "compose:down": "yarn compose down",
+    "compose:exec": "yarn compose exec apps",
+    "compose:build": "yarn compose build",
+    "compose:install": "yarn exec yarn install",
+    "dev": "yarn run clean; dotenv -- turbo dev",
     "build:web": "turbo build --filter=@weakassdev/web",
     "build:api": "turbo build --filter=@weakassdev/api",
     "lint:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
-    "web": "pnpm --filter=@weakassdev/web",
-    "api": "pnpm --filter=@weakassdev/api",
-    "shared": "pnpm --filter=@weakassdev/shared"
+    "web": "yarn workspace @weakassdev/web",
+    "api": "yarn workspace @weakassdev/api",
+    "shared": "yarn workspace @weakassdev/shared"
   },
   "devDependencies": {
     "dotenv-cli": "~7.2.1",
@@ -31,5 +38,6 @@
     "*.{js,jsx,ts,tsx,json,md,css,html}": [
       "prettier --write"
     ]
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }

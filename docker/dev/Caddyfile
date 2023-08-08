@@ -3,5 +3,5 @@ weakassdev.local {
 }
 
 api.weakassdev.local {
-  reverse_proxy apps:{$API_PORT}
+  reverse_proxy apps:{$PORT}
 }

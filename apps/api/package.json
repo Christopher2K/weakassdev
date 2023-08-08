@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "prepare": "echo 'Do nothing'",
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
     "start": "node server.js",
@@ -23,7 +24,7 @@
   "dependencies": {
     "@adonisjs/core": "^5.8.0",
     "@adonisjs/repl": "^3.1.0",
-    "@weakassdev/shared": "workspace:*",
+    "@weakassdev/shared": "*",
     "proxy-addr": "~2.0.7",
     "reflect-metadata": "~0.1.13",
     "source-map-support": "~0.5.21"

@@ -9,6 +9,9 @@ export default class AppProvider {
 
   public async boot() {
     // IoC container is ready
+    const { BaseModel } = await import('@ioc:Adonis/Lucid/Orm');
+    const { CustomNamingStrategy } = await import('App/Models/utils');
+    BaseModel.namingStrategy = new CustomNamingStrategy();
   }
 
   public async ready() {

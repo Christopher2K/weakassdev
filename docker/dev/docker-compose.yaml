@@ -18,6 +18,8 @@ services:
       - ../../:/usr/src/app
     depends_on:
       - db
+    links:
+      - 'db:db'
     command: /bin/bash -c 'yarn && yarn dev'
 
   proxy:

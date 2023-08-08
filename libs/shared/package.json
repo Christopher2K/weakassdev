@@ -8,7 +8,7 @@
   "scripts": {
     "prepare": "echo 'Do nothing'",
     "dev": "concurrently \"tsc --watch --declaration --emitDeclarationOnly\" \"tsup --watch\"",
-    "build": "tsup --dts"
+    "build": "tsup --dts --clean"
   },
   "exports": {
     ".": {
@@ -56,6 +56,6 @@
     ],
     "splitting": false,
     "sourcemap": true,
-    "clean": true
+    "clean": false
   }
 }

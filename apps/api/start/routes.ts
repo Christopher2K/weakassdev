@@ -20,8 +20,6 @@
 
 import Route from '@ioc:Adonis/Core/Route';
 
-import { MODELS_STRING } from '@weakassdev/shared/models';
-
 Route.get('/', async () => {
-  return { hello: MODELS_STRING };
+  return { hello: 'Hey' };
 });

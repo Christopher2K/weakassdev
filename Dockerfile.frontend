@@ -3,6 +3,7 @@ ARG PORT=80
 FROM node:18.15-bullseye-slim as builder
 
 ENV PORT=${PORT}
+ENV NODE_ENV=production
 
 RUN corepack enable
 RUN mkdir -p /usr/app
@@ -24,8 +25,24 @@ COPY apps/web /usr/app/apps/web
 COPY libs/shared /usr/app/libs/shared
 
 ENV NODE_ENV=production
+
+RUN yarn web prepare
 RUN yarn build:web
+RUN rm -rf node_modules
+
+RUN yarn workspaces focus @weakassdev/web --production
+
+FROM node:18.15-alpine3.17 as runner
+
+ENV PORT=${PORT}
+ENV NODE_ENV=production
 
 EXPOSE ${PORT}
 
-CMD ["node", "/usr/app/apps/web/dist/server.js"]
+COPY --from=builder /usr/app/apps/web/dist /usr/app
+COPY --from=builder /usr/app/node_modules /usr/app/node_modules
+COPY --from=builder /usr/app/apps/web/package.json /usr/app/package.json
+COPY --from=builder /usr/app/libs/shared/dist /usr/app/node_modules/@weakassdev/shared/dist
+COPY --from=builder /usr/app/libs/shared/package.json /usr/app/node_modules/@weakassdev/shared/package.json
+
+CMD ["node", "/usr/app/server.js"]

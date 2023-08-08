@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "panda codegen",
+    "prepare": "panda codegen",
     "dev": "solid-start dev --port $APP_PORT --host 0.0.0.0",
     "build": "solid-start build",
     "start": "solid-start start"

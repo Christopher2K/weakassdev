@@ -47,4 +47,4 @@ COPY --from=builder /usr/app/libs/shared/package.json /usr/app/node_modules/@wea
 
 WORKDIR /usr/app
 
-CMD ["/bin/sh", "-c", "'node /usr/app/ace migration:run && node /usr/app/server.js'"]
+CMD ["/bin/sh", "-c", "node /usr/app/ace migration:run"]

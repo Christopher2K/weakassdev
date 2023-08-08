@@ -30,8 +30,8 @@ RUN yarn workspaces focus @weakassdev/api --production
 
 FROM node:18.15-alpine3.17 as runner
 
-ENV PORT=${PORT}
 ENV HOST=0.0.0.0
+ENV PORT=${PORT}
 ENV APP_KEY=${APP_KEY}
 ENV APP_NAME=wad-api
 ENV DRIVE_DISK=local
@@ -45,4 +45,6 @@ COPY --from=builder /usr/app/node_modules /usr/app/node_modules
 COPY --from=builder /usr/app/libs/shared/dist /usr/app/node_modules/@weakassdev/shared/dist
 COPY --from=builder /usr/app/libs/shared/package.json /usr/app/node_modules/@weakassdev/shared/package.json
 
-CMD ["node", "/usr/app/server.js"]
+WORKDIR /usr/app
+
+CMD ["/bin/sh", "-c", "'node /usr/app/ace migration:run && node /usr/app/server.js'"]

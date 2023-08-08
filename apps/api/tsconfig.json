@@ -1,7 +1,7 @@
 {
   "extends": "adonis-preset-ts/tsconfig.json",
-  "include": ["**/*"],
-  "exclude": ["node_modules", "build"],
+  "include": ["./**/*"],
+  "exclude": ["node_modules", "build", "../../node_modules"],
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "./",

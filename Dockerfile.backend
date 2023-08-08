@@ -1,6 +1,3 @@
-ARG PORT=80
-ARG APP_KEY=secret
-ARG DATABASE_URL
 
 FROM node:18.15-bullseye-slim as builder
 
@@ -30,6 +27,10 @@ RUN yarn workspaces focus @weakassdev/api --production
 
 FROM node:18.15-alpine3.17 as runner
 
+ARG PORT=80
+ARG APP_KEY
+ARG DATABASE_URL
+
 ENV HOST=0.0.0.0
 ENV PORT=${PORT}
 ENV APP_KEY=${APP_KEY}
@@ -45,6 +46,4 @@ COPY --from=builder /usr/app/node_modules /usr/app/node_modules
 COPY --from=builder /usr/app/libs/shared/dist /usr/app/node_modules/@weakassdev/shared/dist
 COPY --from=builder /usr/app/libs/shared/package.json /usr/app/node_modules/@weakassdev/shared/package.json
 
-WORKDIR /usr/app
-
-CMD ["/bin/sh", "-c", "node /usr/app/ace migration:run"]
+CMD ["/bin/sh", "-c", "node /usr/app/ace migration:run --force && node /usr/app/server.js"]

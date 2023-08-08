@@ -6,7 +6,7 @@ services:
       context: ../../
       dockerfile: ./docker/dev/Dockerfile
     volumes:
-      - /usr/src/app/.yarn
+      - /usr/src/app/.yarn/cache
       - /usr/src/app/.turbo
       - /usr/src/app/node_modules
       - /usr/src/app/apps/web/node_modules

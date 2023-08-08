@@ -1,22 +1,30 @@
-FROM node:18.15-bullseye-slim as builder
 ARG PORT=80
+
+FROM node:18.15-bullseye-slim as builder
+
 ENV PORT=${PORT}
 
 RUN corepack enable
 RUN mkdir -p /usr/app
+RUN mkdir /usr/app/.yarn
 WORKDIR /usr/app
+
+COPY .yarn /usr/app/.yarn
 COPY package.json /usr/app
-COPY pnpm-*.yaml /usr/app
+COPY .yarnrc.yml /usr/app
+COPY yarn.lock /usr/app
+COPY turbo.json /usr/app
 COPY apps/web/package.json /usr/app/apps/web/package.json
-COPY apps/web/pnpm-*.yaml /usr/app/apps/web
 COPY libs/shared/package.json /usr/app/libs/shared/package.json
-COPY libs/shared/pnpm-*.yaml /usr/app/libs/shared/
-RUN pnpm install --ignore-scripts
-COPY . /usr/app
-RUN pnpm web prepare
+
+RUN yarn install
+
+COPY tsconfig.root.json /usr/app
+COPY apps/web /usr/app/apps/web
+COPY libs/shared /usr/app/libs/shared
 
 ENV NODE_ENV=production
-RUN pnpm build:web
+RUN yarn build:web
 
 EXPOSE ${PORT}
 

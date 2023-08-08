@@ -1,31 +1,48 @@
 ARG PORT=80
+ARG APP_KEY=secret
 ARG DATABASE_URL
 
 FROM node:18.15-bullseye-slim as builder
 
 RUN corepack enable
 RUN mkdir -p /usr/app
+RUN mkdir /usr/app/.yarn
 WORKDIR /usr/app
+
+COPY .yarn /usr/app/.yarn
 COPY package.json /usr/app
-COPY pnpm-*.yaml /usr/app
+COPY .yarnrc.yml /usr/app
+COPY yarn.lock /usr/app
+COPY turbo.json /usr/app
 COPY apps/api/package.json /usr/app/apps/api/package.json
-COPY apps/api/pnpm-*.yaml /usr/app/apps/api
 COPY libs/shared/package.json /usr/app/libs/shared/package.json
-COPY libs/shared/pnpm-*.yaml /usr/app/libs/shared/
-RUN pnpm install --ignore-scripts
-COPY . /usr/app
-RUN pnpm build:api
+
+RUN yarn install
+
+COPY tsconfig.root.json /usr/app
+COPY apps/api /usr/app/apps/api
+COPY libs/shared /usr/app/libs/shared
+
+RUN yarn build:api
+RUN rm -rf node_modules
+
+RUN yarn workspaces focus @weakassdev/api --production
 
 FROM node:18.15-alpine3.17 as runner
 
-ENV API_PORT=${PORT}
+ENV PORT=${PORT}
+ENV HOST=0.0.0.0
+ENV APP_KEY=${APP_KEY}
+ENV APP_NAME=wad-api
+ENV DRIVE_DISK=local
 ENV NODE_ENV=production
 ENV DATABASE_URL=${DATABASE_URL}
-ENV DRIZZLE_FOLDER=/usr/app/drizzle
 
 EXPOSE ${PORT}
 
 COPY --from=builder /usr/app/apps/api/dist /usr/app
-COPY --from=builder /usr/app/apps/api/drizzle ${DRIZZLE_FOLDER}
+COPY --from=builder /usr/app/node_modules /usr/app/node_modules
+COPY --from=builder /usr/app/libs/shared/dist /usr/app/node_modules/@weakassdev/shared/dist
+COPY --from=builder /usr/app/libs/shared/package.json /usr/app/node_modules/@weakassdev/shared/package.json
 
-CMD ["node", "/usr/app/main.mjs"]
+CMD ["node", "/usr/app/server.js"]

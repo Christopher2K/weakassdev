@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "prepare": "husky install && yarn workspaces run prepare",
+    "postinstall": "husky install",
     "clean": "rm -rf ./apps/web/true",
     "compose": "yarn run clean; docker compose -f ./docker/dev/docker-compose.yaml",
     "compose:up": "yarn compose up",
@@ -39,5 +39,5 @@
       "prettier --write"
     ]
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@3.6.1"
 }

@@ -3,7 +3,8 @@
 dist
 .solid
 .output
-.yarn
+.yarn/cache
+.yarn/install-state.gz
 yarn-error.log
 
 # Environment

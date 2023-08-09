@@ -12,8 +12,8 @@ export default class extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.uuid('id').primary();
-      table.string('username', 25).unique();
+      table.uuid('id').primary().defaultTo(this.raw('gen_random_uuid()'));
+      table.string('username', 25).unique().notNullable();
       table.text('password').nullable();
       table.string('email').nullable();
       table.string('avatar_url').nullable();

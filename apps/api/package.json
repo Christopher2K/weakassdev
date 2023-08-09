@@ -27,9 +27,11 @@
     "@adonisjs/core": "^5.8.0",
     "@adonisjs/lucid": "~18.4.0",
     "@adonisjs/repl": "^3.1.0",
+    "@adonisjs/session": "~6.4.0",
     "@weakassdev/shared": "*",
     "luxon": "~3.3.0",
     "pg": "~8.11.2",
+    "phc-argon2": "~1.1.4",
     "proxy-addr": "~2.0.7",
     "reflect-metadata": "~0.1.13",
     "source-map-support": "~0.5.21"

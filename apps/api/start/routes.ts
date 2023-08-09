@@ -24,6 +24,9 @@ Route.group(() => {
   Route.group(() => {
     Route.post('signup', 'AuthController.signup');
     Route.post('login', 'AuthController.login');
+    Route.post('logout', 'AuthController.logout').middleware('auth');
+    // FIXME: Delete this route
+    Route.post('protected', 'AuthController.protected').middleware('auth');
   }).prefix('auth');
 })
   .namespace('App/Controllers/V1')

@@ -3,6 +3,6 @@ import { LucidModel, SnakeCaseNamingStrategy } from '@ioc:Adonis/Lucid/Orm';
 
 export class CustomNamingStrategy extends SnakeCaseNamingStrategy {
   public tableName(model: LucidModel): string {
-    return string.capitalCase(model.name);
+    return string.capitalCase(model.name).split(' ').join('');
   }
 }

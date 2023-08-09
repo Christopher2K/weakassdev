@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
 
 import type { UserRole, UserStatus } from '@weakassdev/shared/models';
+import type { SignupRequest } from '@weakassdev/shared/validators';
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -36,4 +37,10 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
+
+  static from(args: Parameters<typeof User.prototype.fill>[0]): User {
+    let user = new User();
+    user.fill(args);
+    return user;
+  }
 }

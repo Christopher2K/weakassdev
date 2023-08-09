@@ -12,12 +12,25 @@
 | properly.
 |
 */
-
 import Logger from '@ioc:Adonis/Core/Logger';
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler';
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+
+import { ZodError } from '@weakassdev/shared/validators';
 
 export default class ExceptionHandler extends HttpExceptionHandler {
   constructor() {
     super(Logger);
+  }
+
+  public async handle(error: any, ctx: HttpContextContract) {
+    if (error instanceof ZodError) {
+      return ctx.response.status(422).send({
+        code: 'E_CUSTOM_VALIDATION_ERROR',
+        issues: error.issues,
+      });
+    }
+
+    return super.handle(error, ctx);
   }
 }

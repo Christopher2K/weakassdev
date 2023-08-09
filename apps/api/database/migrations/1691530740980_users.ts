@@ -15,7 +15,7 @@ export default class extends BaseSchema {
       table.uuid('id').primary().defaultTo(this.raw('gen_random_uuid()'));
       table.string('username', 25).unique().notNullable();
       table.text('password').nullable();
-      table.string('email').nullable();
+      table.string('email').nullable().unique();
       table.string('avatar_url').nullable();
       table.text('biography').nullable();
       table.jsonb('external_links').defaultTo([]);

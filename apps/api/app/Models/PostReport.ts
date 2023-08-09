@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm';
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm';
 
 import type { PostReportReason, PostReportOutcome } from '@weakassdev/shared/models';
 
@@ -22,15 +22,17 @@ export default class PostReport extends BaseModel {
   @column()
   public outcomeContext: string;
 
-  @hasOne(() => Post, {
-    foreignKey: 'post_id',
-  })
-  public post: HasOne<typeof Post>;
+  @column()
+  public postId: string;
 
-  @hasOne(() => User, {
-    foreignKey: 'reporter_id',
-  })
-  public reporter: HasOne<typeof User>;
+  @belongsTo(() => Post)
+  public post: BelongsTo<typeof Post>;
+
+  @column()
+  public reporterId: string;
+
+  @belongsTo(() => User)
+  public reporter: BelongsTo<typeof User>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

@@ -7,8 +7,9 @@
   "private": true,
   "scripts": {
     "prepare": "echo 'Do nothing'",
-    "dev": "concurrently \"tsc --watch --declaration --emitDeclarationOnly\" \"tsup --watch\"",
-    "build": "tsup --dts --clean"
+    "dev": "tsup --watch --onSuccess \"yarn generate:type\"",
+    "build": "tsup --clean --minify",
+    "generate:type": "tsc --declaration --emitDeclarationOnly"
   },
   "exports": {
     ".": {
@@ -42,9 +43,6 @@
   },
   "devDependencies": {
     "@swc/core": "~1.3.74",
-    "concurrently": "~8.2.0",
-    "esbuild": "~0.18.19",
-    "pino-std-serializers": "~6.2.2",
     "tsup": "~7.2.0",
     "typescript": "~5.1.6"
   },
@@ -61,6 +59,7 @@
       "esm",
       "cjs"
     ],
+    "dts": true,
     "splitting": false,
     "sourcemap": true,
     "clean": false

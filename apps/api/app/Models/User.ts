@@ -2,7 +2,6 @@ import { DateTime } from 'luxon';
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
 
 import type { UserRole, UserStatus } from '@weakassdev/shared/models';
-import type { SignupRequest } from '@weakassdev/shared/validators';
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })

@@ -31,6 +31,8 @@ jobs:
           POSTGRES_USER: weakasstest
           POSTGRES_DB: weakasstest
         image: postgres:15.3-alpine3.18
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -47,7 +49,7 @@ jobs:
       APP_NAME: wad-test-api
       HOST: 0.0.0.0
       PORT: 8001
-      DATABASE_URL: postgres://weakassdev:weakassdev@postgres:5432/weakassdev
+      DATABASE_URL: postgres://weakasstest:weakasstest@localhost:5432/weakasstest
       SESSION_COOKIE_NAME: wad-cookie
     steps:
       - uses: actions/checkout@v3

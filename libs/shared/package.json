@@ -23,9 +23,9 @@
       "import": "./dist/models/index.js"
     },
     "./validators": {
-      "types": "./dist/validators/index.d.ts",
-      "require": "./dist/validators/index.cjs",
-      "import": "./dist/validators/index.js"
+      "types": "./dist/validators.d.ts",
+      "require": "./dist/validators.cjs",
+      "import": "./dist/validators.js"
     }
   },
   "typesVersions": {
@@ -37,7 +37,7 @@
         "dist/models/index.d.ts"
       ],
       "validators": [
-        "dist/validators/index.d.ts"
+        "dist/validators.d.ts"
       ]
     }
   },
@@ -53,7 +53,7 @@
     "entry": [
       "src/index.ts",
       "src/models/index.ts",
-      "src/validators/index.ts"
+      "src/validators.ts"
     ],
     "format": [
       "esm",

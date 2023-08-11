@@ -1,23 +1,23 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import Hash from '@ioc:Adonis/Core/Hash';
+
 import User from 'App/Models/User';
 
 import { signupRequestSchema, loginRequestSchema } from '@weakassdev/shared/validators';
+import DatabaseErrorException from 'App/Exceptions/DatabaseErrorException';
 
 export default class AuthController {
   public async signup(ctx: HttpContextContract) {
     const data = await signupRequestSchema.parseAsync(ctx.request.body());
-    const hashedPassword = await Hash.make(data.password);
 
-    const user = User.from({
-      ...data,
-      password: hashedPassword,
-    });
-    await user.save();
+    let user: User;
+    try {
+      user = await User.create(data);
+    } catch (e) {
+      throw new DatabaseErrorException(e);
+    }
 
-    ctx.auth.login(user);
-
-    return { status: 'todo' };
+    await ctx.auth.login(user);
+    return ctx.response.json({ status: 'todo' });
   }
 
   public async login(ctx: HttpContextContract) {

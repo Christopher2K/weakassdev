@@ -31,6 +31,12 @@ export default class ExceptionHandler extends HttpExceptionHandler {
       });
     }
 
+    return ctx.response.status(error.status ?? 500).send({
+      code: error?.code ?? 'E_SERVER_ERROR',
+      message: error?.message ?? 'E_SERVER_ERROR',
+      stack: error?.stack ?? '',
+    });
+
     return super.handle(error, ctx);
   }
 }

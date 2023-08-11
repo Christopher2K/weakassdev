@@ -1,0 +1,16 @@
+name: Install JS apps dependencies
+description: Install JS dependencies or restore from cache
+
+runs:
+  using: composite
+  steps:
+    - name: Try to restore node modules
+      id: dependencies
+      uses: ./.github/actions/restoreJsPkg
+    - name: Install dependencies
+      if: steps.dependencies.outputs.cache-hit != 'true'
+      shell: sh
+      run: yarn install --immutable
+    - name: Cache node modules
+      if: steps.dependencies.outputs.cache-hit != 'true'
+      uses: ./.github/actions/cacheJsPkg

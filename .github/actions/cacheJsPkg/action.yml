@@ -1,0 +1,15 @@
+name: Cache js project dependencies
+description: Cache js project dependencies to speed the CD/CI process
+
+runs:
+  using: composite
+  steps:
+    - name: Cache node modules
+      id: cache
+      uses: actions/cache/save@v3
+      with:
+        key: ${{ hashFiles('./yarn.lock') }}
+        path: |
+          ./node_modules
+          ./apps/**/node_modules
+          ./libs/**/node_modules

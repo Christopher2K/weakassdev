@@ -23,9 +23,11 @@
     "build:web": "turbo build --filter=@weakassdev/web",
     "build:api": "turbo build --filter=@weakassdev/api",
     "lint:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
+    "lint:ci": "prettier \"**/*.{js,jsx,ts,tsx,json,md,css}\" -c",
     "web": "yarn workspace @weakassdev/web",
     "api": "yarn workspace @weakassdev/api",
-    "shared": "yarn workspace @weakassdev/shared"
+    "shared": "yarn workspace @weakassdev/shared",
+    "test": "turbo test"
   },
   "devDependencies": {
     "dotenv-cli": "~7.2.1",

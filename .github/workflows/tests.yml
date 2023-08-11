@@ -1,0 +1,56 @@
+name: Lint and test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/installJsDependencies
+
+  lint:
+    name: Lint code
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/installJsDependencies
+      - name: Lint
+        run: yarn lint:ci
+
+  tests:
+    name: Test apps and packages
+    services:
+      postgres:
+        env:
+          POSTGRES_PASSWORD: weakasstest
+          POSTGRES_USER: weakasstest
+          POSTGRES_DB: weakasstest
+        image: postgres:15.3-alpine3.18
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    runs-on: ubuntu-latest
+    needs: install
+    env:
+      NODE_ENV: test
+      ASSETS_DRIVER: fake
+      SESSION_DRIVER: memory
+      DRIVE_DISK: local
+      APP_KEY: 6Xd5GY_MVo0UdwvReSo-i2YbmkoQ-DTx
+      APP_NAME: wad-test-api
+      HOST: 0.0.0.0
+      PORT: 8001
+      DATABASE_URL: postgres://weakassdev:weakassdev@postgres:5432/weakassdev
+      SESSION_COOKIE_NAME: wad-cookie
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/installJsDependencies
+      - name: Run tests
+        run: yarn test

@@ -1,0 +1,20 @@
+name: Restore project js dependencies
+description: Restore project js dependencies to speed the CD/CI process
+
+runs:
+  using: composite
+  steps:
+    - name: Restore node modules
+      id: cache
+      uses: actions/cache/restore@v3
+      with:
+        key: ${{ hashFiles('./yarn.lock') }}
+        path: |
+          ./node_modules
+          ./apps/**/node_modules
+          ./libs/**/node_modules
+
+outputs:
+  cache-hit:
+    description: Let the caller know if a cache was restored
+    value: ${{steps.cache.outputs.cache-hit}}

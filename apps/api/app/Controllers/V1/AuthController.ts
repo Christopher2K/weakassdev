@@ -2,7 +2,11 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 import User from 'App/Models/User';
 
-import { signupRequestSchema, loginRequestSchema } from '@weakassdev/shared/validators';
+import {
+  signupRequestSchema,
+  loginRequestSchema,
+  authenticatedUserResponseSchema,
+} from '@weakassdev/shared/validators';
 import DatabaseErrorException from 'App/Exceptions/DatabaseErrorException';
 
 export default class AuthController {
@@ -17,7 +21,10 @@ export default class AuthController {
     }
 
     await ctx.auth.login(user);
-    return ctx.response.json({ status: 'todo' });
+
+    return ctx.response.json({
+      data: authenticatedUserResponseSchema.parse(user),
+    });
   }
 
   public async login(ctx: HttpContextContract) {
@@ -26,12 +33,14 @@ export default class AuthController {
 
     await ctx.auth.login(user);
 
-    return { status: 'todo' };
+    return ctx.response.json({
+      data: authenticatedUserResponseSchema.parse(user),
+    });
   }
 
   public async logout(ctx: HttpContextContract) {
     await ctx.auth.logout();
-    return { status: 'todo' };
+    return ctx.response.status(204);
   }
 
   public async protected() {

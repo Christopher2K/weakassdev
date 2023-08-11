@@ -2,7 +2,12 @@ import { DateTime } from 'luxon';
 import Hash from '@ioc:Adonis/Core/Hash';
 import { BaseModel, column, beforeSave } from '@ioc:Adonis/Lucid/Orm';
 
-import type { UserRole, UserStatus } from '@weakassdev/shared/models';
+import {
+  userRoleSchema,
+  userStatusSchema,
+  type UserRole,
+  type UserStatus,
+} from '@weakassdev/shared/models';
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -18,19 +23,19 @@ export default class User extends BaseModel {
   public email: string;
 
   @column()
-  public avatar_url: string;
+  public avatarUrl: string | null;
 
   @column()
-  public biography: string;
+  public biography: string | null;
 
   @column()
-  public externalLinks: Array<{ [key: string]: string }>;
+  public externalLinks: { value: Array<{ [key: string]: string }> } = { value: [] };
 
   @column()
-  public role: UserRole;
+  public role: UserRole = userRoleSchema.Values.USER;
 
   @column()
-  public status: UserStatus;
+  public status: UserStatus = userStatusSchema.Values.ACTIVE;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

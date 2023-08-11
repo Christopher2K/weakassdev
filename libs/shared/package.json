@@ -47,6 +47,7 @@
     "typescript": "~5.1.6"
   },
   "dependencies": {
+    "luxon": "~3.3.0",
     "zod": "3.20.0"
   },
   "tsup": {

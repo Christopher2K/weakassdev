@@ -18,7 +18,7 @@ export default class extends BaseSchema {
       table.string('email').nullable().unique();
       table.string('avatar_url').nullable();
       table.text('biography').nullable();
-      table.jsonb('external_links').defaultTo([]);
+      table.jsonb('external_links').defaultTo({ value: [] });
 
       table
         .enum('role', [userRoleSchema.Values.USER, userRoleSchema.Values.ADMIN], {

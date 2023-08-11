@@ -3874,6 +3874,7 @@ __metadata:
   resolution: "@weakassdev/shared@workspace:libs/shared"
   dependencies:
     "@swc/core": ~1.3.74
+    luxon: ~3.3.0
     tsup: ~7.2.0
     typescript: ~5.1.6
     zod: 3.20.0

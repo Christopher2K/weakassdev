@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "panda codegen",
+    "typecheck": "tsc-silent -p ./tsconfig.json --suppress @/node_modules/solid-start/ --compiler ../../node_modules/typescript/lib/typescript.js",
     "dev": "solid-start dev --port $APP_PORT --host 0.0.0.0",
     "build": "solid-start build",
     "start": "solid-start start"
@@ -15,6 +16,7 @@
     "esbuild": "~0.14.54",
     "postcss": "~8.4.27",
     "solid-start-node": "~0.2.19",
+    "tsc-silent": "~1.2.2",
     "typescript": "~5.1.6",
     "vite": "~4.4.6"
   },

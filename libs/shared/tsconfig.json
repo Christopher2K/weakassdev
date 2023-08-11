@@ -4,7 +4,6 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "declaration": true,
-    "emitDeclarationOnly": true,
     "outDir": "./dist",
     "target": "ES5",
     "paths": {

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "echo 'Do nothing'",
+    "typecheck": "tsc --noEmit",
     "ace": "node ace",
     "dev": "node ace serve --watch",
     "build": "node ace build --production",

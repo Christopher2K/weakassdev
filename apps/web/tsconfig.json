@@ -2,12 +2,16 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "../../tsconfig.root.json",
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "jsxImportSource": "solid-js",
     "jsx": "preserve",
+    "noEmit": true,
     "paths": {
-      "@app/*": ["*"]
+      "@app/*": ["./src/*"],
+      "@style/*": ["./styled-system/*"]
     },
-    "types": ["solid-start/env"]
-  }
+    "types": ["../../node_modules/solid-start/env"]
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }

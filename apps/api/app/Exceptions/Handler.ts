@@ -36,7 +36,5 @@ export default class ExceptionHandler extends HttpExceptionHandler {
       message: error?.message ?? 'E_SERVER_ERROR',
       stack: error?.stack ?? '',
     });
-
-    return super.handle(error, ctx);
   }
 }

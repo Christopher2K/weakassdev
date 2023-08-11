@@ -48,6 +48,13 @@ services:
       timeout: 10s
       retries: 120
 
+  db-test:
+    env_file: ../../.env.test
+    image: postgres:15.3-alpine3.18
+    restart: always
+    ports:
+      - '5433:5432'
+
 volumes:
   caddy_data:
   caddy_config:

@@ -64,6 +64,10 @@ export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
 */
 export const configureSuite: Required<Config>['configureSuite'] = (suite) => {
   if (suite.name === 'functional') {
-    suite.setup(() => TestUtils.httpServer().start());
+    suite.setup(async () => {
+      await TestUtils.httpServer().start();
+      await TestUtils.db().migrate();
+      await TestUtils.db().seed();
+    });
   }
 };

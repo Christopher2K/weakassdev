@@ -16,15 +16,17 @@ test.group('[signup handler]', (group) => {
       password: 'Password1234',
     });
 
-    const user = await User.findBy('username', 'Chris');
+    const user = await User.findByOrFail('username', 'Chris');
 
     response.assertStatus(200);
     response.assertBody({
       data: {
-        id: user!.id,
-        username: user!.username,
-        email: user!.email,
-        createdAt: user!.createdAt.toUTC().toISO(),
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        createdAt: user.createdAt.toUTC().toISO(),
+        avatarUrl: null,
+        biography: null,
         externalLinks: {
           value: [],
         },

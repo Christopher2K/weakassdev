@@ -23,10 +23,10 @@ export default class User extends BaseModel {
   public email: string;
 
   @column()
-  public avatarUrl: string | null;
+  public avatarUrl: string | null = null;
 
   @column()
-  public biography: string | null;
+  public biography: string | null = null;
 
   @column()
   public externalLinks: { value: Array<{ [key: string]: string }> } = { value: [] };

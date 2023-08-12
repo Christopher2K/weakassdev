@@ -29,9 +29,7 @@ export default class AuthController {
 
   public async login(ctx: HttpContextContract) {
     const data = await loginRequestSchema.parseAsync(ctx.request.body());
-    const user = await ctx.auth.verifyCredentials(data.username, data.password);
-
-    await ctx.auth.login(user);
+    const user = (await ctx.auth.attempt(data.username, data.password)) as Promise<User>;
 
     return ctx.response.json({
       data: authenticatedUserResponseSchema.parse(user),
@@ -40,7 +38,7 @@ export default class AuthController {
 
   public async logout(ctx: HttpContextContract) {
     await ctx.auth.logout();
-    return ctx.response.status(204);
+    return ctx.response.noContent();
   }
 
   public async protected() {

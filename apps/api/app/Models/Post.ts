@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm';
 
-import { PostStatus } from '@weakassdev/shared/models';
+import { PostStatus, postStatusSchema } from '@weakassdev/shared/models';
 
 import User from 'App/Models/User';
 
@@ -13,7 +13,7 @@ export default class Post extends BaseModel {
   public content: string;
 
   @column()
-  public status: PostStatus;
+  public status: PostStatus = postStatusSchema.Values.PUBLISHED;
 
   @column()
   public authorId: string;

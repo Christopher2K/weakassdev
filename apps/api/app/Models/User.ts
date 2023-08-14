@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import Hash from '@ioc:Adonis/Core/Hash';
-import { BaseModel, column, beforeSave } from '@ioc:Adonis/Lucid/Orm';
+import { BaseModel, column, beforeSave, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm';
 
 import {
   userRoleSchema,
@@ -8,6 +8,8 @@ import {
   type UserRole,
   type UserStatus,
 } from '@weakassdev/shared/models';
+
+import Post from './Post';
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -42,6 +44,11 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
+
+  @hasMany(() => Post, {
+    foreignKey: 'authorId',
+  })
+  public posts: HasMany<typeof Post>;
 
   // HOOKS
   @beforeSave()

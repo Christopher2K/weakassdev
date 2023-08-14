@@ -18,7 +18,9 @@ export default class Post extends BaseModel {
   @column()
   public authorId: string;
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'authorId',
+  })
   public author: BelongsTo<typeof User>;
 
   @column.dateTime({ autoCreate: true })

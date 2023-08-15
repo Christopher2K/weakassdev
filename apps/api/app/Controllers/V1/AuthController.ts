@@ -40,8 +40,4 @@ export default class AuthController {
     await ctx.auth.logout();
     return ctx.response.noContent();
   }
-
-  public async protected() {
-    return { status: 'todo' };
-  }
 }

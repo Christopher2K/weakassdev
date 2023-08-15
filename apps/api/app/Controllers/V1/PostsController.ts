@@ -6,6 +6,7 @@ import {
   postsIndexResponseSchema,
   postsShowParamsSchema,
   postsShowResponseSchema,
+  postsStoreRequestSchema,
 } from '@weakassdev/shared/validators';
 import { postStatusSchema } from '@weakassdev/shared/models';
 
@@ -27,7 +28,20 @@ export default class PostsController {
     return postsShowResponseSchema.parse(data.serialize());
   }
 
-  public store() {}
+  public async store(ctx: HttpContextContract) {
+    const body = postsStoreRequestSchema.parse(ctx.request.body());
+    const user = ctx.auth.user;
+
+    if (!user) return ctx.response.unauthorized();
+
+    const post = await Post.create({
+      content: body.content,
+      authorId: user.id,
+    });
+    await post.load('author');
+
+    return postsShowResponseSchema.parse(post.toJSON());
+  }
 
   public update() {}
 

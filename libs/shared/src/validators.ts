@@ -78,3 +78,8 @@ export type PostsIndexResponse = z.infer<typeof postsIndexResponseSchema>;
 export const postsShowParamsSchema = z.object({
   id: z.string().uuid(),
 });
+
+export const postsStoreRequestSchema = z.object({
+  content: z.string().min(10),
+});
+export type PostsStoreRequest = z.infer<typeof postsStoreRequestSchema>;

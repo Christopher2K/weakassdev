@@ -1,8 +1,9 @@
 import { test } from '@japa/runner';
+
 import { postsIndexResponseSchema } from '@weakassdev/shared/validators';
 
 test.group('[posts index handler]', () => {
-  test('respond to anonymous users', async ({ client }) => {
+  test('responds to anonymous users', async ({ client }) => {
     const response = await client.get('/v1/posts');
     response.assertStatus(200);
   });

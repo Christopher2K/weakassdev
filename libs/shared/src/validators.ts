@@ -58,18 +58,23 @@ export const authenticatedUserResponseSchema = z.object({
 });
 export type AuthenticatedUserResponse = z.infer<typeof authenticatedUserResponseSchema>;
 
-export const postsIndexResponseSchema = makeListResponseSchema(
-  z.object({
+export const postsShowResponseSchema = z.object({
+  id: z.string(),
+  status: postStatusSchema,
+  content: z.string(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+  author: z.object({
     id: z.string(),
-    status: postStatusSchema,
-    content: z.string(),
-    createdAt: z.coerce.date(),
-    updatedAt: z.coerce.date(),
-    author: z.object({
-      id: z.string(),
-      username: z.string(),
-      avatarUrl: z.string().url().nullish(),
-    }),
+    username: z.string(),
+    avatarUrl: z.string().url().nullish(),
   }),
-);
+});
+export type PostsShowResponse = z.infer<typeof postsShowResponseSchema>;
+
+export const postsIndexResponseSchema = makeListResponseSchema(postsShowResponseSchema);
 export type PostsIndexResponse = z.infer<typeof postsIndexResponseSchema>;
+
+export const postsShowParamsSchema = z.object({
+  id: z.string().uuid(),
+});

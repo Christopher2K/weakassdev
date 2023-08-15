@@ -1,7 +1,12 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Post from 'App/Models/Post';
 
-import { listQuerySchema, postsIndexResponseSchema } from '@weakassdev/shared/validators';
+import {
+  listQuerySchema,
+  postsIndexResponseSchema,
+  postsShowParamsSchema,
+  postsShowResponseSchema,
+} from '@weakassdev/shared/validators';
 import { postStatusSchema } from '@weakassdev/shared/models';
 
 export default class PostsController {
@@ -15,9 +20,14 @@ export default class PostsController {
     return postsIndexResponseSchema.parse(data.serialize());
   }
 
-  public store() {}
+  public async show(ctx: HttpContextContract) {
+    const params = postsShowParamsSchema.parse(ctx.params);
+    const data = await Post.query().preload('author').where('id', params.id).firstOrFail();
 
-  public show() {}
+    return postsShowResponseSchema.parse(data.serialize());
+  }
+
+  public store() {}
 
   public update() {}
 

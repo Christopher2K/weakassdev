@@ -5,6 +5,7 @@ import Post from 'App/Models/Post';
 import PostFactory from 'Database/factories/PostFactory';
 
 import { postsShowResponseSchema } from '@weakassdev/shared/validators';
+import { postStatusSchema } from '@weakassdev/shared/models';
 
 test.group('[posts show handler]', (group) => {
   let post: Post;
@@ -35,4 +36,21 @@ test.group('[posts show handler]', (group) => {
     const response = await client.get(`/v1/posts/a65091c9-c884-487f-8a6d-34dadbb5aeba`);
     response.assertStatus(404);
   });
+
+  test('not returns non-PUBLISHED posts')
+    .with([
+      postStatusSchema.Values.DELETED,
+      postStatusSchema.Values.FLAGGED,
+      postStatusSchema.Values.ARCHIVED,
+    ])
+    .run(async ({ client }, status) => {
+      const newPost = await PostFactory.with('author')
+        .merge({
+          status,
+        })
+        .create();
+
+      const response = await client.get(`/v1/posts/${newPost.id}`);
+      response.assertStatus(404);
+    });
 });

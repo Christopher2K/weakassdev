@@ -75,7 +75,7 @@ export type PostsShowResponse = z.infer<typeof postsShowResponseSchema>;
 export const postsIndexResponseSchema = makeListResponseSchema(postsShowResponseSchema);
 export type PostsIndexResponse = z.infer<typeof postsIndexResponseSchema>;
 
-export const postsShowParamsSchema = z.object({
+export const entityShowParams = z.object({
   id: z.string().uuid(),
 });
 

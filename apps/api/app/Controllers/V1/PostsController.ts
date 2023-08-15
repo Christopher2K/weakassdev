@@ -4,7 +4,7 @@ import Post from 'App/Models/Post';
 import {
   listQuerySchema,
   postsIndexResponseSchema,
-  postsShowParamsSchema,
+  entityShowParams,
   postsShowResponseSchema,
   postsStoreRequestSchema,
 } from '@weakassdev/shared/validators';
@@ -22,8 +22,12 @@ export default class PostsController {
   }
 
   public async show(ctx: HttpContextContract) {
-    const params = postsShowParamsSchema.parse(ctx.params);
-    const data = await Post.query().preload('author').where('id', params.id).firstOrFail();
+    const params = entityShowParams.parse(ctx.params);
+    const data = await Post.query()
+      .preload('author')
+      .where('id', params.id)
+      .andWhere('status', postStatusSchema.Values.PUBLISHED)
+      .firstOrFail();
 
     return postsShowResponseSchema.parse(data.serialize());
   }

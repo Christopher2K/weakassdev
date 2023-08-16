@@ -11,6 +11,8 @@ export default class extends BaseSchema {
   protected tableName = 'PostReport';
 
   public async up() {
+    this.schema.raw(`DROP TYPE IF EXISTS "${postReportOutcomeDbName}";`);
+    this.schema.raw(`DROP TYPE IF EXISTS "${postReportReasonDbName}";`);
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().defaultTo(this.raw('gen_random_uuid()'));
       table
@@ -36,7 +38,7 @@ export default class extends BaseSchema {
             enumName: postReportOutcomeDbName,
           },
         )
-        .notNullable();
+        .nullable();
       table.text('outcome_context').nullable();
       table.uuid('post_id').references('Post.id').onDelete('RESTRICT').notNullable();
       table.uuid('reporter_id').references('User.id').onDelete('RESTRICT').notNullable();

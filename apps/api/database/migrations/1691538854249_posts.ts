@@ -6,6 +6,8 @@ export default class extends BaseSchema {
   protected tableName = 'Post';
 
   public async up() {
+    this.schema.raw(`DROP TYPE IF EXISTS "${postStatusDbName}";`);
+
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().defaultTo(this.raw('gen_random_uuid()'));
       table.text('content').notNullable();

@@ -11,6 +11,9 @@ export default class extends BaseSchema {
   protected tableName = 'User';
 
   public async up() {
+    this.schema.raw(`DROP TYPE IF EXISTS "${userRoleDbName}";`);
+    this.schema.raw(`DROP TYPE IF EXISTS "${userStatusDbName}";`);
+
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().defaultTo(this.raw('gen_random_uuid()'));
       table.string('username', 25).unique().notNullable();

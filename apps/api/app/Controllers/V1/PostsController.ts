@@ -49,7 +49,25 @@ export default class PostsController {
 
   public update() {}
 
-  public destroy() {}
+  public async destroy(ctx: HttpContextContract) {
+    const params = entityShowParams.parse(ctx.params);
+    const post = await Post.query()
+      .where('id', params.id)
+      .andWhere('status', postStatusSchema.Values.PUBLISHED)
+      .firstOrFail();
+    const user = ctx.auth.user;
+
+    if (!user) return ctx.response.unauthorized();
+    if (post.authorId !== user.id) return ctx.response.forbidden();
+
+    await post
+      .merge({
+        status: postStatusSchema.Values.DELETED,
+      })
+      .save();
+
+    return ctx.response.accepted(null);
+  }
 
   public report() {}
 }

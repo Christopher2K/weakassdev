@@ -34,6 +34,7 @@ Route.group(() => {
     .middleware({
       store: ['auth'],
       update: ['auth'],
+      destroy: ['auth'],
     });
   Route.group(() => {
     Route.post(':id/report', 'PostsController.report');

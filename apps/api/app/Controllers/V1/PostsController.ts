@@ -47,6 +47,8 @@ export default class PostsController {
     return postsShowResponseSchema.parse(post.toJSON());
   }
 
+  // TODO: This requires a whole ass migration
+  // Post -1--*-> PostContent
   public update() {}
 
   public async destroy(ctx: HttpContextContract) {

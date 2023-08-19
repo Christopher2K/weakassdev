@@ -25,7 +25,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 
   public async handle(error: any, ctx: HttpContextContract) {
     if (error instanceof ZodError) {
-      return ctx.response.status(422).send({
+      return ctx.response.unprocessableEntity({
         code: 'E_CUSTOM_VALIDATION_ERROR',
         issues: error.issues,
       });

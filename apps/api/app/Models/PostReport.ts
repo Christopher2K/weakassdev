@@ -14,24 +14,28 @@ export default class PostReport extends BaseModel {
   public reason: PostReportReason;
 
   @column()
-  public reasonContext: string;
+  public reasonContext: string | null = null;
 
   @column()
   public outcome: PostReportOutcome;
 
   @column()
-  public outcomeContext: string;
+  public outcomeContext: string | null = null;
 
   @column()
   public postId: string;
 
-  @belongsTo(() => Post)
+  @belongsTo(() => Post, {
+    foreignKey: 'postId',
+  })
   public post: BelongsTo<typeof Post>;
 
   @column()
   public reporterId: string;
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'reporterId',
+  })
   public reporter: BelongsTo<typeof User>;
 
   @column.dateTime({ autoCreate: true })

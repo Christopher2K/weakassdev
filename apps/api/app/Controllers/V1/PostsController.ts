@@ -7,8 +7,11 @@ import {
   entityShowParams,
   postsShowResponseSchema,
   postsStoreRequestSchema,
+  postsReportRequestSchema,
+  postsReportResponseSchema,
 } from '@weakassdev/shared/validators';
 import { postStatusSchema } from '@weakassdev/shared/models';
+import PostReport from 'App/Models/PostReport';
 
 export default class PostsController {
   public async index(ctx: HttpContextContract) {
@@ -71,5 +74,35 @@ export default class PostsController {
     return ctx.response.accepted(null);
   }
 
-  public report() {}
+  public async report(ctx: HttpContextContract) {
+    const params = entityShowParams.parse(ctx.params);
+    const body = postsReportRequestSchema.parse(ctx.request.body());
+
+    const user = ctx.auth.user;
+    if (!user) return ctx.response.unauthorized();
+    const post = await Post.query().where('id', params.id).firstOrFail();
+    if (post.authorId === user.id) return ctx.response.forbidden();
+
+    const existingReport = await PostReport.query()
+      .where('reporter_id', user.id)
+      .andWhere('post_id', post.id)
+      .first();
+
+    if (existingReport != null) {
+      // The operation has already been done, error
+      return ctx.response.unprocessableEntity({
+        code: 'E_DUPLICATE',
+        message: 'A report already exist for this post',
+      });
+    }
+
+    const report = await PostReport.create({
+      postId: post.id,
+      reporterId: user.id,
+      reason: body.reason,
+      reasonContext: body.reasonContext,
+    });
+
+    return postsReportResponseSchema.parse(report.serialize());
+  }
 }

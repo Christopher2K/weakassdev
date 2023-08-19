@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { postStatusSchema } from './models';
+import { postReportReasonSchema, postStatusSchema } from './models';
 import { luxonDateTime } from './utils';
 
 export const ZodError = z.ZodError;
@@ -83,3 +83,18 @@ export const postsStoreRequestSchema = z.object({
   content: z.string().min(10),
 });
 export type PostsStoreRequest = z.infer<typeof postsStoreRequestSchema>;
+
+export const postsReportRequestSchema = z.object({
+  reason: postReportReasonSchema,
+  reasonContext: z.string().nullish(),
+});
+export type PostsReportRequest = z.infer<typeof postsReportRequestSchema>;
+
+export const postsReportResponseSchema = z.object({
+  id: z.string(),
+  reason: postReportReasonSchema,
+  reasonContext: z.string().nullish(),
+  postId: z.string(),
+  reporterId: z.string(),
+});
+export type PostsReportResponse = z.infer<typeof postsStoreRequestSchema>;

@@ -8,8 +8,8 @@ export default class extends BaseSchema {
       table.uuid('id').primary().defaultTo(this.raw('gen_random_uuid()'));
       table.string('reaction', 25).notNullable();
 
-      table.uuid('user_id').references('User.id').onDelete('RESTRICT');
-      table.uuid('post_id').references('Post.id').onDelete('RESTRICT');
+      table.uuid('user_id').references('User.id').onDelete('RESTRICT').notNullable();
+      table.uuid('post_id').references('Post.id').onDelete('RESTRICT').notNullable();
 
       table.unique(['post_id', 'user_id'], {
         useConstraint: true,

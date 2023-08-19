@@ -1,16 +1,24 @@
 import { DateTime } from 'luxon';
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm';
+import {
+  BaseModel,
+  BelongsTo,
+  HasMany,
+  HasOne,
+  belongsTo,
+  column,
+  hasMany,
+  hasOne,
+} from '@ioc:Adonis/Lucid/Orm';
 
 import { PostStatus, postStatusSchema } from '@weakassdev/shared/models';
 
 import User from 'App/Models/User';
 
+import PostContent from './PostContent';
+
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
   public id: string;
-
-  @column()
-  public content: string;
 
   @column()
   public status: PostStatus = postStatusSchema.Values.PUBLISHED;
@@ -28,4 +36,16 @@ export default class Post extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
+
+  @hasOne(() => PostContent, {
+    onQuery(query) {
+      return query.orderBy('created_at', 'desc').first();
+    },
+  })
+  public content: HasOne<typeof PostContent>;
+
+  @hasMany(() => PostContent, {
+    foreignKey: 'postId',
+  })
+  public postVersions: HasMany<typeof PostContent>;
 }

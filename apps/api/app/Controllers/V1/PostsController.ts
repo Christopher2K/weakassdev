@@ -1,5 +1,4 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import Post from 'App/Models/Post';
 
 import {
   listQuerySchema,
@@ -11,7 +10,10 @@ import {
   postsReportResponseSchema,
 } from '@weakassdev/shared/validators';
 import { postStatusSchema } from '@weakassdev/shared/models';
+
 import PostReport from 'App/Models/PostReport';
+import PostContent from 'App/Models/PostContent';
+import Post from 'App/Models/Post';
 
 export default class PostsController {
   public async index(ctx: HttpContextContract) {
@@ -19,6 +21,7 @@ export default class PostsController {
     const data = await Post.query()
       .whereIn('status', [postStatusSchema.Values.PUBLISHED])
       .preload('author')
+      .preload('content')
       .paginate(query.page, query.limit);
 
     return postsIndexResponseSchema.parse(data.serialize());
@@ -28,6 +31,7 @@ export default class PostsController {
     const params = entityShowParams.parse(ctx.params);
     const data = await Post.query()
       .preload('author')
+      .preload('content')
       .where('id', params.id)
       .andWhere('status', postStatusSchema.Values.PUBLISHED)
       .firstOrFail();
@@ -42,12 +46,16 @@ export default class PostsController {
     if (!user) return ctx.response.unauthorized();
 
     const post = await Post.create({
-      content: body.content,
       authorId: user.id,
     });
+    await PostContent.create({
+      content: body.content,
+      postId: post.id,
+    });
+    await post.load('content');
     await post.load('author');
 
-    return postsShowResponseSchema.parse(post.toJSON());
+    return postsShowResponseSchema.parse(post.serialize());
   }
 
   // TODO: This requires a whole ass migration

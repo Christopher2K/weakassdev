@@ -39,7 +39,16 @@ export default class Post extends BaseModel {
 
   @hasOne(() => PostContent, {
     onQuery(query) {
-      return query.orderBy('created_at', 'desc').first();
+      return query.distinctOn('post_id').orderBy([
+        {
+          column: 'post_id',
+          order: 'desc',
+        },
+        {
+          column: 'created_at',
+          order: 'desc',
+        },
+      ]);
     },
   })
   public content: HasOne<typeof PostContent>;

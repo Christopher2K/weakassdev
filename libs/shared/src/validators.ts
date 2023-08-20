@@ -61,9 +61,13 @@ export type AuthenticatedUserResponse = z.infer<typeof authenticatedUserResponse
 export const postsShowResponseSchema = z.object({
   id: z.string(),
   status: postStatusSchema,
-  content: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
+  content: z.object({
+    id: z.string(),
+    content: z.string(),
+    createdAt: z.coerce.date(),
+  }),
   author: z.object({
     id: z.string(),
     username: z.string(),

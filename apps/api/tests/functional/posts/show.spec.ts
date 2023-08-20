@@ -12,7 +12,7 @@ test.group('[posts show handler]', (group) => {
 
   group.each.setup(async () => {
     await Database.beginGlobalTransaction();
-    post = await PostFactory.with('author').create();
+    post = await PostFactory.with('author').with('content').create();
     return () => Database.rollbackGlobalTransaction();
   });
 

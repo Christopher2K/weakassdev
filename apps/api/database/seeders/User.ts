@@ -2,7 +2,7 @@ import BaseSeeder from '@ioc:Adonis/Lucid/Seeder';
 
 import UserFactory from 'Database/factories/UserFactory';
 
-const COUNT = 100;
+const COUNT = 20;
 
 export default class extends BaseSeeder {
   public async run() {

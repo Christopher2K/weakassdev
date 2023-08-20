@@ -7,6 +7,7 @@
 
 import type { Config } from '@japa/runner';
 import TestUtils from '@ioc:Adonis/Core/TestUtils';
+import Env from '@ioc:Adonis/Core/Env';
 import { assert, runFailedTests, specReporter, apiClient } from '@japa/preset-adonis';
 
 /*
@@ -65,6 +66,8 @@ export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
 export const configureSuite: Required<Config>['configureSuite'] = (suite) => {
   if (suite.name === 'functional') {
     suite.setup(async () => {
+      console.debug('DATABASE', Env.get('DATABASE_URL'));
+
       await TestUtils.httpServer().start();
       await TestUtils.db().migrate();
       await TestUtils.db().seed();

@@ -4,7 +4,8 @@
     "./commands",
     "@adonisjs/core/build/commands/index.js",
     "@adonisjs/repl/build/commands",
-    "@adonisjs/lucid/build/commands"
+    "@adonisjs/lucid/build/commands",
+    "@adonisjs/bouncer/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -13,13 +14,14 @@
     "Database": "database",
     "Contracts": "contracts"
   },
-  "preloads": ["./start/routes", "./start/kernel"],
+  "preloads": ["./start/routes", "./start/kernel", "./start/bouncer"],
   "providers": [
     "./providers/AppProvider",
     "@adonisjs/core",
     "@adonisjs/lucid",
     "@adonisjs/auth",
-    "@adonisjs/session"
+    "@adonisjs/session",
+    "@adonisjs/bouncer"
   ],
   "aceProviders": ["@adonisjs/repl"],
   "tests": {

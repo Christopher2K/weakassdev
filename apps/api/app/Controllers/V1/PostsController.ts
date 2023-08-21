@@ -61,14 +61,10 @@ export default class PostsController {
   public async update(ctx: HttpContextContract) {
     const body = postsStoreRequestSchema.parse(ctx.request.body());
     const params = entityShowParams.parse(ctx.params);
-    const user = ctx.auth.user;
-
-    if (!user) return ctx.response.unauthorized();
     const post = await Post.query().preload('content').where('id', params.id).firstOrFail();
 
-    if (!post.canBeUpdated) return ctx.response.forbidden();
-    if (post.authorId !== user.id) return ctx.response.forbidden();
     if (post.content.content === body.content) return ctx.response.unprocessableEntity();
+    await ctx.bouncer.authorize('editPost', post);
 
     await PostContent.create({
       content: body.content,
@@ -82,14 +78,8 @@ export default class PostsController {
 
   public async destroy(ctx: HttpContextContract) {
     const params = entityShowParams.parse(ctx.params);
-    const post = await Post.query()
-      .where('id', params.id)
-      .andWhere('status', postStatusSchema.Values.PUBLISHED)
-      .firstOrFail();
-    const user = ctx.auth.user;
-
-    if (!user) return ctx.response.unauthorized();
-    if (post.authorId !== user.id) return ctx.response.forbidden();
+    const post = await Post.query().where('id', params.id).firstOrFail();
+    await ctx.bouncer.authorize('deletePost', post);
 
     await post
       .merge({
@@ -107,7 +97,8 @@ export default class PostsController {
     const user = ctx.auth.user;
     if (!user) return ctx.response.unauthorized();
     const post = await Post.query().where('id', params.id).firstOrFail();
-    if (post.authorId === user.id) return ctx.response.forbidden();
+
+    await ctx.bouncer.authorize('reportPost', post);
 
     const existingReport = await PostReport.query()
       .where('reporter_id', user.id)

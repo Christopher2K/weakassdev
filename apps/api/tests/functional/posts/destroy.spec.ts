@@ -44,6 +44,6 @@ test.group('[posts destroy handler]', (group) => {
 
     const response = await client.delete(`/v1/posts/${post.id}`).loginAs(post.author);
 
-    response.assertStatus(404);
+    response.assertStatus(403);
   });
 });

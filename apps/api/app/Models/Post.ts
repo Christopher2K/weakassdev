@@ -57,4 +57,12 @@ export default class Post extends BaseModel {
     foreignKey: 'postId',
   })
   public postVersions: HasMany<typeof PostContent>;
+
+  // UTILS
+  public get canBeUpdated() {
+    const limit = this.createdAt.plus({ minutes: 30 });
+    const now = DateTime.now().toUTC();
+
+    return now < limit;
+  }
 }

@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import {} from 'luxon';
 
 import {
   listQuerySchema,
@@ -52,15 +53,32 @@ export default class PostsController {
       content: body.content,
       postId: post.id,
     });
-    await post.load('content');
-    await post.load('author');
+    await Promise.all([post.load('content'), post.load('author')]);
 
     return postsShowResponseSchema.parse(post.serialize());
   }
 
-  // TODO: This requires a whole ass migration
-  // Post -1--*-> PostContent
-  public update() {}
+  public async update(ctx: HttpContextContract) {
+    const body = postsStoreRequestSchema.parse(ctx.request.body());
+    const params = entityShowParams.parse(ctx.params);
+    const user = ctx.auth.user;
+
+    if (!user) return ctx.response.unauthorized();
+    const post = await Post.query().preload('content').where('id', params.id).firstOrFail();
+
+    if (!post.canBeUpdated) return ctx.response.forbidden();
+    if (post.authorId !== user.id) return ctx.response.forbidden();
+    if (post.content.content === body.content) return ctx.response.unprocessableEntity();
+
+    await PostContent.create({
+      content: body.content,
+      postId: post.id,
+    });
+
+    await Promise.all([post.load('content'), post.load('author')]);
+
+    return postsShowResponseSchema.parse(post.serialize());
+  }
 
   public async destroy(ctx: HttpContextContract) {
     const params = entityShowParams.parse(ctx.params);

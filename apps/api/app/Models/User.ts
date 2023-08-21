@@ -57,11 +57,4 @@ export default class User extends BaseModel {
       user.password = await Hash.make(user.password);
     }
   }
-
-  // MANAGEMENT
-  static from(args: Parameters<typeof User.prototype.fill>[0]): User {
-    let user = new User();
-    user.fill(args);
-    return user;
-  }
 }

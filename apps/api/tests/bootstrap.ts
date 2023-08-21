@@ -69,6 +69,7 @@ export const configureSuite: Required<Config>['configureSuite'] = (suite) => {
       console.debug('DATABASE', Env.get('DATABASE_URL'));
 
       await TestUtils.httpServer().start();
+      await TestUtils.db().truncate();
       await TestUtils.db().migrate();
       await TestUtils.db().seed();
     });

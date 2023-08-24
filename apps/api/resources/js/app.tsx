@@ -1,4 +1,5 @@
 // const { createInertiaApp } = require('@inertiajs/react');
+import React from 'react';
 import { createInertiaApp } from '@inertiajs/inertia-react';
 import { createRoot } from 'react-dom/client';
 

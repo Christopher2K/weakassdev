@@ -605,6 +605,28 @@
           "description": "Actions to implement"
         }
       ]
+    },
+    "ssr:build": {
+      "settings": {
+        "stayAlive": true
+      },
+      "commandPath": "@eidellev/inertia-adonisjs/build/commands/Build",
+      "commandName": "ssr:build",
+      "description": "Build and watch files for changes",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
+    "ssr:watch": {
+      "settings": {
+        "stayAlive": true
+      },
+      "commandPath": "@eidellev/inertia-adonisjs/build/commands/Watch",
+      "commandName": "ssr:watch",
+      "description": "Build and watch files for changes",
+      "args": [],
+      "aliases": [],
+      "flags": []
     }
   },
   "aliases": {}

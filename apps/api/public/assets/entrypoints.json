@@ -1,7 +1,7 @@
 {
   "entrypoints": {
     "app": {
-      "js": ["http://localhost:8080/assets/app.js"]
+      "js": ["https://api.weakassdev.local/assets/app.js"]
     }
   }
 }

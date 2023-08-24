@@ -1,12 +1,13 @@
 {
   "extends": "adonis-preset-ts/tsconfig.json",
   "include": ["**/*"],
-  "exclude": ["node_modules", "build"],
+  "exclude": ["node_modules", "build", "resources"],
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "./",
     "baseUrl": "./",
     "sourceMap": true,
+    "jsx": "react-jsx",
     "paths": {
       "App/*": ["./app/*"],
       "Config/*": ["./config/*"],
@@ -21,7 +22,8 @@
       "@adonisjs/auth",
       "@adonisjs/session",
       "@adonisjs/bouncer",
-      "@adonisjs/view"
+      "@adonisjs/view",
+      "@eidellev/inertia-adonisjs"
     ]
   }
 }

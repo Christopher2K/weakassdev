@@ -45,7 +45,12 @@ Encore.setPublicPath('/assets');
 | entrypoints.
 |
 */
-Encore.addEntry('app', './resources/js/app.js');
+Encore.addEntry('app', './resources/js/app.tsx')
+  .enableBabelTypeScriptPreset({
+    isTSX: true,
+    allExtensions: true,
+  })
+  .enableReactPreset();
 
 /*
 |--------------------------------------------------------------------------
@@ -137,6 +142,15 @@ Encore.configureDevServerOptions((options) => {
     options.static = [options.static];
   }
 
+  const webSocketURL = 'wss://api.weakassdev.local/ws';
+  if (!options.client) {
+    options.client = {
+      webSocketURL,
+    };
+  } else {
+    options.client.webSocketURL = webSocketURL;
+  }
+
   /**
    * Enable live reload and add views directory
    */
@@ -145,6 +159,7 @@ Encore.configureDevServerOptions((options) => {
     directory: join(__dirname, './resources/views'),
     watch: true,
   });
+  options.allowedHosts = 'all';
 });
 
 /*
@@ -202,6 +217,11 @@ config.infrastructureLogging = {
   level: 'warn',
 };
 config.stats = 'errors-warnings';
+config.optimization = {
+  concatenateModules: false,
+  providedExports: false,
+  usedExports: false,
+};
 
 /*
 |--------------------------------------------------------------------------

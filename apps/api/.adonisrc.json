@@ -5,7 +5,8 @@
     "@adonisjs/core/build/commands/index.js",
     "@adonisjs/repl/build/commands",
     "@adonisjs/lucid/build/commands",
-    "@adonisjs/bouncer/build/commands"
+    "@adonisjs/bouncer/build/commands",
+    "@eidellev/inertia-adonisjs/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -14,7 +15,15 @@
     "Database": "database",
     "Contracts": "contracts"
   },
-  "preloads": ["./start/routes", "./start/kernel", "./start/bouncer"],
+  "preloads": [
+    "./start/routes",
+    "./start/kernel",
+    "./start/bouncer",
+    {
+      "file": "./start/inertia",
+      "environment": ["web"]
+    }
+  ],
   "providers": [
     "./providers/AppProvider",
     "@adonisjs/core",
@@ -22,7 +31,8 @@
     "@adonisjs/auth",
     "@adonisjs/session",
     "@adonisjs/bouncer",
-    "@adonisjs/view"
+    "@adonisjs/view",
+    "@eidellev/inertia-adonisjs"
   ],
   "aceProviders": ["@adonisjs/repl"],
   "tests": {
@@ -36,6 +46,10 @@
   },
   "testProviders": ["@japa/preset-adonis/TestsProvider"],
   "metaFiles": [
+    {
+      "pattern": "public/**",
+      "reloadServer": false
+    },
     {
       "pattern": "resources/views/**/*.edge",
       "reloadServer": false

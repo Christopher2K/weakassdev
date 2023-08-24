@@ -1,7 +1,14 @@
 # WeakA\*\*Dev Monorepo!
 
-# Instruction
+# Requirements
 
+1. `mkcert`
+2. `nss`
+3. `docker` and `docker-compose`
+
+# Instructions (not for windows people, sorry)
+
+0. `./init.sh`
 1. `yarn install`
 2. Set `127.0.0.1 api.weakassdev.local` and `127.0.0.1 weakassdev.local` in your `/etc/hosts` file
 3. `cp .env.example .env` - Generate a secret key if you want

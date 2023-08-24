@@ -17,6 +17,7 @@ node_modules
 # codegen
 styled-system
 styled-system-static
+docker/certs
 
 # IDEs and editors
 /.idea

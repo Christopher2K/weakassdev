@@ -1,7 +1,16 @@
 weakassdev.local {
+  tls /usr/local/etc/caddy/certs/weakassdev.local+1.pem /usr/local/etc/caddy/certs/weakassdev.local+1-key.pem
   reverse_proxy apps:{$APP_PORT}
 }
 
-api.weakassdev.local {
+api.weakassdev.local:443 {
+  tls /usr/local/etc/caddy/certs/weakassdev.local+1.pem /usr/local/etc/caddy/certs/weakassdev.local+1-key.pem
+
+  route /assets/* {
+    reverse_proxy apps:8080
+  }
+  route /ws {
+    reverse_proxy apps:8080
+  }
   reverse_proxy apps:{$PORT}
 }

@@ -44,3 +44,9 @@ Route.group(() => {
 })
   .namespace('App/Controllers/V1')
   .prefix('v1');
+
+Route.group(() => {
+  Route.get('users', 'UsersController.index');
+})
+  .namespace('App/Controllers/Admin')
+  .prefix('admin');

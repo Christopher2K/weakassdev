@@ -52,6 +52,10 @@ Encore.addEntry('app', './resources/js/app.tsx')
   })
   .enableReactPreset();
 
+Encore.addAliases({
+  '~': join(__dirname, './resources/js'),
+});
+
 /*
 |--------------------------------------------------------------------------
 | Copy assets
@@ -184,7 +188,7 @@ Encore.configureDevServerOptions((options) => {
 | PostCSS or CSS.
 |
 */
-// Encore.enablePostCssLoader()
+Encore.enablePostCssLoader();
 // Encore.configureCssLoader(() => {})
 
 /*

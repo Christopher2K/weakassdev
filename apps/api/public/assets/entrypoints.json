@@ -1,6 +1,7 @@
 {
   "entrypoints": {
     "app": {
+      "css": ["https://api.weakassdev.local/assets/app.css"],
       "js": ["https://api.weakassdev.local/assets/app.js"]
     }
   }

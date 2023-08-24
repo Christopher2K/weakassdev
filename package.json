@@ -22,7 +22,7 @@
     "dev": "yarn run clean; dotenv -- turbo dev",
     "build:web": "turbo build --filter=@weakassdev/web",
     "build:api": "turbo build --filter=@weakassdev/api",
-    "lint:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
+    "lint:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css,edge}\"",
     "lint:ci": "prettier \"**/*.{js,jsx,ts,tsx,json,md,css}\" -c",
     "web": "yarn workspace @weakassdev/web",
     "api": "yarn workspace @weakassdev/api",

@@ -21,7 +21,8 @@
     "@adonisjs/lucid",
     "@adonisjs/auth",
     "@adonisjs/session",
-    "@adonisjs/bouncer"
+    "@adonisjs/bouncer",
+    "@adonisjs/view"
   ],
   "aceProviders": ["@adonisjs/repl"],
   "tests": {
@@ -33,5 +34,11 @@
       }
     ]
   },
-  "testProviders": ["@japa/preset-adonis/TestsProvider"]
+  "testProviders": ["@japa/preset-adonis/TestsProvider"],
+  "metaFiles": [
+    {
+      "pattern": "resources/views/**/*.edge",
+      "reloadServer": false
+    }
+  ]
 }

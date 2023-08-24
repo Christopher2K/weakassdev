@@ -30,6 +30,7 @@
     "@adonisjs/lucid": "~18.4.0",
     "@adonisjs/repl": "^3.1.0",
     "@adonisjs/session": "~6.4.0",
+    "@adonisjs/view": "~6.2.0",
     "@weakassdev/shared": "*",
     "luxon": "~3.3.0",
     "pg": "~8.11.2",

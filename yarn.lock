@@ -403,6 +403,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@adonisjs/view@npm:~6.2.0":
+  version: 6.2.0
+  resolution: "@adonisjs/view@npm:6.2.0"
+  dependencies:
+    edge-error: ^2.0.8
+    edge-supercharged: ^3.1.1
+    edge.js: ^5.5.0
+  peerDependencies:
+    "@adonisjs/core": ^5.7.0
+  checksum: 8e065b6c39efcd28b5d23b2e2219140be09b2b00468fb2d4e8540f379126ac8abf94dbefe936cad34579b23d34cdb4097444fa7d1e9d2b095127d449914b7313
+  languageName: node
+  linkType: hard
+
 "@alloc/quick-lru@npm:^5.2.0":
   version: 5.2.0
   resolution: "@alloc/quick-lru@npm:5.2.0"
@@ -3081,6 +3094,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@poppinss/inspect@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@poppinss/inspect@npm:1.0.1"
+  checksum: 13b7effeab455b464807bd5963164d3a9e98536a17da9ab810bd3f2276fb31525304e6189b1f5349f0c7d29dffefbd0215b2991ef69a441e11651a79d17bb246
+  languageName: node
+  linkType: hard
+
 "@poppinss/manager@npm:^5.0.2":
   version: 5.0.2
   resolution: "@poppinss/manager@npm:5.0.2"
@@ -3115,6 +3135,31 @@ __metadata:
     "@poppinss/colors": ^3.0.2
     enquirer: ^2.3.6
   checksum: 21b4d79d2a91390480a9c1f8fea8d683334c0f9afd75f7a8860f8738b6df5d3daa30fb3e64fcc5db67e2d90901c526fcccdf4b32143c4ea6790c54cb4b65ba56
+  languageName: node
+  linkType: hard
+
+"@poppinss/utils@npm:^3.1.3":
+  version: 3.3.1
+  resolution: "@poppinss/utils@npm:3.3.1"
+  dependencies:
+    "@types/bytes": ^3.1.1
+    "@types/he": ^1.1.2
+    buffer-alloc: ^1.2.0
+    bytes: ^3.1.0
+    change-case: ^4.1.2
+    cuid: ^2.1.8
+    flattie: ^1.1.0
+    fs-readdir-recursive: ^1.1.0
+    he: ^1.2.0
+    kind-of: ^6.0.3
+    lodash: ^4.17.21
+    ms: ^2.1.3
+    pluralize: ^8.0.0
+    require-all: ^3.0.0
+    resolve-from: ^5.0.0
+    slugify: ^1.6.1
+    truncatise: 0.0.8
+  checksum: fafebb024bb4aa20b876db30caebb9e3d9886ac910a1ef694cfc2c814d93ed11d13c64ba88cf6e972b49b8dbffd95be939422cb751006d867855fa2b505470f8
   languageName: node
   linkType: hard
 
@@ -3864,6 +3909,7 @@ __metadata:
     "@adonisjs/lucid": ~18.4.0
     "@adonisjs/repl": ^3.1.0
     "@adonisjs/session": ~6.4.0
+    "@adonisjs/view": ~6.2.0
     "@japa/preset-adonis": ~1.2.0
     "@japa/runner": ~2.5.1
     "@types/proxy-addr": ~2.0.0
@@ -5076,6 +5122,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"astring@npm:^1.8.4":
+  version: 1.8.6
+  resolution: "astring@npm:1.8.6"
+  bin:
+    astring: bin/astring
+  checksum: 6f034d2acef1dac8bb231e7cc26c573d3c14e1975ea6e04f20312b43d4f462f963209bc64187d25d477a182dc3c33277959a0156ab7a3617aa79b1eac4d88e1f
+  languageName: node
+  linkType: hard
+
 "astro@npm:2.8.4":
   version: 2.8.4
   resolution: "astro@npm:2.8.4"
@@ -5425,6 +5480,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"buffer-alloc-unsafe@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "buffer-alloc-unsafe@npm:1.1.0"
+  checksum: c5e18bf51f67754ec843c9af3d4c005051aac5008a3992938dda1344e5cfec77c4b02b4ca303644d1e9a6e281765155ce6356d85c6f5ccc5cd21afc868def396
+  languageName: node
+  linkType: hard
+
+"buffer-alloc@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "buffer-alloc@npm:1.2.0"
+  dependencies:
+    buffer-alloc-unsafe: ^1.1.0
+    buffer-fill: ^1.0.0
+  checksum: 560cd27f3cbe73c614867da373407d4506309c62fe18de45a1ce191f3785ec6ca2488d802ff82065798542422980ca25f903db078c57822218182c37c3576df5
+  languageName: node
+  linkType: hard
+
+"buffer-fill@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "buffer-fill@npm:1.0.0"
+  checksum: c29b4723ddeab01e74b5d3b982a0c6828f2ded49cef049ddca3dac661c874ecdbcecb5dd8380cf0f4adbeb8cff90a7de724126750a1f1e5ebd4eb6c59a1315b1
+  languageName: node
+  linkType: hard
+
 "buffer-from@npm:^1.0.0":
   version: 1.1.2
   resolution: "buffer-from@npm:1.1.2"
@@ -5509,7 +5588,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bytes@npm:3.1.2, bytes@npm:^3.1.2":
+"bytes@npm:3.1.2, bytes@npm:^3.1.0, bytes@npm:^3.1.2":
   version: 3.1.2
   resolution: "bytes@npm:3.1.2"
   checksum: e4bcd3948d289c5127591fbedf10c0b639ccbf00243504e4e127374a15c3bc8eed0d28d4aaab08ff6f1cf2abc0cce6ba3085ed32f4f90e82a5683ce0014e1b6e
@@ -6686,6 +6765,68 @@ __metadata:
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
   checksum: 7d00d7cd8e49b9afa762a813faac332dee781932d6f2c848dc348939c4253f1d4564341b7af1d041853bc3f32c2ef141b58e0a4d9862c17a7f08f68df1e0f1ed
+  languageName: node
+  linkType: hard
+
+"edge-error@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "edge-error@npm:2.0.8"
+  checksum: f72214252a5590669b2133b54293401739bcbcaabb90ab050f6413c37d4246ef4cc15af3e434912afc41a87fdaeea895fb63db4bdc29b25a5cddc8cfd3901515
+  languageName: node
+  linkType: hard
+
+"edge-error@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "edge-error@npm:3.0.0"
+  checksum: 6d14f929e59936a68af3670409c1f8beed708ac8f8a3656f44d6d9be1bfe9247ffa8f6487ca8a9f075a90c0d4adc0ded4653ab480092ce31572793c97cf0f607
+  languageName: node
+  linkType: hard
+
+"edge-lexer@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "edge-lexer@npm:5.0.2"
+  dependencies:
+    edge-error: ^3.0.0
+  checksum: 1460ed69781d7395568ce7e2ffac568c6a016704adbddebde57a8509c4aa51e1a0831731cb0a4e0f4fab3c5ecae1beadc5149ba9640df7a6f886ddbd924c5f34
+  languageName: node
+  linkType: hard
+
+"edge-parser@npm:^8.2.1":
+  version: 8.2.2
+  resolution: "edge-parser@npm:8.2.2"
+  dependencies:
+    acorn: ^8.8.2
+    astring: ^1.8.4
+    edge-error: ^3.0.0
+    edge-lexer: ^5.0.2
+    js-stringify: ^1.0.2
+  checksum: 7bd146e7057990c6ab3628d1678a25633c4c738159d32c49972564497d763e1469c2e63b7feaa9e99bb8e82ae1b4844a35dc5b2ae58d8f6b7b55413c7e6421da
+  languageName: node
+  linkType: hard
+
+"edge-supercharged@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "edge-supercharged@npm:3.1.1"
+  dependencies:
+    "@poppinss/utils": ^3.1.3
+    slash: ^3.0.0
+  checksum: 6ab691b84f82b2887c725e23fe7ea220909ead609c34f77441cf2a2c6b57712632c233386e7db260e2b2308e974f535d13883f59ad9f42282212db56791abf32
+  languageName: node
+  linkType: hard
+
+"edge.js@npm:^5.5.0":
+  version: 5.5.1
+  resolution: "edge.js@npm:5.5.1"
+  dependencies:
+    "@poppinss/inspect": ^1.0.1
+    "@poppinss/utils": ^5.0.0
+    edge-error: ^3.0.0
+    edge-lexer: ^5.0.2
+    edge-parser: ^8.2.1
+    js-stringify: ^1.0.2
+    macroable: ^7.0.1
+    stringify-attributes: ^2.0.0
+  checksum: 7b37728bd7b195b109604c7bd8becbafcc0e5156826b25dc41d13ff65f2a207143481a8635f24ad187657480d6c61972d31c94e9405747b6082b019cff9bf697
   languageName: node
   linkType: hard
 
@@ -9015,6 +9156,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-stringify@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "js-stringify@npm:1.0.2"
+  checksum: f9701d9e535d3ac0f62bbf2624b76c5d0af5b889187232817ae284a41ba21fd7a8b464c2dce3815d8cf52c8bea3480be6b368cfc2c67da799cad458058e8bbf5
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -9557,7 +9705,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"macroable@npm:^7.0.2":
+"macroable@npm:^7.0.1, macroable@npm:^7.0.2":
   version: 7.0.2
   resolution: "macroable@npm:7.0.2"
   checksum: 4c4dddaad264ac64d5afddbbdcd7edcaa0211592a481516cc88a15d2c9cf2a49b3b8dd5803aad1901dccf11ffd79f24b9706df232d93ebbec4a1f73151e330dd
@@ -12892,7 +13040,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slugify@npm:^1.6.5":
+"slugify@npm:^1.6.1, slugify@npm:^1.6.5":
   version: 1.6.6
   resolution: "slugify@npm:1.6.6"
   checksum: 04773c2d3b7aea8d2a61fa47cc7e5d29ce04e1a96cbaec409da57139df906acb3a449fac30b167d203212c806e73690abd4ff94fbad0a9a7b7ea109a2a638ae9

@@ -16,6 +16,7 @@
     "@babel/core": "~7.22.11",
     "@babel/preset-env": "~7.22.10",
     "@babel/preset-react": "~7.22.5",
+    "@babel/preset-typescript": "~7.22.11",
     "@japa/preset-adonis": "~1.2.0",
     "@japa/runner": "~2.5.1",
     "@symfony/webpack-encore": "~4.4.0",

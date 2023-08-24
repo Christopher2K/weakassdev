@@ -1998,7 +1998,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7.18.6":
+"@babel/preset-typescript@npm:^7.18.6, @babel/preset-typescript@npm:~7.22.11":
   version: 7.22.11
   resolution: "@babel/preset-typescript@npm:7.22.11"
   dependencies:
@@ -4450,6 +4450,7 @@ __metadata:
     "@babel/core": ~7.22.11
     "@babel/preset-env": ~7.22.10
     "@babel/preset-react": ~7.22.5
+    "@babel/preset-typescript": ~7.22.11
     "@eidellev/inertia-adonisjs": ~8.1.0
     "@inertiajs/inertia": ~0.11.1
     "@inertiajs/inertia-react": ~0.8.1

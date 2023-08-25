@@ -13,13 +13,16 @@ COPY yarn.lock /usr/app
 COPY turbo.json /usr/app
 COPY apps/api/package.json /usr/app/apps/api/package.json
 COPY libs/shared/package.json /usr/app/libs/shared/package.json
+COPY libs/config/package.json /usr/app/libs/config/package.json
 
 RUN yarn install
 
 COPY tsconfig.root.json /usr/app
 COPY apps/api /usr/app/apps/api
 COPY libs/shared /usr/app/libs/shared
+COPY libs/config /usr/app/libs/config
 
+RUN yarn api prepare
 RUN yarn build:api
 RUN rm -rf node_modules
 

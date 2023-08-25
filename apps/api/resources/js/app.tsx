@@ -4,7 +4,7 @@ import { createInertiaApp } from '@inertiajs/inertia-react';
 import { createRoot } from 'react-dom/client';
 import Base from './Pages/Base';
 import RootLayout from './Pages/Layout';
-import '../css/app.css';
+import '@weakassdev/config/base.css';
 
 const DefaultLayout = ({ children }: PropsWithChildren<{}>) => <>{children}</>;
 

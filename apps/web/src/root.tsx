@@ -12,7 +12,7 @@ import {
   Title,
 } from 'solid-start';
 
-import '@app/styles/base.css';
+import '@weakassdev/config/base.css';
 import { Navbar } from '@app/components';
 
 export default function Root() {

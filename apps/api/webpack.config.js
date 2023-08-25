@@ -54,6 +54,7 @@ Encore.addEntry('app', './resources/js/app.tsx')
 
 Encore.addAliases({
   '~': join(__dirname, './resources/js'),
+  '@style': join(__dirname, './styled-system'),
 });
 
 /*

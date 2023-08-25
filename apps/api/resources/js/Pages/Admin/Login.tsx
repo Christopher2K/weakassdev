@@ -2,15 +2,13 @@ import React from 'react';
 
 import { Input } from '~/Components';
 import { vstack } from '@style/patterns';
-import { css } from '@style/css';
 
 export default function Login() {
   return (
     <main
-      className={css({
+      className={vstack({
         justifyContent: 'center',
         alignItems: 'center',
-        background: 'green',
       })}
     >
       <h1>Connexion</h1>

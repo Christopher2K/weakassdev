@@ -17,6 +17,7 @@ COPY yarn.lock /usr/app
 COPY turbo.json /usr/app
 COPY apps/web/package.json /usr/app/apps/web/package.json
 COPY libs/shared/package.json /usr/app/libs/shared/package.json
+COPY libs/config/package.json /usr/app/libs/config/package.json
 
 RUN yarn install
 

@@ -1,10 +1,7 @@
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
+import { weakAssDevPreset } from '@weakassdev/config/panda';
 
 const globalCss = defineGlobalStyles({
-  html: {
-    width: '100%',
-    height: '100%',
-  },
   body: {
     display: 'grid',
     gridTemplateColumns: {
@@ -29,11 +26,7 @@ export default defineConfig({
   // Files to exclude
   exclude: [],
 
-  // Useful for theme customization
-  theme: {
-    extend: {},
-  },
-
   // The output directory for your css system
   outdir: 'styled-system',
+  presets: [weakAssDevPreset],
 });

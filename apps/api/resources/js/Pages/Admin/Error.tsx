@@ -15,7 +15,9 @@ export default function Error({ error }: ErrorProps) {
         alignItems: 'center',
       })}
     >
-      <Typography tag="h1">OH MON DIEU, un erreur!!!</Typography>
+      <Typography tag="h1">OH MON DIEU</Typography>
+      <Typography tag="h2">It's so OVER!!!!!!!</Typography>
+      <Typography tag="h2">We're cooked (On est cuisiné) (Same thing)</Typography>
       {(function () {
         switch (error) {
           case 'Unauthorized':

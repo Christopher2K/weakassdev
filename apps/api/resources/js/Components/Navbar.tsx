@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, usePage } from '@inertiajs/inertia-react';
-import { Home, LogIn, LogOut } from 'lucide-react';
+import { Home, LogIn, LogOut, Users, Newspaper } from 'lucide-react';
 
 import { css, cva } from '@style/css';
 import { vstack } from '@style/patterns';
@@ -90,6 +90,22 @@ export function Navbar() {
             url={url}
             icon={<Home size={ICON_SIZE} />}
           />
+          {user != null && (
+            <>
+              <NavItem
+                href="/admin/users"
+                label="Utilisateurs"
+                url={url}
+                icon={<Users size={ICON_SIZE} />}
+              />
+              <NavItem
+                href="/admin/posts"
+                label="Posts"
+                url={url}
+                icon={<Newspaper size={ICON_SIZE} />}
+              />
+            </>
+          )}
         </div>
 
         <div className={sectionStyle}>

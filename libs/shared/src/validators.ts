@@ -1,6 +1,11 @@
 import { z } from 'zod';
 
-import { postReportReasonSchema, postStatusSchema } from './models';
+import {
+  postReportReasonSchema,
+  postStatusSchema,
+  userRoleSchema,
+  userStatusSchema,
+} from './models';
 import { luxonDateTime } from './utils';
 
 export const ZodError = z.ZodError;
@@ -102,3 +107,20 @@ export const postsReportResponseSchema = z.object({
   reporterId: z.string(),
 });
 export type PostsReportResponse = z.infer<typeof postsStoreRequestSchema>;
+
+export const adminUsersDataSchema = makeListResponseSchema(
+  z.object({
+    id: z.string(),
+    username: z.string(),
+    email: z.string().email(),
+    status: userStatusSchema,
+    role: userRoleSchema,
+    createdAt: z.coerce.date(),
+    avatarUrl: z.string().url().nullish(),
+    biography: z.string().nullish(),
+    externalLinks: z.object({
+      value: z.array(z.record(z.string().url())),
+    }),
+  }),
+);
+export type AdminUsersData = z.infer<typeof adminUsersDataSchema>;

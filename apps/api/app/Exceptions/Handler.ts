@@ -23,10 +23,17 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     super(Logger);
   }
 
+  // TODO: Refactor this using [Content Negociation](https://docs.adonisjs.com/guides/request#content-negotiation)
   public async handle(error: any, ctx: HttpContextContract) {
     const url = ctx.request.url(false);
     // Admin part is using adonis validators since they deeply integrated with Inertia
     if (url.startsWith('/admin')) {
+      const { session, response } = ctx;
+
+      if (['E_INVALID_AUTH_PASSWORD', 'E_INVALID_AUTH_UID'].includes(error.code)) {
+        session.flash('errors', { login: error.message });
+        return response.redirect('/admin');
+      }
       return super.handle(error, ctx);
     }
 

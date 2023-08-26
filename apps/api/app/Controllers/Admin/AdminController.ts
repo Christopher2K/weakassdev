@@ -1,20 +1,16 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import { schema, rules } from '@ioc:Adonis/Core/Validator';
+import User from 'App/Models/User';
+
+import AdminLoginValidator from 'App/Validators/AdminLoginValidator';
 
 export default class AdminController {
   public index({ inertia }: HttpContextContract) {
     return inertia.render('Admin/Login');
   }
 
-  public async login(ctx: HttpContextContract) {
-    const { response } = ctx;
-
-    const data = await ctx.request.validate({
-      schema: schema.create({
-        email: schema.string({ trim: true }, [rules.email()]),
-        password: schema.string({}, [rules.minLength(8)]),
-      }),
-    });
+  public async login({ request, response, auth }: HttpContextContract) {
+    const data = await request.validate(AdminLoginValidator);
+    (await auth.attempt(data.username, data.password)) as Promise<User>;
 
     return response.redirect().toRoute('AdminController.dashboard');
   }

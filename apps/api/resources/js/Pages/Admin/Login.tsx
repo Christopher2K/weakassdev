@@ -1,27 +1,23 @@
-import React from 'react';
-import { usePage, useForm } from '@inertiajs/inertia-react';
+import React, { useState } from 'react';
+import { useForm, usePage } from '@inertiajs/inertia-react';
 
-import { FieldContainer, TextInput, Button, Typography } from '~/Components';
+import { FieldContainer, TextInput, Button, Typography, Message } from '~/Components';
 import { Layout } from '~/Pages/Layout';
 import { vstack } from '@style/patterns';
 
-type LoginProps = {
-  formErrors: [];
-};
-
-export default function Login(props: LoginProps) {
-  const page = usePage();
-  console.log(page);
-  const { data, setData, post, processing, errors } = useForm({
-    email: '',
+export default function Login() {
+  const { props } = usePage();
+  const { data, setData, post, processing } = useForm({
+    username: '',
     password: '',
   });
-
-  console.log(errors);
+  const [hiddenErrors, setHiddenErrors] = useState<string[]>([]);
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    post('/admin/login');
+    post('/admin/login', {
+      onFinish: () => setHiddenErrors([]),
+    });
   }
 
   return (
@@ -31,6 +27,11 @@ export default function Login(props: LoginProps) {
         alignItems: 'center',
       })}
     >
+      {!hiddenErrors.includes('login') && props?.errors?.login && (
+        <Message kind="error" onClose={() => setHiddenErrors((errors) => [...errors, 'login'])}>
+          Mot de passe ou utilisateur incorrect
+        </Message>
+      )}
       <Typography tag="h1">Connexion</Typography>
       <form
         onSubmit={submit}
@@ -44,18 +45,32 @@ export default function Login(props: LoginProps) {
           <Typography tag="label" htmlFor="username">
             Nom d'utilisateur
           </Typography>
-          <TextInput type="text" name="username" id="email" required />
+          <TextInput
+            type="text"
+            name="username"
+            id="email"
+            required
+            value={data.username}
+            onChange={(e) => setData('username', e.target.value)}
+          />
         </FieldContainer>
 
         <FieldContainer>
           <Typography tag="label" htmlFor="password">
             Mot de passe
           </Typography>
-          <TextInput type="password" name="password" id="password" required />
+          <TextInput
+            type="password"
+            name="password"
+            id="password"
+            required
+            value={data.password}
+            onChange={(e) => setData('password', e.target.value)}
+          />
         </FieldContainer>
 
         <FieldContainer alignment="center">
-          <Button>Se connecter</Button>
+          <Button disabled={processing}>Se connecter</Button>
         </FieldContainer>
       </form>
     </div>

@@ -115,7 +115,7 @@ export const adminUsersDataSchema = makeListResponseSchema(
     email: z.string().email(),
     status: userStatusSchema,
     role: userRoleSchema,
-    createdAt: z.coerce.date(),
+    createdAt: z.string(),
     avatarUrl: z.string().url().nullish(),
     biography: z.string().nullish(),
     externalLinks: z.object({

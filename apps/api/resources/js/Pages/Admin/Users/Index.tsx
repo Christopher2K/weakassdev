@@ -5,11 +5,11 @@ import {
   getCoreRowModel,
   flexRender,
 } from '@tanstack/react-table';
-import { Link } from '@inertiajs/inertia-react';
+import { DateTime } from 'luxon';
 
 import type { AdminUsersData } from '@weakassdev/shared/validators';
 
-import { Typography } from '~/Components';
+import { Typography, Table } from '~/Components';
 import { Layout } from '~/Pages/Layout';
 
 const columnHelpers = createColumnHelper<AdminUsersData['data'][number]>();
@@ -34,6 +34,10 @@ const columns = [
     header: () => 'Statut',
     cell: (info) => info.getValue(),
   }),
+  columnHelpers.accessor('createdAt', {
+    header: () => 'Inscrit(e) depuis',
+    cell: (info) => DateTime.fromISO(info.getValue()).toLocaleString(DateTime.DATETIME_MED),
+  }),
 ];
 
 type IndexProps = {
@@ -42,8 +46,6 @@ type IndexProps = {
 
 export default function Index({ users }: IndexProps) {
   const { data, meta } = users;
-  const isFirstPage = meta.firstPage === meta.currentPage;
-  const isLastPage = meta.lastPage === meta.currentPage;
 
   const table = useReactTable({
     data: data,
@@ -55,35 +57,39 @@ export default function Index({ users }: IndexProps) {
     <div>
       <Typography tag="h1">Utilisateurs</Typography>
 
-      <table>
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {!isFirstPage && (
-        <Link href={`/admin/users?page=${meta.currentPage - 1}`}>Page précédente</Link>
-      )}
-      {!isLastPage && <Link href={`/admin/users?page=${meta.currentPage + 1}`}>Page suivante</Link>}
+      <Table.Root>
+        <Table.Container>
+          <Table.Header>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </Table.Header>
+          <Table.Body>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                ))}
+              </tr>
+            ))}
+          </Table.Body>
+          <Table.Footer length={columns.length}>
+            <Table.Pagination
+              baseUrl="/admin/users"
+              currentPage={meta.currentPage}
+              lastPage={meta.lastPage}
+            />
+          </Table.Footer>
+        </Table.Container>
+      </Table.Root>
     </div>
   );
 }

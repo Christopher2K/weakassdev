@@ -70,7 +70,7 @@ export default function Login() {
         </FieldContainer>
 
         <FieldContainer alignment="center">
-          <Button disabled={processing}>Se connecter</Button>
+          <Button.Base disabled={processing}>Se connecter</Button.Base>
         </FieldContainer>
       </form>
     </div>

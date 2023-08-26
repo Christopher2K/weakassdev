@@ -15,4 +15,16 @@ export default class AdminUsersController {
       users: adminUsersDataSchema.parse(users.serialize()),
     });
   }
+
+  public async show({ inertia }: HttpContextContract) {
+    return inertia.render('Admin/Users/Show');
+  }
+
+  public async edit({ inertia }: HttpContextContract) {
+    return inertia.render('Admin/Users/Edit');
+  }
+
+  public async update({}: HttpContextContract) {}
+
+  public async destroy({}: HttpContextContract) {}
 }

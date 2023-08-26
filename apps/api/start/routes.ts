@@ -58,13 +58,8 @@ Route.group(() => {
     // PROTECTED PAGES
     Route.get('dashboard', 'AdminController.dashboard');
 
-    Route.group(() => {
-      Route.get('', 'AdminUsersController.index');
-    }).prefix('users');
-
-    Route.group(() => {
-      Route.get('', 'AdminPostsController.index');
-    }).prefix('posts');
+    Route.resource('users', 'AdminUsersController').except(['store', 'create']).as('adminUsers');
+    Route.resource('posts', 'AdminPostController').except(['store', 'create']).as('adminPosts');
   })
     .middleware('auth')
     .middleware('admin');

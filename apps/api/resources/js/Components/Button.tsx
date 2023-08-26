@@ -1,23 +1,22 @@
-import { styled } from '@style/jsx';
+import React, { ButtonHTMLAttributes, ComponentProps, DetailedHTMLProps } from 'react';
+import { Link as InertiaLink } from '@inertiajs/inertia-react';
 
-export const Button = styled('button', {
-  base: {
-    fontSize: 'm',
-    fontWeight: 'medium',
-    backgroundColor: 'gray.400',
-    color: 'gray.900',
-    borderRadius: 'md',
-    px: '4',
-    py: '2',
-    cursor: 'pointer',
-    _hover: {
-      backgroundColor: 'gray.300',
-    },
-    _active: {
-      transform: 'scale(0.9)',
-    },
-    _disabled: {
-      cursor: 'not-allowed',
-    },
-  },
-});
+import { cx } from '@style/css';
+import { buttonStyle } from '~/styles';
+
+type BaseProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
+function Base({ className, ...props }: BaseProps) {
+  const cxs = cx(buttonStyle({}), className);
+  return <button className={cxs} {...props} />;
+}
+
+type LinkProps = ComponentProps<typeof InertiaLink>;
+function Link({ className, ...props }: LinkProps) {
+  const cxs = cx(buttonStyle({}), className);
+  return <InertiaLink className={cxs} {...props} />;
+}
+
+export const Button = {
+  Link,
+  Base,
+};

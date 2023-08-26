@@ -9,7 +9,7 @@ import { DateTime } from 'luxon';
 
 import type { AdminUsersData } from '@weakassdev/shared/validators';
 
-import { Typography, Table } from '~/Components';
+import { Typography, Table, Button } from '~/Components';
 import { Layout } from '~/Pages/Layout';
 
 const columnHelpers = createColumnHelper<AdminUsersData['data'][number]>();
@@ -37,6 +37,15 @@ const columns = [
   columnHelpers.accessor('createdAt', {
     header: () => 'Inscrit(e) depuis',
     cell: (info) => DateTime.fromISO(info.getValue()).toLocaleString(DateTime.DATETIME_MED),
+  }),
+  columnHelpers.display({
+    id: 'actions',
+    header: () => 'Actions',
+    cell: (info) => (
+      <div>
+        <Button.Link href={`/admin/users/${info.row.getValue('id')}`}>Détails</Button.Link>
+      </div>
+    ),
   }),
 ];
 

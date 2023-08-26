@@ -1,8 +1,8 @@
 import React from 'react';
 import { usePage, useForm } from '@inertiajs/inertia-react';
 
-import { FieldContainer, Label, TextInput, Button } from '~/Components';
-import Layout from '~/Pages/Layout';
+import { FieldContainer, TextInput, Button, Typography } from '~/Components';
+import { Layout } from '~/Pages/Layout';
 import { vstack } from '@style/patterns';
 
 type LoginProps = {
@@ -31,7 +31,7 @@ export default function Login(props: LoginProps) {
         alignItems: 'center',
       })}
     >
-      <h1>Connexion</h1>
+      <Typography tag="h1">Connexion</Typography>
       <form
         onSubmit={submit}
         className={vstack({
@@ -41,12 +41,16 @@ export default function Login(props: LoginProps) {
         })}
       >
         <FieldContainer>
-          <Label htmlFor="username">Username</Label>
+          <Typography tag="label" htmlFor="username">
+            Nom d'utilisateur
+          </Typography>
           <TextInput type="text" name="username" id="email" required />
         </FieldContainer>
 
         <FieldContainer>
-          <Label htmlFor="password">Mot de passe</Label>
+          <Typography tag="label" htmlFor="password">
+            Mot de passe
+          </Typography>
           <TextInput type="password" name="password" id="password" required />
         </FieldContainer>
 

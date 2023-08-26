@@ -5,7 +5,7 @@ import { css } from '@style/css';
 
 type LayoutProps = PropsWithChildren<{}>;
 
-export default function Layout({ children }: LayoutProps) {
+export function Layout({ children }: LayoutProps) {
   return (
     <>
       <Navbar />

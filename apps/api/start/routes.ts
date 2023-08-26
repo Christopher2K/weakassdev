@@ -46,14 +46,15 @@ Route.group(() => {
   .prefix('v1');
 
 Route.group(() => {
-  Route.get('', 'AdminController.login');
+  Route.get('', 'AdminController.index');
+  Route.post('login', 'AdminController.login');
 
   Route.group(() => {
     Route.get('dashboard', 'AdminController.dashboard');
     Route.get('users', 'UsersController.index');
-  })
-    .middleware('auth')
-    .middleware('admin');
+  });
+  // .middleware('auth')
+  // .middleware('admin');
 })
   .namespace('App/Controllers/Admin')
   .prefix('admin');

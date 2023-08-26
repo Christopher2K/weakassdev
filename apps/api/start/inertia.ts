@@ -11,6 +11,9 @@
 import Inertia from '@ioc:EidelLev/Inertia';
 
 Inertia.share({
+  formErrors: (ctx) => {
+    return ctx.session.flashMessages.get('formErrors');
+  },
   errors: (ctx) => {
     return ctx.session.flashMessages.get('errors');
   },

@@ -4473,6 +4473,7 @@ __metadata:
     "@weakassdev/shared": "*"
     adonis-preset-ts: ~2.1.0
     autoprefixer: ~10.4.15
+    lucide-react: ~0.269.0
     luxon: ~3.3.0
     pg: ~8.11.2
     phc-argon2: ~1.1.4
@@ -11488,6 +11489,15 @@ __metadata:
   version: 10.0.1
   resolution: "lru-cache@npm:10.0.1"
   checksum: 06f8d0e1ceabd76bb6f644a26dbb0b4c471b79c7b514c13c6856113879b3bf369eb7b497dad4ff2b7e2636db202412394865b33c332100876d838ad1372f0181
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:~0.269.0":
+  version: 0.269.0
+  resolution: "lucide-react@npm:0.269.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0
+  checksum: 5e01031546fa6b364c86d66d2842a7aa28ff67f108b7686ad4f78182e02203d475f2f4883a71691d2ef4e33b53be38e0b07a4435ae0f41015219806422c36a23
   languageName: node
   linkType: hard
 

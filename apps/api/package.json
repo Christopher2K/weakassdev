@@ -51,6 +51,7 @@
     "@types/react": "~18.2.21",
     "@types/react-dom": "~18.2.7",
     "@weakassdev/shared": "*",
+    "lucide-react": "~0.269.0",
     "luxon": "~3.3.0",
     "pg": "~8.11.2",
     "phc-argon2": "~1.1.4",

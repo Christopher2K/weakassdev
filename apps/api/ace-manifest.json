@@ -1,5 +1,17 @@
 {
   "commands": {
+    "admin:create": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/CreateAdmin",
+      "commandName": "admin:create",
+      "description": "Create a new admin user",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",

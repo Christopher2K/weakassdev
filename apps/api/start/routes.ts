@@ -46,15 +46,22 @@ Route.group(() => {
   .prefix('v1');
 
 Route.group(() => {
+  // PAGES
   Route.get('', 'AdminController.index');
+  Route.get('unauthorized', 'AdminController.unauthorized');
+  Route.get('logout', 'AdminController.logout');
+
+  // FORM SUBMISSIONS
   Route.post('login', 'AdminController.login');
 
   Route.group(() => {
+    // PROTECTED PAGES
     Route.get('dashboard', 'AdminController.dashboard');
     Route.get('users', 'UsersController.index');
-  });
-  // .middleware('auth')
-  // .middleware('admin');
+  })
+    .middleware('auth')
+    .middleware('admin');
 })
   .namespace('App/Controllers/Admin')
+  .middleware('silentAuth')
   .prefix('admin');

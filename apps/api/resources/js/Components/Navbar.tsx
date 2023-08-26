@@ -58,7 +58,8 @@ function NavItem({ href, label, url, icon }: NavItemProps) {
 }
 
 export function Navbar() {
-  const { url } = usePage();
+  const { url, props } = usePage();
+  const { user } = props;
 
   return (
     <nav
@@ -92,13 +93,18 @@ export function Navbar() {
         </div>
 
         <div className={sectionStyle}>
-          <NavItem href="/admin" label="Connexion" url={url} icon={<LogIn size={ICON_SIZE} />} />
-          <NavItem
-            href="/admin/logout"
-            label="Déconnexion"
-            url={url}
-            icon={<LogOut size={ICON_SIZE} />}
-          />
+          {user == null && (
+            <NavItem href="/admin" label="Connexion" url={url} icon={<LogIn size={ICON_SIZE} />} />
+          )}
+
+          {user != null && (
+            <NavItem
+              href="/admin/logout"
+              label="Déconnexion"
+              url={url}
+              icon={<LogOut size={ICON_SIZE} />}
+            />
+          )}
         </div>
       </div>
     </nav>

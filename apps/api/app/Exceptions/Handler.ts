@@ -30,6 +30,10 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     if (url.startsWith('/admin')) {
       const { session, response } = ctx;
 
+      if (error.status === 401) {
+        return response.redirect('/admin/unauthorized');
+      }
+
       if (['E_INVALID_AUTH_PASSWORD', 'E_INVALID_AUTH_UID'].includes(error.code)) {
         session.flash('errors', { login: error.message });
         return response.redirect('/admin');

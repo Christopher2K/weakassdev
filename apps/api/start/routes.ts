@@ -58,7 +58,7 @@ Route.group(() => {
     Route.get('dashboard', 'AdminController.dashboard');
 
     Route.resource('users', 'AdminUsersController').except(['store', 'create']).as('adminUsers');
-    Route.resource('posts', 'AdminPostController').except(['store', 'create']).as('adminPosts');
+    Route.resource('posts', 'AdminPostsController').except(['store', 'create']).as('adminPosts');
   })
     .middleware('auth')
     .middleware('admin');

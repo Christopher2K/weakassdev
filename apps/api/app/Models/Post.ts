@@ -58,11 +58,17 @@ export default class Post extends BaseModel {
   })
   public postVersions: HasMany<typeof PostContent>;
 
-  // UTILS
+  // Getter / Setter
   public get canBeUpdated() {
     const limit = this.createdAt.plus({ minutes: 30 });
     const now = DateTime.now().toUTC();
 
     return now < limit;
+  }
+
+  public serializeExtras() {
+    return {
+      revisions: +this.$extras.revisions,
+    };
   }
 }

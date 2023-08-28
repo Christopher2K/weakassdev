@@ -66,7 +66,7 @@ export default function Index({ users }: IndexProps) {
   });
 
   return (
-    <div>
+    <>
       <h1 className={css({ textStyle: 'h2', mb: '10' })}>Utilisateurs</h1>
 
       <Table.Root>
@@ -102,7 +102,7 @@ export default function Index({ users }: IndexProps) {
           </Table.Footer>
         </Table.Container>
       </Table.Root>
-    </div>
+    </>
   );
 }
 

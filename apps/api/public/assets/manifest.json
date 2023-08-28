@@ -1,12 +1,6 @@
 {
   "assets/app.css": "https://api.weakassdev.local/assets/app.css",
   "assets/app.js": "https://api.weakassdev.local/assets/app.js",
-  "assets/fonts/OpenSans-Medium.woff": "https://api.weakassdev.local/assets/fonts/OpenSans-Medium.bf421ba0.woff",
-  "assets/fonts/OpenSans-Regular.woff": "https://api.weakassdev.local/assets/fonts/OpenSans-Regular.6c5acfa9.woff",
-  "assets/fonts/OpenSans-SemiBold.woff": "https://api.weakassdev.local/assets/fonts/OpenSans-SemiBold.ad9bc43d.woff",
-  "assets/fonts/OpenSans-Medium.woff2": "https://api.weakassdev.local/assets/fonts/OpenSans-Medium.78764371.woff2",
-  "assets/fonts/OpenSans-Regular.woff2": "https://api.weakassdev.local/assets/fonts/OpenSans-Regular.3ef06ba3.woff2",
-  "assets/fonts/OpenSans-SemiBold.woff2": "https://api.weakassdev.local/assets/fonts/OpenSans-SemiBold.a7e5d5e9.woff2",
   "assets/fonts/Inter-SemiBold.woff": "https://api.weakassdev.local/assets/fonts/Inter-SemiBold.6d7d360a.woff",
   "assets/fonts/Inter-Medium.woff": "https://api.weakassdev.local/assets/fonts/Inter-Medium.484bd6e6.woff",
   "assets/fonts/Inter-Regular.woff": "https://api.weakassdev.local/assets/fonts/Inter-Regular.f3ce705f.woff",

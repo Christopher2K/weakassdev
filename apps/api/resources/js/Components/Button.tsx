@@ -12,17 +12,10 @@ export const buttonStyle = cva({
   base: {
     display: 'flex',
     textStyle: 'button',
-    color: 'indigo.600',
-    backgroundColor: 'indigo.100',
     borderRadius: 'sm',
     borderWidth: 'thin',
     borderStyle: 'solid',
-    borderColor: 'indigo.100',
     cursor: 'pointer',
-    _hover: {
-      backgroundColor: 'indigo.200',
-      borderColor: 'indigo.600',
-    },
     _disabled: {
       cursor: 'not-allowed',
       opacity: 0.5,
@@ -44,14 +37,36 @@ export const buttonStyle = cva({
         py: '4',
       },
     },
+    theme: {
+      primary: {
+        color: 'indigo.600',
+        backgroundColor: 'indigo.100',
+        borderColor: 'indigo.100',
+        _hover: {
+          backgroundColor: 'indigo.200',
+          borderColor: 'indigo.600',
+        },
+      },
+      secondary: {
+        color: 'lime.600',
+        backgroundColor: 'lime.100',
+        borderColor: 'lime.100',
+        _hover: {
+          backgroundColor: 'lime.200',
+          borderColor: 'lime.600',
+        },
+      },
+    },
   },
   defaultVariants: {
+    theme: 'primary',
     btnSize: 'sm',
   },
 });
 
 type StyleProps = {
   btnSize?: RecipeVariantProps<typeof buttonStyle>['btnSize'];
+  theme?: RecipeVariantProps<typeof buttonStyle>['theme'];
 };
 type CommonProps = PropsWithChildren<{
   leftIcon?: JSX.Element;
@@ -79,8 +94,8 @@ type BaseProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTML
   CommonProps &
   StyleProps;
 
-function Base({ className, children, leftIcon, rightIcon, btnSize, ...props }: BaseProps) {
-  const cxs = cx(buttonStyle({ btnSize }), className);
+function Base({ className, children, leftIcon, rightIcon, btnSize, theme, ...props }: BaseProps) {
+  const cxs = cx(buttonStyle({ btnSize, theme }), className);
   return (
     <button className={cxs} {...props}>
       <Content leftIcon={leftIcon} rightIcon={rightIcon}>
@@ -97,11 +112,12 @@ function Link({
   leftIcon,
   rightIcon,
   btnSize,
+  theme,
   disabled,
   onClick,
   ...props
 }: LinkProps) {
-  const cxs = cx(buttonStyle({ btnSize }), className);
+  const cxs = cx(buttonStyle({ btnSize, theme }), className);
 
   function noop(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     e.preventDefault();

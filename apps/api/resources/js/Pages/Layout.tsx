@@ -25,7 +25,6 @@ export function Layout({ children }: LayoutProps) {
             p: '4',
             px: '8',
             width: 'full',
-            maxW: '1100px',
             minHeight: 'full',
             mx: 'auto',
           })}

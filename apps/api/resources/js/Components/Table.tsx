@@ -1,6 +1,6 @@
 import React, { type PropsWithChildren } from 'react';
 import { Link } from '@inertiajs/inertia-react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 
 import { Button } from './Button';
 import { css } from '@style/css';
@@ -134,6 +134,24 @@ function Pagination({ baseUrl, currentPage, lastPage }: PaginationProps) {
   );
 }
 
+export type CellLinkProps = {
+  info: string;
+  href: string;
+};
+function CellLink({ info, href }: CellLinkProps) {
+  return (
+    <span className={hstack({})}>
+      <Button.Link
+        btnSize="sm"
+        theme="secondary"
+        href={href}
+        leftIcon={<ExternalLink size={12} />}
+      />
+      {info}
+    </span>
+  );
+}
+
 export const Table = {
   Root,
   Container,
@@ -141,4 +159,6 @@ export const Table = {
   Body,
   Footer,
   Pagination,
+
+  CellLink,
 };

@@ -124,3 +124,24 @@ export const adminUsersDataSchema = makeListResponseSchema(
   }),
 );
 export type AdminUsersData = z.infer<typeof adminUsersDataSchema>;
+
+export const adminPostsDataSchema = makeListResponseSchema(
+  z.object({
+    id: z.string(),
+    status: postStatusSchema,
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    content: z.object({
+      id: z.string(),
+      content: z.string(),
+      createdAt: z.coerce.date(),
+    }),
+    author: z.object({
+      id: z.string(),
+      username: z.string(),
+      avatarUrl: z.string().url().nullish(),
+    }),
+    revisions: z.number(),
+  }),
+);
+export type AdminPostsData = z.infer<typeof adminPostsDataSchema>;

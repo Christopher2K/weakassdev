@@ -3,6 +3,7 @@ import React from 'react';
 import { createInertiaApp } from '@inertiajs/inertia-react';
 import { createRoot } from 'react-dom/client';
 import '@weakassdev/config/base.css';
+import '../css/app.css';
 
 createInertiaApp({
   id: 'app',

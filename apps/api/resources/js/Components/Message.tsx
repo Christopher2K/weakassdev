@@ -2,7 +2,6 @@ import React, { type PropsWithChildren } from 'react';
 import { X } from 'lucide-react';
 
 import { RecipeVariantProps, css, cva, cx } from '@style/css';
-import { Typography } from './Typography';
 
 const messageStyle = cva({
   base: {
@@ -39,7 +38,7 @@ export function Message({ onClose, kind, children }: MessageProps) {
 
   return (
     <article className={articleCx}>
-      <Typography>{children}</Typography>
+      <p className={css({ textStyle: 'body' })}>{children}</p>
       <button
         type="button"
         aria-label="Fermer"
@@ -48,7 +47,7 @@ export function Message({ onClose, kind, children }: MessageProps) {
         })}
         onClick={onClose}
       >
-        <X size={20} />
+        <X size={24} />
       </button>
     </article>
   );

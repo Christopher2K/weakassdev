@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Link, usePage } from '@inertiajs/inertia-react';
-import { Home, LogIn, LogOut, Users, Newspaper } from 'lucide-react';
+import { Home, LogOut, Users, Newspaper, StopCircle } from 'lucide-react';
 
 import { css, cva } from '@style/css';
 import { vstack } from '@style/patterns';
@@ -11,33 +11,23 @@ const navbarItemStyle = cva({
     display: 'inline-flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    gap: '2',
     alignItems: 'center',
-    fontSize: 'sm',
-    px: '4',
-    py: '2',
-    borderRadius: 'md',
+    gap: '3',
+    px: '6',
+    py: '3',
     width: 'full',
+    textStyle: 'body',
     _hover: {
-      backgroundColor: 'gray.400',
-    },
-    _active: {
-      transform: 'scale(0.9)',
+      backgroundColor: 'gray.200',
     },
   },
   variants: {
     active: {
       true: {
-        backgroundColor: 'gray.400',
+        backgroundColor: 'gray.200',
       },
     },
   },
-});
-
-const sectionStyle = vstack({
-  justifyContent: 'flex-start',
-  alignItems: 'flex-start',
-  alignSelf: 'stretch',
 });
 
 type NavItemProps = {
@@ -47,7 +37,6 @@ type NavItemProps = {
   exact?: boolean;
   icon: JSX.Element;
 };
-
 function NavItem({ href, label, url, icon, exact = false }: NavItemProps) {
   const active = exact ? href === url : url.startsWith(href);
   return (
@@ -58,16 +47,37 @@ function NavItem({ href, label, url, icon, exact = false }: NavItemProps) {
   );
 }
 
+type NavSectionProps = PropsWithChildren<{
+  title?: string;
+}>;
+function NavSection({ children, title }: NavSectionProps) {
+  return (
+    <div
+      className={vstack({
+        w: 'full',
+      })}
+    >
+      {title && <p className={css({ width: 'full', textStyle: 'caption', px: '4' })}>{title}</p>}
+      <div
+        className={vstack({
+          w: 'full',
+          gap: '0',
+        })}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function Navbar() {
-  const { url, props } = usePage();
-  const { user } = props;
+  const { url } = usePage();
 
   return (
     <nav
       className={css({
-        width: '240px',
+        width: '440px',
         height: 'full',
-        padding: '2',
       })}
     >
       <div
@@ -78,51 +88,55 @@ export function Navbar() {
           alignItems: 'center',
           width: 'width',
           height: 'full',
-          padding: '2',
-          backgroundColor: 'gray.100',
-          borderRadius: 'md',
+          backgroundColor: 'gray.50',
+          borderRightWidth: 'thin',
+          borderColor: 'gray.100',
           overflowY: 'auto',
         })}
       >
-        <div className={sectionStyle}>
-          <NavItem
-            exact
-            href="/admin/dashboard"
-            label="Dashboard"
-            url={url}
-            icon={<Home size={ICON_SIZE} />}
-          />
-          {user != null && (
-            <>
-              <NavItem
-                href="/admin/users"
-                label="Utilisateurs"
-                url={url}
-                icon={<Users size={ICON_SIZE} />}
-              />
-              <NavItem
-                href="/admin/posts"
-                label="Posts"
-                url={url}
-                icon={<Newspaper size={ICON_SIZE} />}
-              />
-            </>
-          )}
+        <div className={vstack({ w: 'full' })}>
+          <NavSection>
+            <NavItem
+              exact
+              href="/admin/dashboard"
+              label="Dashboard"
+              url={url}
+              icon={<Home size={ICON_SIZE} />}
+            />
+          </NavSection>
+
+          <NavSection title="Entités">
+            <NavItem
+              href="/admin/users"
+              label="Utilisateurs"
+              url={url}
+              icon={<Users size={ICON_SIZE} />}
+            />
+            <NavItem
+              href="/admin/posts"
+              label="Posts"
+              url={url}
+              icon={<Newspaper size={ICON_SIZE} />}
+            />
+
+            <NavItem
+              href="/admin/reports"
+              label="Modération"
+              url={url}
+              icon={<StopCircle size={ICON_SIZE} />}
+            />
+          </NavSection>
         </div>
 
-        <div className={sectionStyle}>
-          {user == null && (
-            <NavItem href="/admin" label="Connexion" url={url} icon={<LogIn size={ICON_SIZE} />} />
-          )}
-
-          {user != null && (
+        <div className={css({ w: 'full' })}>
+          <NavSection>
             <NavItem
               href="/admin/logout"
               label="Déconnexion"
               url={url}
               icon={<LogOut size={ICON_SIZE} />}
             />
-          )}
+          </NavSection>
         </div>
       </div>
     </nav>

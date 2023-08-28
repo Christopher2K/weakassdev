@@ -2,13 +2,17 @@ import React, { PropsWithChildren } from 'react';
 
 import { Navbar } from '~/Components';
 import { css } from '@style/css';
+import { usePage } from '@inertiajs/inertia-react';
 
 type LayoutProps = PropsWithChildren<{}>;
 
 export function Layout({ children }: LayoutProps) {
+  const { props } = usePage();
+  const isLoggedIn = props.user !== null;
+
   return (
     <>
-      <Navbar />
+      {isLoggedIn && <Navbar />}
       <div
         className={css({
           w: 'full',

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useForm, usePage } from '@inertiajs/inertia-react';
 
-import { FieldContainer, TextInput, Button, Typography, Message } from '~/Components';
+import { FieldContainer, TextInput, Button, Message } from '~/Components';
 import { Layout } from '~/Pages/Layout';
+import { css } from '@style/css';
 import { vstack } from '@style/patterns';
 
 export default function Login() {
@@ -32,7 +33,6 @@ export default function Login() {
           Mot de passe ou utilisateur incorrect
         </Message>
       )}
-      <Typography tag="h1">Connexion</Typography>
       <form
         onSubmit={submit}
         className={vstack({
@@ -42,9 +42,9 @@ export default function Login() {
         })}
       >
         <FieldContainer>
-          <Typography tag="label" htmlFor="username">
+          <label className={css({ textStyle: 'label' })} htmlFor="username">
             Nom d'utilisateur
-          </Typography>
+          </label>
           <TextInput
             type="text"
             name="username"
@@ -56,9 +56,9 @@ export default function Login() {
         </FieldContainer>
 
         <FieldContainer>
-          <Typography tag="label" htmlFor="password">
+          <label className={css({ textStyle: 'label' })} htmlFor="password">
             Mot de passe
-          </Typography>
+          </label>
           <TextInput
             type="password"
             name="password"

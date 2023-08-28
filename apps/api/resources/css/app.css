@@ -1,11 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@font-face {
+  font-family: 'Inter';
+  src:
+    url('/public/fonts/Inter-Regular.woff2') format('woff2'),
+    url('/public/fonts/Inter-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
-@layer base {
-  html,
-  body {
-    width: 100%;
-    min-height: 100%;
-  }
+@font-face {
+  font-family: 'Inter';
+  src:
+    url('/public/fonts/Inter-Medium.woff2') format('woff2'),
+    url('/public/fonts/Inter-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src:
+    url('/public/fonts/Inter-SemiBold.woff2') format('woff2'),
+    url('/public/fonts/Inter-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
 }

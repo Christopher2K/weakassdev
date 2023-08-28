@@ -2,8 +2,7 @@ import { cva } from '@style/css';
 
 export const buttonStyle = cva({
   base: {
-    fontSize: 'm',
-    fontWeight: 'medium',
+    textStyle: 'button',
     backgroundColor: 'gray.400',
     color: 'gray.900',
     borderRadius: 'md',

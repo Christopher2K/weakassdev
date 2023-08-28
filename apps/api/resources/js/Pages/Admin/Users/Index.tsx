@@ -9,7 +9,8 @@ import { DateTime } from 'luxon';
 
 import type { AdminUsersData } from '@weakassdev/shared/validators';
 
-import { Typography, Table, Button } from '~/Components';
+import { css } from '@style/css';
+import { Table, Button } from '~/Components';
 import { Layout } from '~/Pages/Layout';
 
 const columnHelpers = createColumnHelper<AdminUsersData['data'][number]>();
@@ -64,7 +65,7 @@ export default function Index({ users }: IndexProps) {
 
   return (
     <div>
-      <Typography tag="h1">Utilisateurs</Typography>
+      <h1 className={css({ textStyle: 'h2' })}>Utilisateurs</h1>
 
       <Table.Root>
         <Table.Container>

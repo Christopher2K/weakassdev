@@ -16,8 +16,13 @@ export default class AdminUsersController {
     });
   }
 
-  public async show({ inertia }: HttpContextContract) {
-    return inertia.render('Admin/Users/Show');
+  public async show({ request, inertia }: HttpContextContract) {
+    const userUuid = request.param('id');
+    const user = await User.findByOrFail('id', userUuid);
+
+    return inertia.render('Admin/Users/Show', {
+      user: user.serialize(),
+    });
   }
 
   public async edit({ inertia }: HttpContextContract) {

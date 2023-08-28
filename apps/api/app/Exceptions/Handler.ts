@@ -23,28 +23,20 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     super(Logger);
   }
 
-  // TODO: Refactor this using [Content Negociation](https://docs.adonisjs.com/guides/request#content-negotiation)
   public async handle(error: any, ctx: HttpContextContract) {
-    const url = ctx.request.url(false);
-    // Admin part is using adonis validators since they deeply integrated with Inertia
-    if (url.startsWith('/admin')) {
-      const { session, response } = ctx;
-
-      if (error.status === 401) {
-        return response.redirect('/admin/unauthorized');
-      }
-
-      if (['E_INVALID_AUTH_PASSWORD', 'E_INVALID_AUTH_UID'].includes(error.code)) {
-        session.flash('errors', { login: error.message });
-        return response.redirect('/admin');
-      }
-      return super.handle(error, ctx);
+    const content = ctx.request.accepts(['html', 'json']);
+    switch (content) {
+      case 'html':
+        return this.handleHtml(error, ctx);
+      case 'json':
+        return this.handleJson(error, ctx);
+      default:
+        return this.handleHtml(error, ctx);
     }
+  }
 
-    // API part is using Zod as models are shared between clients and backend
+  private handleJson(error: any, ctx: HttpContextContract) {
     if (error instanceof ZodError) {
-      ctx.session.flash('errors', error.issues);
-      ctx.session.flash('formErrors', error.issues);
       return ctx.response.unprocessableEntity({
         code: 'E_CUSTOM_VALIDATION_ERROR',
         issues: error.issues,
@@ -56,5 +48,27 @@ export default class ExceptionHandler extends HttpExceptionHandler {
       message: error?.message ?? 'E_SERVER_ERROR',
       stack: error?.stack ?? '',
     });
+  }
+
+  private handleHtml(error: any, ctx: HttpContextContract) {
+    const { session, response, inertia } = ctx;
+
+    if (['E_INVALID_AUTH_PASSWORD', 'E_INVALID_AUTH_UID'].includes(error.code)) {
+      session.flash('errors', { login: error.message });
+      return response.redirect('/admin');
+    }
+
+    switch (error.status) {
+      case 401:
+        return inertia.render('Error', { error: 'unauthorized ' });
+      case 403:
+        return inertia.render('Error', { error: 'forbidden' });
+      case 404:
+        return inertia.render('Error', { error: 'not-found' });
+      case undefined:
+        return inertia.render('Error', { error: 'server-error' });
+    }
+
+    return super.handle(error, ctx);
   }
 }

@@ -1,13 +1,15 @@
 import React from 'react';
 
-import { Layout } from '~/Pages/Layout';
 import { vstack } from '@style/patterns';
 import { Typography } from '~/Components';
 
+import { Layout } from './Layout';
+
 type ErrorProps = {
-  error: 'Unauthorized' | 'Forbidden' | 'NotFound' | 'ServerError';
+  error: 'unauthorized' | 'forbidden' | 'not-found' | 'server-error';
+  user?: {};
 };
-export default function Error({ error }: ErrorProps) {
+export default function Error({ error, ...props }: ErrorProps) {
   return (
     <div
       className={vstack({
@@ -15,13 +17,15 @@ export default function Error({ error }: ErrorProps) {
         alignItems: 'center',
       })}
     >
-      <Typography tag="h1">OH MON DIEU</Typography>
-      <Typography tag="h2">It's so OVER!!!!!!!</Typography>
+      <Typography tag="h1">It's so OVER!!!!!!!</Typography>
       <Typography tag="h2">We're cooked (On est cuisiné) (Same thing)</Typography>
       {(function () {
         switch (error) {
-          case 'Unauthorized':
+          case 'unauthorized':
+          case 'forbidden':
             return <Typography>Vous n'avez pas les autorisations requises</Typography>;
+          case 'not-found':
+            return <Typography>La ressource demandée n'éxiste pas</Typography>;
           default:
             return <Typography>Une erreur est survenue</Typography>;
         }

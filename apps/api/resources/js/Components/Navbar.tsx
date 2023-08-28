@@ -44,11 +44,12 @@ type NavItemProps = {
   label: string;
   href: string;
   url: string;
+  exact?: boolean;
   icon: JSX.Element;
 };
 
-function NavItem({ href, label, url, icon }: NavItemProps) {
-  const active = href === url;
+function NavItem({ href, label, url, icon, exact = false }: NavItemProps) {
+  const active = exact ? href === url : url.startsWith(href);
   return (
     <Link href={href} className={navbarItemStyle({ active })}>
       {icon}
@@ -85,6 +86,7 @@ export function Navbar() {
       >
         <div className={sectionStyle}>
           <NavItem
+            exact
             href="/admin/dashboard"
             label="Dashboard"
             url={url}

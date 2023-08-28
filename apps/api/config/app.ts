@@ -128,7 +128,7 @@ export const http: ServerConfig = {
   | client to set the header explicitly.
   |
   */
-  forceContentNegotiationTo: 'application/json',
+  // forceContentNegotiationTo: 'application/json'
 };
 
 /*

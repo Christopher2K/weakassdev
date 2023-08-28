@@ -48,7 +48,6 @@ Route.group(() => {
 Route.group(() => {
   // PAGES
   Route.get('', 'AdminController.index');
-  Route.get('unauthorized', 'AdminController.unauthorized');
   Route.get('logout', 'AdminController.logout');
 
   // FORM SUBMISSIONS

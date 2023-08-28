@@ -13,10 +13,6 @@ export default class AdminController {
     return ctx.inertia.render('Admin/Dashboard');
   }
 
-  public unauthorized({ inertia }: HttpContextContract) {
-    return inertia.render('Admin/Error', { error: 'Unauthorized' });
-  }
-
   // FORM SUBMISSIONS
   public async login({ request, response, auth }: HttpContextContract) {
     const data = await request.validate(AdminLoginValidator);

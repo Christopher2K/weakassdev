@@ -44,7 +44,9 @@ const columns = [
     header: () => 'Actions',
     cell: (info) => (
       <div>
-        <Button.Link href={`/admin/users/${info.row.getValue('id')}`}>Détails</Button.Link>
+        <Button.Link href={`/admin/users/${info.row.getValue('id')}`} btnSize="sm">
+          Détails
+        </Button.Link>
       </div>
     ),
   }),
@@ -65,7 +67,7 @@ export default function Index({ users }: IndexProps) {
 
   return (
     <div>
-      <h1 className={css({ textStyle: 'h2' })}>Utilisateurs</h1>
+      <h1 className={css({ textStyle: 'h2', mb: '10' })}>Utilisateurs</h1>
 
       <Table.Root>
         <Table.Container>

@@ -23,6 +23,7 @@ export function Layout({ children }: LayoutProps) {
         <main
           className={css({
             p: '4',
+            px: '8',
             width: 'full',
             maxW: '1100px',
             minHeight: 'full',

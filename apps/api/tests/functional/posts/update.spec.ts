@@ -30,7 +30,8 @@ test.group('[posts update handler]', (group) => {
       .json({
         content: 'New content!',
       })
-      .loginAs(user);
+      .loginAs(user)
+      .accept('json');
 
     const body = postsShowResponseSchema.parse(response.body());
     response.assertStatus(200);
@@ -52,7 +53,8 @@ test.group('[posts update handler]', (group) => {
       .json({
         content: 'New content!',
       })
-      .loginAs(oldPost.author);
+      .loginAs(oldPost.author)
+      .accept('json');
 
     response.assertStatus(403);
   });
@@ -64,7 +66,8 @@ test.group('[posts update handler]', (group) => {
       .json({
         content: 'New content!',
       })
-      .loginAs(testUser);
+      .loginAs(testUser)
+      .accept('json');
 
     response.assertStatus(403);
   });
@@ -75,7 +78,8 @@ test.group('[posts update handler]', (group) => {
       .json({
         content: 'New content!',
       })
-      .loginAs(user);
+      .loginAs(user)
+      .accept('json');
 
     response.assertStatus(404);
   });
@@ -86,7 +90,8 @@ test.group('[posts update handler]', (group) => {
       .json({
         content: postContent,
       })
-      .loginAs(user);
+      .loginAs(user)
+      .accept('json');
 
     response.assertStatus(422);
   });

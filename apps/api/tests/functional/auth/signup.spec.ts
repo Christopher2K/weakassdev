@@ -11,11 +11,14 @@ test.group('[signup handler]', (group) => {
   });
 
   test('create an account for a new user', async ({ client }) => {
-    const response = await client.post('/v1/auth/signup').json({
-      username: 'Chris',
-      email: 'test@chris.test',
-      password: 'Password1234',
-    });
+    const response = await client
+      .post('/v1/auth/signup')
+      .json({
+        username: 'Chris',
+        email: 'test@chris.test',
+        password: 'Password1234',
+      })
+      .accept('json');
 
     const user = await User.findByOrFail('username', 'Chris');
 
@@ -39,7 +42,7 @@ test.group('[signup handler]', (group) => {
     const data = await UserFactory.create();
 
     const newData = await UserFactory.merge({ username: data.username }).make();
-    const response = await client.post('/v1/auth/signup').json(newData);
+    const response = await client.post('/v1/auth/signup').json(newData).accept('json');
 
     response.assertStatus(409);
     response.assertBodyContains({
@@ -51,7 +54,7 @@ test.group('[signup handler]', (group) => {
     const data = await UserFactory.create();
 
     const newData = await UserFactory.merge({ email: data.email }).make();
-    const response = await client.post('/v1/auth/signup').json(newData);
+    const response = await client.post('/v1/auth/signup').json(newData).accept('json');
 
     response.assertStatus(409);
     response.assertBodyContains({
@@ -60,10 +63,13 @@ test.group('[signup handler]', (group) => {
   });
 
   test('reject if the signup schema cannot be parsed', async ({ client }) => {
-    const response = await client.post('/v1/auth/signup').json({
-      username: 'sending',
-      email: 'crap',
-    });
+    const response = await client
+      .post('/v1/auth/signup')
+      .json({
+        username: 'sending',
+        email: 'crap',
+      })
+      .accept('json');
 
     response.assertStatus(422);
     response.assertBodyContains({

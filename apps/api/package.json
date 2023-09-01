@@ -9,7 +9,8 @@
     "dev": "node ace serve --watch --encore-args=\"--host 0.0.0.0 --public https://api.weakassdev.local\"",
     "build": "node ace build --production",
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "test:local": "dotenv -o -e .env.testing node ace test"
   },
   "devDependencies": {
     "@adonisjs/assembler": "~5.9.5",
@@ -26,6 +27,7 @@
     "@weakassdev/config": "*",
     "adonis-preset-ts": "~2.1.0",
     "autoprefixer": "~10.4.15",
+    "dotenv-cli": "~7.3.0",
     "pino-pretty": "~10.2.0",
     "postcss": "~8.4.28",
     "postcss-loader": "~7.3.3",

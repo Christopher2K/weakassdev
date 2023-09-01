@@ -48,8 +48,12 @@ export const reporters: Required<Config>['reporters'] = [specReporter()];
 |
 */
 export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
-  setup: [() => TestUtils.ace().loadCommands()],
-  teardown: [],
+  setup: [
+    () => TestUtils.ace().loadCommands(),
+    () => TestUtils.db().truncate(),
+    () => TestUtils.httpServer().start(),
+  ],
+  teardown: [() => TestUtils.ace().loadCommands(), () => TestUtils.db().truncate()],
 };
 
 /*
@@ -65,10 +69,9 @@ export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
 */
 export const configureSuite: Required<Config>['configureSuite'] = (suite) => {
   if (suite.name === 'functional') {
-    suite.setup(async () => {
-      console.debug('DATABASE', Env.get('DATABASE_URL'));
+    console.debug('DATABASE', Env.get('DATABASE_URL'));
 
-      await TestUtils.httpServer().start();
+    suite.setup(async () => {
       await TestUtils.db().truncate();
       await TestUtils.db().migrate();
       await TestUtils.db().seed();

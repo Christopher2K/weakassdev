@@ -17,7 +17,10 @@ test.group('[posts destroy handler]', (group) => {
   });
 
   test('mark a post as soft deleted', async ({ client, assert }) => {
-    const response = await client.delete(`/v1/posts/${post.id}`).loginAs(post.author);
+    const response = await client
+      .delete(`/v1/posts/${post.id}`)
+      .loginAs(post.author)
+      .accept('json');
     post = await post.refresh();
 
     response.assertStatus(202);
@@ -26,12 +29,15 @@ test.group('[posts destroy handler]', (group) => {
 
   test('cannot delete a post that does not belongs to the current user', async ({ client }) => {
     const randomUser = await User.query().first();
-    const response = await client.delete(`/v1/posts/${post.id}`).loginAs(randomUser!);
+    const response = await client
+      .delete(`/v1/posts/${post.id}`)
+      .loginAs(randomUser!)
+      .accept('json');
     response.assertStatus(403);
   });
 
   test('cannot delete a post as an anonymous user', async ({ client }) => {
-    const response = await client.delete(`/v1/posts/${post.id}`);
+    const response = await client.delete(`/v1/posts/${post.id}`).accept('json');
     response.assertStatus(401);
   });
 
@@ -42,7 +48,10 @@ test.group('[posts destroy handler]', (group) => {
       })
       .save();
 
-    const response = await client.delete(`/v1/posts/${post.id}`).loginAs(post.author);
+    const response = await client
+      .delete(`/v1/posts/${post.id}`)
+      .loginAs(post.author)
+      .accept('json');
 
     response.assertStatus(403);
   });

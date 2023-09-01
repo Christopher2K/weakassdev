@@ -22,7 +22,8 @@ test.group('[posts store handler]', (group) => {
     const response = await client
       .post(`/v1/posts`)
       .json({ content: 'Hello, how are you?' })
-      .loginAs(user);
+      .loginAs(user)
+      .accept('json');
 
     response.assertStatus(200);
   });
@@ -31,14 +32,15 @@ test.group('[posts store handler]', (group) => {
     const response = await client
       .post(`/v1/posts`)
       .json({ content: 'Hello, how are you?' })
-      .loginAs(user);
+      .loginAs(user)
+      .accept('json');
 
     response.assertStatus(200);
     postsShowResponseSchema.parse(response.body());
   });
 
   test('rejects anonymous user', async ({ client }) => {
-    const response = await client.post(`/v1/posts`);
+    const response = await client.post(`/v1/posts`).accept('json');
     response.assertStatus(401);
   });
 
@@ -46,7 +48,8 @@ test.group('[posts store handler]', (group) => {
     const response = await client
       .post(`/v1/posts`)
       .json({ text: 'Hello, how are you?' })
-      .loginAs(user);
+      .loginAs(user)
+      .accept('json');
 
     response.assertStatus(422);
   });

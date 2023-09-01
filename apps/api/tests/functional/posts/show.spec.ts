@@ -17,23 +17,25 @@ test.group('[posts show handler]', (group) => {
   });
 
   test('responds to anonymous user', async ({ client }) => {
-    const response = await client.get(`/v1/posts/${post.id}`);
+    const response = await client.get(`/v1/posts/${post.id}`).accept('json');
     response.assertStatus(200);
   });
 
   test('pass the response data validator', async ({ client }) => {
-    const response = await client.get(`/v1/posts/${post.id}`);
+    const response = await client.get(`/v1/posts/${post.id}`).accept('json');
     postsShowResponseSchema.parse(response.body());
     response.assertStatus(200);
   });
 
   test('fails if the parameter is not a valid uuid', async ({ client }) => {
-    const response = await client.get(`/v1/posts/something-else`);
+    const response = await client.get(`/v1/posts/something-else`).accept('json');
     response.assertStatus(422);
   });
 
   test('fails if the id does not exists in database', async ({ client }) => {
-    const response = await client.get(`/v1/posts/a65091c9-c884-487f-8a6d-34dadbb5aeba`);
+    const response = await client
+      .get(`/v1/posts/a65091c9-c884-487f-8a6d-34dadbb5aeba`)
+      .accept('json');
     response.assertStatus(404);
   });
 
@@ -50,7 +52,7 @@ test.group('[posts show handler]', (group) => {
         })
         .create();
 
-      const response = await client.get(`/v1/posts/${newPost.id}`);
+      const response = await client.get(`/v1/posts/${newPost.id}`).accept('json');
       response.assertStatus(404);
     });
 });

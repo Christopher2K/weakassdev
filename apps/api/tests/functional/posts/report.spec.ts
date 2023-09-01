@@ -25,7 +25,8 @@ test.group('[posts report handler]', (group) => {
         reason: 'DUPLICATE',
         reasonContext: 'Test',
       })
-      .loginAs(anotherUser);
+      .loginAs(anotherUser)
+      .accept('json');
 
     postsReportResponseSchema.parse(response.body());
     response.assertStatus(200);
@@ -38,7 +39,8 @@ test.group('[posts report handler]', (group) => {
         reason: 'DUPLICATE',
         reasonContext: 'Test',
       })
-      .loginAs(post.author);
+      .loginAs(post.author)
+      .accept('json');
 
     response.assertStatus(403);
   });
@@ -54,7 +56,8 @@ test.group('[posts report handler]', (group) => {
         reason: 'DUPLICATE',
         reasonContext: 'Test',
       })
-      .loginAs(postReport.reporter);
+      .loginAs(postReport.reporter)
+      .accept('json');
 
     response.assertStatus(422);
   });
@@ -68,7 +71,8 @@ test.group('[posts report handler]', (group) => {
         reason: 'DUPLICATE',
         reasonContext: 'Test',
       })
-      .loginAs(user);
+      .loginAs(user)
+      .accept('json');
 
     response.assertStatus(404);
   });
@@ -79,7 +83,8 @@ test.group('[posts report handler]', (group) => {
       .json({
         reason: 'DUPLICATE',
         reasonContext: 'Test',
-      });
+      })
+      .accept('json');
 
     response.assertStatus(401);
   });

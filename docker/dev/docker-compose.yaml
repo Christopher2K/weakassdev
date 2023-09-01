@@ -50,7 +50,7 @@ services:
       retries: 120
 
   db-test:
-    env_file: ../../.env.test
+    env_file: ../../.env.testing
     image: postgres:15.3-alpine3.18
     restart: always
     ports:

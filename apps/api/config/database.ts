@@ -41,6 +41,9 @@ const databaseConfig: DatabaseConfig = {
       },
       healthCheck: true,
       debug: Env.get('NODE_ENV') !== 'production',
+      seeders: {
+        paths: ['./database/seeders/MainSeeder'],
+      },
     },
   },
 };

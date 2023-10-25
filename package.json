@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "apps/*",
-      "libs/*"
-    ]
-  },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
   "scripts": {
     "postinstall": "husky install",
     "clean": "rm -rf ./apps/web/true",

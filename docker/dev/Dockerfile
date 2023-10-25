@@ -16,4 +16,6 @@ COPY apps/web/package.json ./apps/web/
 
 COPY libs/shared/package.json ./libs/shared/
 
-RUN yarn install --frozen-lockfile
+COPY libs/config/package.json ./libs/config/
+
+RUN yarn install

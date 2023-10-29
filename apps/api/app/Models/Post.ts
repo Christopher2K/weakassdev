@@ -15,6 +15,7 @@ import { PostStatus, postStatusSchema } from '@weakassdev/shared/models';
 import User from 'App/Models/User';
 
 import PostContent from './PostContent';
+import PostReport from './PostReport';
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
@@ -57,6 +58,11 @@ export default class Post extends BaseModel {
     foreignKey: 'postId',
   })
   public postVersions: HasMany<typeof PostContent>;
+
+  @hasMany(() => PostReport, {
+    foreignKey: 'postId',
+  })
+  public reports: HasMany<typeof PostReport>;
 
   // Getter / Setter
   public get canBeUpdated() {

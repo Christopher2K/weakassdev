@@ -13,5 +13,5 @@
     "types": ["../../node_modules/solid-start/env"]
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "react"]
 }

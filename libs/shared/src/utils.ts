@@ -6,3 +6,7 @@ export const luxonDateTime = z
   .transform((arg) => {
     return arg.toUTC().toISO() as string;
   });
+
+export function formatDate(plainDate: string): string {
+  return DateTime.fromISO(plainDate).toLocaleString(DateTime.DATETIME_SHORT);
+}

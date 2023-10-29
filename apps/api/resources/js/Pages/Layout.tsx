@@ -14,6 +14,7 @@ export function Layout({ children }: LayoutProps) {
     <>
       {isLoggedIn && <Navbar />}
       <div
+        scroll-region="true"
         className={css({
           w: 'full',
           h: 'full',

@@ -27,6 +27,11 @@
       "types": "./dist/validators.d.ts",
       "require": "./dist/validators.cjs",
       "import": "./dist/validators.js"
+    },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "require": "./dist/utils.cjs",
+      "import": "./dist/utils.js"
     }
   },
   "typesVersions": {
@@ -39,6 +44,9 @@
       ],
       "validators": [
         "dist/validators.d.ts"
+      ],
+      "utils": [
+        "dist/utils.d.ts"
       ]
     }
   },
@@ -55,7 +63,8 @@
     "entry": [
       "src/index.ts",
       "src/models/index.ts",
-      "src/validators.ts"
+      "src/validators.ts",
+      "src/utils.ts"
     ],
     "format": [
       "esm",

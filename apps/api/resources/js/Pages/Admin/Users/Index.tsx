@@ -95,6 +95,7 @@ export default function Index({ users }: IndexProps) {
           </Table.Body>
           <Table.Footer length={columns.length}>
             <Table.Pagination
+              as="span"
               baseUrl="/admin/users"
               currentPage={meta.currentPage}
               lastPage={meta.lastPage}

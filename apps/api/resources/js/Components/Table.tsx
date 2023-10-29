@@ -2,9 +2,11 @@ import React, { type PropsWithChildren } from 'react';
 import { Link } from '@inertiajs/inertia-react';
 import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 
-import { Button } from './Button';
 import { css } from '@style/css';
 import { hstack } from '@style/patterns';
+
+import { Button } from './Button';
+import { Pagination } from './Pagination';
 
 type RootProps = PropsWithChildren<{}>;
 function Root({ children }: RootProps) {
@@ -88,49 +90,6 @@ function Footer({ children, length }: FooterProps) {
         <td colSpan={length}>{children}</td>
       </tr>
     </tfoot>
-  );
-}
-
-type PaginationProps = {
-  baseUrl: string;
-  currentPage: number;
-  lastPage: number;
-};
-
-function Pagination({ baseUrl, currentPage, lastPage }: PaginationProps) {
-  const isPreviousNavigationDisabled = currentPage === 1;
-  const isNextNavigationDisabled = currentPage === lastPage;
-
-  return (
-    <span className={hstack()}>
-      <Button.Link btnSize="sm" disabled={isPreviousNavigationDisabled} href={`${baseUrl}?page=1`}>
-        Début de liste
-      </Button.Link>
-      <Button.Link
-        btnSize="sm"
-        disabled={isPreviousNavigationDisabled}
-        href={`${baseUrl}?page=${currentPage - 1}`}
-        leftIcon={<ChevronLeft size={20} />}
-      >
-        Page précédente
-      </Button.Link>
-
-      <Button.Link
-        btnSize="sm"
-        disabled={isNextNavigationDisabled}
-        href={`${baseUrl}?page=${currentPage + 1}`}
-        rightIcon={<ChevronRight size={20} />}
-      >
-        Page suivante
-      </Button.Link>
-      <Button.Link
-        btnSize="sm"
-        disabled={isNextNavigationDisabled}
-        href={`${baseUrl}?page=${lastPage}`}
-      >
-        Fin de liste
-      </Button.Link>
-    </span>
   );
 }
 

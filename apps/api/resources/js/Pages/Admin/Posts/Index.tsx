@@ -108,6 +108,7 @@ export default function Index({ posts }: IndexProps) {
           </Table.Body>
           <Table.Footer length={columns.length}>
             <Table.Pagination
+              as="span"
               baseUrl="/admin/posts"
               currentPage={meta.currentPage}
               lastPage={meta.lastPage}

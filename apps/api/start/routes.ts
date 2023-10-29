@@ -59,6 +59,9 @@ Route.group(() => {
 
     Route.resource('users', 'AdminUsersController').except(['store', 'create']).as('adminUsers');
     Route.resource('posts', 'AdminPostsController').except(['store', 'create']).as('adminPosts');
+    Route.resource('reports', 'AdminReportsController')
+      .except(['store', 'create'])
+      .as('adminReports');
   })
     .middleware('auth')
     .middleware('admin');

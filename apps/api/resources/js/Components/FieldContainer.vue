@@ -1,6 +1,11 @@
-import { styled } from '@style/jsx';
+<script setup lang="ts">
+import { cva, RecipeVariantProps } from '@style/css';
 
-export const FieldContainer = styled('div', {
+type StyleProps = RecipeVariantProps<typeof containerStyle>;
+
+const props = defineProps<StyleProps>();
+
+const containerStyle = cva({
   base: {
     display: 'flex',
     flexDir: 'column',
@@ -26,3 +31,10 @@ export const FieldContainer = styled('div', {
     alignment: 'left',
   },
 });
+</script>
+
+<template>
+  <div :class="containerStyle(props)">
+    <slot></slot>
+  </div>
+</template>

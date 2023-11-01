@@ -17,7 +17,7 @@ export default class PostReport extends BaseModel {
   public reasonContext: string | null = null;
 
   @column()
-  public outcome: PostReportOutcome;
+  public outcome: PostReportOutcome | null;
 
   @column()
   public outcomeContext: string | null = null;

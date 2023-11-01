@@ -90,8 +90,8 @@ export function ReportItem({ report }: ReportItemProps) {
             w: 'full',
           })}
         >
-          <Button.Base>Approve report</Button.Base>
-          <Button.Base>Reject report</Button.Base>
+          <Button.Link href={`/admin/reports/${report.id}/approve`}>Approve report</Button.Link>
+          <Button.Link href={`/admin/reports/${report.id}/reject`}>Reject report</Button.Link>
         </div>
       </div>
     </div>

@@ -16,13 +16,16 @@ Inertia.share({
   formErrors: (ctx) => {
     return ctx.session.flashMessages.get('formErrors');
   },
-  errors: (ctx) => {
-    return ctx.session.flashMessages.get('errors');
-  },
   user: (ctx) => {
     const user = ctx.auth.user;
     if (!user) return null;
 
     return authenticatedUserResponseSchema.parse(user);
+  },
+  success: (ctx) => {
+    return ctx.session.flashMessages.get('success');
+  },
+  errors: (ctx) => {
+    return ctx.session.flashMessages.get('errors');
   },
 }).version(() => Inertia.manifestFile('public/assets/manifest.json'));

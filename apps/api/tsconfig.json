@@ -7,7 +7,6 @@
     "rootDir": "./",
     "baseUrl": "./",
     "sourceMap": true,
-    "jsx": "react-jsx",
     "paths": {
       "App/*": ["./app/*"],
       "Config/*": ["./config/*"],

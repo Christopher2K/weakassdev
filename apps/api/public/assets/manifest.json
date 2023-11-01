@@ -1,10 +1,3 @@
 {
-  "assets/app.css": "https://api.weakassdev.local/assets/app.css",
-  "assets/app.js": "https://api.weakassdev.local/assets/app.js",
-  "assets/fonts/Inter-SemiBold.woff": "https://api.weakassdev.local/assets/fonts/Inter-SemiBold.6d7d360a.woff",
-  "assets/fonts/Inter-Medium.woff": "https://api.weakassdev.local/assets/fonts/Inter-Medium.484bd6e6.woff",
-  "assets/fonts/Inter-Regular.woff": "https://api.weakassdev.local/assets/fonts/Inter-Regular.f3ce705f.woff",
-  "assets/fonts/Inter-SemiBold.woff2": "https://api.weakassdev.local/assets/fonts/Inter-SemiBold.72499514.woff2",
-  "assets/fonts/Inter-Medium.woff2": "https://api.weakassdev.local/assets/fonts/Inter-Medium.d4b54413.woff2",
-  "assets/fonts/Inter-Regular.woff2": "https://api.weakassdev.local/assets/fonts/Inter-Regular.ac03a6de.woff2"
+  "assets/app.js": "https://api.weakassdev.local/assets/app.js"
 }

@@ -45,12 +45,17 @@ Encore.setPublicPath('/assets');
 | entrypoints.
 |
 */
-Encore.addEntry('app', './resources/js/app.tsx')
+Encore.addEntry('app', './resources/js/app.ts')
   .enableBabelTypeScriptPreset({
-    isTSX: true,
+    // isTSX: true,
     allExtensions: true,
   })
-  .enableReactPreset();
+  .enableVueLoader(() => {}, {
+    version: 3,
+    runtimeCompilerBuild: false,
+    useJsx: false,
+  });
+// .enableReactPreset();
 
 Encore.addAliases({
   '~': join(__dirname, './resources/js'),
@@ -204,8 +209,8 @@ Encore.enablePostCssLoader();
 // Encore.enableVueLoader(() => {}, {
 //   version: 3,
 //   runtimeCompilerBuild: false,
-//   useJsx: false
-// })
+//   useJsx: false,
+// });
 
 /*
 |--------------------------------------------------------------------------

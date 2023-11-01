@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>Error</div>
+  <div>BLABLABLA</div>
 </template>

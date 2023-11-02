@@ -7,7 +7,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@pandacss/dev": "~0.12.1",
+    "@pandacss/dev": "~0.17.5",
     "typescript": "~5.2.0"
   }
 }

@@ -70,7 +70,6 @@ const textStyles = defineTextStyles({
   },
 });
 
-// @ts-ignore
 export default defineConfig({
   importMap: {
     css: '@style/css',
@@ -81,7 +80,6 @@ export default defineConfig({
   preflight: true,
   jsxFramework: 'vue',
 
-  // @ts-ignore
   globalCss,
 
   include: ['./**/*.{vue,ts}'],
@@ -89,12 +87,10 @@ export default defineConfig({
 
   theme: {
     extend: {
-      // @ts-ignore
       textStyles,
     },
   },
 
   outdir: 'styled-system',
-  // @ts-ignore
   presets: [weakAssDevPreset],
 });

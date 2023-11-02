@@ -1,9 +1,5 @@
 <script lang="ts">
 import AppLayout from '~/Pages/Layout.vue';
-import FieldContainer from '~/Components/FieldContainer.vue';
-import TextInput from '~/Components/TextInput.vue';
-import AppButton from '~/Components/AppButton.vue';
-import AppMessage from '~/Components/AppMessage.vue';
 
 export default {
   layout: AppLayout,
@@ -11,6 +7,11 @@ export default {
 </script>
 
 <script setup lang="ts">
+import FieldContainer from '~/Components/FieldContainer.vue';
+import TextInput from '~/Components/TextInput.vue';
+import AppButton from '~/Components/AppButton.vue';
+import AppMessage from '~/Components/AppMessage.vue';
+
 import { computed, ref } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { css } from '@style/css';

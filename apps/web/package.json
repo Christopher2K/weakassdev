@@ -11,7 +11,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "@pandacss/dev": "~0.12.1",
+    "@pandacss/dev": "~0.17.5",
     "@types/node": "~18.11.18",
     "@weakassdev/config": "*",
     "esbuild": "~0.14.54",

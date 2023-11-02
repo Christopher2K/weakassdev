@@ -53,7 +53,7 @@
   "devDependencies": {
     "@swc/core": "~1.3.74",
     "tsup": "~7.2.0",
-    "typescript": "~5.1.6"
+    "typescript": "~5.2.0"
   },
   "dependencies": {
     "luxon": "~3.3.0",

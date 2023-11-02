@@ -3,7 +3,8 @@ import { cva, RecipeVariantProps } from '@style/css';
 
 type StyleProps = RecipeVariantProps<typeof containerStyle>;
 
-const props = defineProps<StyleProps>();
+// const props = defineProps<StyleProps>();
+const props = defineProps<{}>();
 
 const containerStyle = cva({
   base: {

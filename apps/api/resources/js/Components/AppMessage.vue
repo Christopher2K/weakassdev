@@ -47,7 +47,7 @@ const messageStyle = cva({
           cursor: 'pointer',
         })
       "
-      @click="() => emit('close')"
+      @click="emit('close')"
     >
       <XIcon :size="24" />
     </button>

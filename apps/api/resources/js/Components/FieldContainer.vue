@@ -3,8 +3,9 @@ import { cva, RecipeVariantProps } from '@style/css';
 
 type StyleProps = RecipeVariantProps<typeof containerStyle>;
 
-// const props = defineProps<StyleProps>();
-const props = defineProps<{}>();
+const props = defineProps<{
+  alignment?: StyleProps['alignment'];
+}>();
 
 const containerStyle = cva({
   base: {
@@ -35,7 +36,7 @@ const containerStyle = cva({
 </script>
 
 <template>
-  <div :class="containerStyle(props)">
+  <div :class="containerStyle({ alignment: props.alignment })">
     <slot></slot>
   </div>
 </template>

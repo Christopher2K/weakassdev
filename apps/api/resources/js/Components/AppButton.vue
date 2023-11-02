@@ -7,7 +7,8 @@ import { css, cva, RecipeVariantProps } from '@style/css';
 
 // TODO: Check if props typing and passthrough are OK here!
 
-const props = defineProps<StyleProps & SpecificProps[T]>();
+// const props = defineProps<StyleProps & SpecificProps[T]>();
+const props = defineProps<StyleProps>();
 
 const slots = defineSlots<{
   ['left-icon']: (props: unknown) => unknown;

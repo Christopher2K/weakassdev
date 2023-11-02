@@ -70,20 +70,31 @@ const textStyles = defineTextStyles({
   },
 });
 
+// @ts-ignore
 export default defineConfig({
+  importMap: {
+    css: '@style/css',
+    recipes: '@style/recipes',
+    patterns: '@style/patterns',
+    jsx: '@style/jsx',
+  },
   preflight: true,
-  globalCss,
-  jsxFramework: 'react',
+  jsxFramework: 'vue',
 
-  include: ['./resources/js/**/*.{ts,tsx}'],
+  // @ts-ignore
+  globalCss,
+
+  include: ['./**/*.{vue,ts}'],
   exclude: [],
 
   theme: {
     extend: {
+      // @ts-ignore
       textStyles,
     },
   },
 
   outdir: 'styled-system',
+  // @ts-ignore
   presets: [weakAssDevPreset],
 });

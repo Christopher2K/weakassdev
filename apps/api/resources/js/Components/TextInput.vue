@@ -2,7 +2,8 @@
 import type { InputHTMLAttributes } from 'vue';
 import { css } from '@style/css';
 
-defineProps<InputHTMLAttributes>();
+// defineProps<InputHTMLAttributes>();
+defineProps<{}>();
 </script>
 
 <template>

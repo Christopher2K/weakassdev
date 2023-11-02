@@ -16,9 +16,8 @@ const props = defineProps<{
     "
   >
     <p :v-if="Boolean(props.title)" :class="css({ width: 'full', textStyle: 'caption', px: '4' })">
-      {{ props.title }}}
+      {{ props.title }}
     </p>
-    }
     <div
       :class="
         vstack({

@@ -40,12 +40,12 @@ export default class AdminReportsController {
     // });
 
     // Redirect to the list page using Inertia
-    session.flash('success', 'Report approved. The post has been flagged.');
+    session.flash('feedback', ['success', 'Report approved. The post has been flagged.']);
     return inertia.redirectBack();
   }
 
   public async rejectReport({ inertia, session }: HttpContextContract) {
-    session.flash('success', 'Report rejected.');
+    session.flash('feedback', ['error', 'Error example.']);
     return inertia.redirectBack();
   }
 }

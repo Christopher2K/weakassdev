@@ -22,10 +22,5 @@ Inertia.share({
 
     return authenticatedUserResponseSchema.parse(user);
   },
-  success: (ctx) => {
-    return ctx.session.flashMessages.get('success');
-  },
-  errors: (ctx) => {
-    return ctx.session.flashMessages.get('errors');
-  },
+  feedback: (ctx) => ctx.session.flashMessages.get('feedback'),
 }).version(() => Inertia.manifestFile('public/assets/manifest.json'));

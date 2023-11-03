@@ -109,8 +109,10 @@ const props = defineProps<{
           })
         "
       >
-        <AppButton :href="`/admin/reports/${report.id}/approve`">Approuver le blocage</AppButton>
-        <AppButton :href="`/admin/reports/${report.id}/reject`">Rejeter</AppButton>
+        <AppButton :href="`/admin/reports/${report.id}/approve`" preserve-scroll
+          >Approuver le blocage</AppButton
+        >
+        <AppButton :href="`/admin/reports/${report.id}/reject`" preserve-scroll>Rejeter</AppButton>
       </div>
     </div>
   </div>

@@ -1,14 +1,15 @@
-<script setup lang="ts" generic="T extends 'link' | 'button'">
-export type ButtonType = 'link' | 'button';
+<script setup lang="ts">
+import { computed, type ButtonHTMLAttributes } from 'vue';
 
 import { Link, type InertiaLinkProps } from '@inertiajs/vue3';
-import { computed, type ButtonHTMLAttributes } from 'vue';
 import { css, cva, RecipeVariantProps } from '@style/css';
 
-// TODO: Check if props typing and passthrough are OK here!
-
-// const props = defineProps<StyleProps & SpecificProps[T]>();
-const props = defineProps<StyleProps>();
+const props = defineProps<{
+  btnSize?: RecipeVariantProps<typeof buttonStyle>['btnSize'];
+  theme?: RecipeVariantProps<typeof buttonStyle>['theme'];
+  href?: InertiaLinkProps['href'];
+  type?: ButtonHTMLAttributes['type'];
+}>();
 
 const slots = defineSlots<{
   ['left-icon']: (props: unknown) => unknown;
@@ -17,6 +18,7 @@ const slots = defineSlots<{
 
 const isLeftIconDefined = computed(() => slots['left-icon'] != null);
 const isRightIconDefined = computed(() => slots['right-icon'] != null);
+const isLink = computed(() => Boolean(props.href));
 
 const buttonStyle = cva({
   base: {
@@ -73,31 +75,18 @@ const buttonStyle = cva({
     btnSize: 'sm',
   },
 });
-
-type SpecificProps = {
-  link: InertiaLinkProps;
-  button: ButtonHTMLAttributes;
-};
-
-type StyleProps = {
-  btnSize?: RecipeVariantProps<typeof buttonStyle>['btnSize'];
-  theme?: RecipeVariantProps<typeof buttonStyle>['theme'];
-};
-
-function isLink(a: unknown): a is SpecificProps['link'] {
-  return (a as SpecificProps['link']).href != null;
-}
 </script>
 
 <template>
   <component
-    :is="isLink(props) ? Link : 'button'"
+    :is="isLink ? Link : 'button'"
     :class="
       buttonStyle({
         btnSize: props.btnSize,
         theme: props.theme,
       })
     "
+    :href="props.href"
   >
     <span
       :class="

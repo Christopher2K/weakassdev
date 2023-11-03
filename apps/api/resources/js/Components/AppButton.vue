@@ -9,12 +9,15 @@ const props = defineProps<{
   theme?: RecipeVariantProps<typeof buttonStyle>['theme'];
   href?: InertiaLinkProps['href'];
   type?: ButtonHTMLAttributes['type'];
+  disabled?: boolean;
 }>();
 
 const slots = defineSlots<{
   ['left-icon']: (props: unknown) => unknown;
   ['right-icon']: (props: unknown) => unknown;
 }>();
+
+const emits = defineEmits<{ click: [MouseEvent] }>();
 
 const isLeftIconDefined = computed(() => slots['left-icon'] != null);
 const isRightIconDefined = computed(() => slots['right-icon'] != null);
@@ -36,6 +39,15 @@ const buttonStyle = cva({
     },
   },
   variants: {
+    disabled: {
+      true: {
+        cursor: 'not-allowed',
+        opacity: 0.5,
+        bg: 'gray.100',
+        color: 'gray.600',
+        pointerEvents: 'none',
+      },
+    },
     btnSize: {
       sm: {
         p: '2',
@@ -73,8 +85,13 @@ const buttonStyle = cva({
   defaultVariants: {
     theme: 'primary',
     btnSize: 'sm',
+    disabled: false,
   },
 });
+
+function preventLinkClick(event: MouseEvent) {
+  event.preventDefault();
+}
 </script>
 
 <template>
@@ -84,9 +101,14 @@ const buttonStyle = cva({
       buttonStyle({
         btnSize: props.btnSize,
         theme: props.theme,
+        disabled,
       })
     "
+    :type="props.type"
+    :disabled="isLink ? null : disabled"
+    :aria-disabled="disabled"
     :href="props.href"
+    @click="isLink && props.disabled ? preventLinkClick($event) : emits('click', $event)"
   >
     <span
       :class="

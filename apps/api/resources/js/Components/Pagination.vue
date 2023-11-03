@@ -7,16 +7,18 @@ import AppButton from './AppButton.vue';
 
 const props = withDefaults(
   defineProps<{
+    as?: string;
     baseUrl: string;
     currentPage: number;
     lastPage: number;
-    as?: string;
   }>(),
   { as: 'div' },
 );
 
 const isPreviousNavigationDisabled = computed(() => props.currentPage === 1);
 const isNextNavigationDisabled = computed(() => props.currentPage === props.lastPage);
+
+console.log('isNextNavigationDisabled', isNextNavigationDisabled.value);
 </script>
 
 <template>

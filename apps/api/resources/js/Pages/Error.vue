@@ -40,6 +40,5 @@ const errorMsg = computed(() => {
     <h1 :class="css({ textStyle: 'h1' })">It's so OVER!!!!!!!</h1>
     <h2 :class="css({ textStyle: 'h3' })">We're cooked (On est cuisiné) (Same thing)</h2>
     <p :class="css({ textStyle: 'body' })">{{ errorMsg }}</p>
-    ;
   </div>
 </template>

@@ -18,7 +18,9 @@ const props = defineProps<{ length: number }>();
     "
   >
     <tr>
-      <td :colSpan="props.length">{children}</td>
+      <td :colSpan="props.length">
+        <slot />
+      </td>
     </tr>
   </tfoot>
 </template>

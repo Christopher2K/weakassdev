@@ -3,7 +3,7 @@ import { css } from '@style/css';
 </script>
 
 <template>
-  <div
+  <thead
     :class="
       css({
         borderTopRadius: 'md',
@@ -20,5 +20,5 @@ import { css } from '@style/css';
     "
   >
     <slot />
-  </div>
+  </thead>
 </template>

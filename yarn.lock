@@ -4021,6 +4021,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/luxon@npm:~3.3.3":
+  version: 3.3.3
+  resolution: "@types/luxon@npm:3.3.3"
+  checksum: 072dd39eea3f63453788fab2fcfc83eb33917afcaffe178ce08ecd8b016824b8ab3bfa991f66266f2fc1927768a56b4334945f2eb1d83638e325c0c43d7d0e86
+  languageName: node
+  linkType: hard
+
 "@types/md5@npm:^2.3.2":
   version: 2.3.2
   resolution: "@types/md5@npm:2.3.2"
@@ -4562,6 +4569,7 @@ __metadata:
   resolution: "@weakassdev/shared@workspace:libs/shared"
   dependencies:
     "@swc/core": ~1.3.74
+    "@types/luxon": ~3.3.3
     luxon: ~3.3.0
     tsup: ~7.2.0
     typescript: ~5.2.0

@@ -45,17 +45,17 @@ const props = defineProps<{
           })
         "
       >
-        Reported by
+        Signalé par
         <Link :href="`/admin/users/${report.reporter.id}`">{{
           props.report.reporter.username
         }}</Link
-        >, on
+        >, le
         {{ formatDate(report.createdAt) }}
       </p>
       <DefinitionList
         :items="[
-          ['Reason', report.reason],
-          ['Context', report.reasonContext],
+          ['Raison', report.reason],
+          ['Contexte', report.reasonContext],
         ]"
       />
     </div>
@@ -83,11 +83,11 @@ const props = defineProps<{
           })
         "
       >
-        Posted by
+        Posté par
         <Link :href="`/admin/users/${report.post.author.id}`">{{
           props.report.post.author.username
         }}</Link>
-        on {{ formatDate(props.report.post.createdAt) }}
+        le {{ formatDate(props.report.post.createdAt) }}
       </p>
     </div>
 
@@ -109,8 +109,8 @@ const props = defineProps<{
           })
         "
       >
-        <AppButton :href="`/admin/reports/${report.id}/approve`">Approve report</AppButton>
-        <AppButton :href="`/admin/reports/${report.id}/reject`">Reject report</AppButton>
+        <AppButton :href="`/admin/reports/${report.id}/approve`">Approuver le blocage</AppButton>
+        <AppButton :href="`/admin/reports/${report.id}/reject`">Rejeter</AppButton>
       </div>
     </div>
   </div>

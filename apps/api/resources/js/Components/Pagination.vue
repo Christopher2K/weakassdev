@@ -17,8 +17,6 @@ const props = withDefaults(
 
 const isPreviousNavigationDisabled = computed(() => props.currentPage === 1);
 const isNextNavigationDisabled = computed(() => props.currentPage === props.lastPage);
-
-console.log('isNextNavigationDisabled', isNextNavigationDisabled.value);
 </script>
 
 <template>

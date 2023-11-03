@@ -23,7 +23,7 @@ import TableFooter from '~/Components/Table/TableFooter.vue';
 import Pagination from '~/Components/Pagination.vue';
 
 const props = defineProps<{
-  posts: AdminUsersData;
+  users: AdminUsersData;
 }>();
 
 const columnHelpers = createColumnHelper<AdminUsersData['data'][number]>();
@@ -60,7 +60,7 @@ const columns = [
 ];
 const table = useVueTable({
   get data() {
-    return props.posts.data;
+    return props.users.data;
   },
   columns,
   getCoreRowModel: getCoreRowModel(),
@@ -101,8 +101,8 @@ const table = useVueTable({
         <Pagination
           as="span"
           baseUrl="/admin/users"
-          :currentPage="props.posts.meta.currentPage"
-          :lastPage="props.posts.meta.lastPage"
+          :currentPage="props.users.meta.currentPage"
+          :lastPage="props.users.meta.lastPage"
         />
       </TableFooter>
     </TableContainer>

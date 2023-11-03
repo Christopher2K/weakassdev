@@ -1,6 +1,5 @@
 <script lang="ts">
 import AppLayout from '~/Pages/Layout.vue';
-import AppButton from '~/Components/AppButton.vue';
 
 export default {
   layout: AppLayout,
@@ -10,10 +9,12 @@ export default {
 <script setup lang="ts">
 import { DateTime } from 'luxon';
 import { createColumnHelper, useVueTable, FlexRender, getCoreRowModel } from '@tanstack/vue-table';
+
 import { css } from '@style/css';
 
 import { AdminPostsData } from '@weakassdev/shared/validators';
 
+import AppButton from '~/Components/AppButton.vue';
 import TableRoot from '~/Components/Table/TableRoot.vue';
 import TableHeader from '~/Components/Table/TableHeader.vue';
 import TableBody from '~/Components/Table/TableBody.vue';
@@ -56,12 +57,6 @@ const columns = [
   columnHelpers.display({
     id: 'actions',
     header: () => 'Actions',
-    cell: (info) => 'Hey',
-    // <div>
-    //   <Button.Link href={`/admin/posts/${info.row.getValue('id')}`} btnSize="sm">
-    //     Détails
-    //   </Button.Link>
-    // </div>
   }),
 ];
 

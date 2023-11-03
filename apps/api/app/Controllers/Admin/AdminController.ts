@@ -16,7 +16,7 @@ export default class AdminController {
 
   public async dashboard({ inertia }: HttpContextContract) {
     const { postCount, userCount } = await GlobalManager.getEntitiesCount('Post', 'User');
-    return inertia.render('Admin/Dashboard', { postCount, userCount });
+    return inertia.render('Admin/Dashboard/Index', { postCount, userCount });
   }
 
   // FORM SUBMISSIONS

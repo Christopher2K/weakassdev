@@ -39,6 +39,14 @@ const textStyles = defineTextStyles({
       lineHeight: '140%',
     },
   },
+  bigBody: {
+    value: {
+      fontFamily: 'Inter',
+      fontWeight: 'normal',
+      fontSize: 'xl',
+      lineHeight: '140%',
+    },
+  },
   body: {
     value: {
       fontFamily: 'Inter',

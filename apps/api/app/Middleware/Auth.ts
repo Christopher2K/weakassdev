@@ -14,7 +14,7 @@ export default class AuthMiddleware {
    * The URL to redirect to when request is Unauthorized
    */
   // FIXME: This should come from Env object
-  protected redirectTo = 'https://weakassdev.local';
+  protected redirectTo = 'https://weakassdev.test';
 
   /**
    * Authenticates the current HTTP request against a custom set of defined

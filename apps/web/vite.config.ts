@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [solid()],
   server: {
     hmr: {
-      host: 'weakassdev.local',
+      host: 'weakassdev.test',
     },
     watch: {
       usePolling: true,

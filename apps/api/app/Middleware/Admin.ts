@@ -3,7 +3,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import { userRoleSchema } from '@weakassdev/shared/models';
 
 export default class AdminMiddleware {
-  protected redirectTo = 'https://api.weakassdev.local/admin';
+  protected redirectTo = 'https://api.weakassdev.test/admin';
 
   public async handle({ auth }: HttpContextContract, next: () => Promise<void>) {
     // code for middleware goes here. ABOVE THE NEXT CALL

@@ -152,7 +152,7 @@ Encore.configureDevServerOptions((options) => {
     options.static = [options.static];
   }
 
-  const webSocketURL = 'wss://api.weakassdev.local/ws';
+  const webSocketURL = 'wss://api.weakassdev.test/ws';
   if (!options.client) {
     options.client = {
       webSocketURL,

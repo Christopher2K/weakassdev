@@ -6,7 +6,7 @@
     "prepare": "panda codegen",
     "typecheck": "tsc --noEmit",
     "ace": "node ace",
-    "dev": "node ace serve --watch --encore-args=\"--host 0.0.0.0 --public https://api.weakassdev.local\"",
+    "dev": "node ace serve --watch --encore-args=\"--host 0.0.0.0 --public https://api.weakassdev.test\"",
     "build": "node ace build --production",
     "start": "node server.js",
     "test": "node ace test",

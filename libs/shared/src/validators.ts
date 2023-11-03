@@ -153,6 +153,7 @@ export const adminReportsDataSchema = makeListResponseSchema(
     outcomeContext: z.string().nullable(),
     post: z.object({
       id: z.string(),
+      createdAt: z.string(),
       content: z.object({
         content: z.string(),
         createdAt: z.string(),

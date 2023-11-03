@@ -1,10 +1,9 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
-import { postReportOutcomeSchema, postStatusSchema } from '@weakassdev/shared/models';
+import { postStatusSchema } from '@weakassdev/shared/models';
 import { adminReportsDataSchema } from '@weakassdev/shared/validators';
 
 import PostReport from 'App/Models/PostReport';
-import Post from 'App/Models/Post';
 
 export default class AdminReportsController {
   public async index({ request, inertia }: HttpContextContract) {
@@ -24,7 +23,7 @@ export default class AdminReportsController {
     });
   }
 
-  public async approveReport({ session, request, inertia }: HttpContextContract) {
+  public async approveReport({ session, inertia }: HttpContextContract) {
     // const reportId = request.param('id');
     // const report = await PostReport.findOrFail(reportId);
     //
@@ -45,7 +44,7 @@ export default class AdminReportsController {
     return inertia.redirectBack();
   }
 
-  public async rejectReport({ request, inertia, session }: HttpContextContract) {
+  public async rejectReport({ inertia, session }: HttpContextContract) {
     session.flash('success', 'Report rejected.');
     return inertia.redirectBack();
   }

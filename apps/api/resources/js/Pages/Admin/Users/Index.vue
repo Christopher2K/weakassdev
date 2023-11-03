@@ -68,7 +68,7 @@ const table = useVueTable({
 </script>
 
 <template>
-  <h1 :class="css({ textStyle: 'h2', mb: '10' })">Posts</h1>
+  <h1 :class="css({ textStyle: 'h2', mb: '10' })">Utilisateurs</h1>
   <TableRoot>
     <TableContainer>
       <TableHeader>

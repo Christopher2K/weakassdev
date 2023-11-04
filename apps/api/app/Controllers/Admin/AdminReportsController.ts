@@ -1,6 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
-import { postStatusSchema } from '@weakassdev/shared/models';
+import Post from 'App/Models/Post';
+
+import { postStatusSchema, postReportOutcomeSchema } from '@weakassdev/shared/models';
 import { adminReportsDataSchema } from '@weakassdev/shared/validators';
 
 import PostReport from 'App/Models/PostReport';
@@ -23,29 +25,41 @@ export default class AdminReportsController {
     });
   }
 
-  public async approveReport({ session, inertia }: HttpContextContract) {
-    // const reportId = request.param('id');
-    // const report = await PostReport.findOrFail(reportId);
-    //
-    // // Mark the reports as approved
-    // await PostReport.query()
-    //   .update({
-    //     outcome: postReportOutcomeSchema.Values.APPROVED,
-    //   })
-    //   .where('postId', report.postId);
-    //
-    // // Mark the post as flagged
-    // await Post.query().update({
-    //   status: postStatusSchema.Values.FLAGGED,
-    // });
+  public async approveReport({ request, session, inertia }: HttpContextContract) {
+    const reportId = request.body()['id'];
+    const report = await PostReport.findOrFail(reportId);
+
+    // Mark the reports as approved
+    await PostReport.query()
+      .update({
+        outcome: postReportOutcomeSchema.Values.APPROVED,
+      })
+      .where('postId', report.postId);
+
+    // Mark the post as flagged
+    await Post.query()
+      .update({
+        status: postStatusSchema.Values.FLAGGED,
+      })
+      .where('id', report.postId);
 
     // Redirect to the list page using Inertia
-    session.flash('feedback', ['success', 'Report approved. The post has been flagged.']);
+    session.flash('feedback', ['success', 'Signalement accepté, le poste à bien été restreint']);
     return inertia.redirectBack();
   }
 
-  public async rejectReport({ inertia, session }: HttpContextContract) {
-    session.flash('feedback', ['error', 'Error example.']);
+  public async rejectReport({ request, inertia, session }: HttpContextContract) {
+    const reportId = request.body()['id'];
+    const report = await PostReport.findOrFail(reportId);
+
+    // Mark the reports as rejected
+    await PostReport.query()
+      .update({
+        outcome: postReportOutcomeSchema.Values.REJECTED,
+      })
+      .where('postId', report.postId);
+
+    session.flash('feedback', ['success', 'Signalement refusé, le poste est toujours en ligne.']);
     return inertia.redirectBack();
   }
 }

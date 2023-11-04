@@ -7,6 +7,7 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { router } from '@inertiajs/vue3';
 import { AdminReportsData } from '@weakassdev/shared/validators';
 import { css } from '@style/css';
 import { vstack } from '@style/patterns';
@@ -18,6 +19,31 @@ import ReportItem from './components/ReportItem.vue';
 const props = defineProps<{
   reports: AdminReportsData;
 }>();
+
+function approveReport(reportId: string) {
+  router.post(
+    '/admin/reports/approve',
+    {
+      id: reportId,
+    },
+    {
+      preserveScroll: true,
+    },
+  );
+}
+
+function rejectReport(reportId: string) {
+  router.post(
+    '/admin/reports/reject',
+    {
+      id: reportId,
+    },
+
+    {
+      preserveScroll: true,
+    },
+  );
+}
 </script>
 
 <template>
@@ -31,7 +57,13 @@ const props = defineProps<{
       })
     "
   >
-    <ReportItem v-for="report of props.reports.data" :key="report.id" :report="report" />
+    <ReportItem
+      v-for="report of props.reports.data"
+      :key="report.id"
+      :report="report"
+      @approve="approveReport($event)"
+      @reject="rejectReport($event)"
+    />
     <Pagination
       v-if="props.reports.data.length > 0"
       as="footer"

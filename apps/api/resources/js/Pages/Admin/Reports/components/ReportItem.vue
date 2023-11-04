@@ -12,6 +12,11 @@ import DefinitionList from '~/Components/DefinitionList.vue';
 const props = defineProps<{
   report: AdminReportsData['data'][number];
 }>();
+
+const emits = defineEmits<{
+  approve: [string];
+  reject: [string];
+}>();
 </script>
 
 <template>
@@ -109,10 +114,8 @@ const props = defineProps<{
           })
         "
       >
-        <AppButton :href="`/admin/reports/${report.id}/approve`" preserve-scroll
-          >Approuver le blocage</AppButton
-        >
-        <AppButton :href="`/admin/reports/${report.id}/reject`" preserve-scroll>Rejeter</AppButton>
+        <AppButton @click="emits('approve', report.id)">Approuver le blocage</AppButton>
+        <AppButton @click="emits('reject', report.id)">Rejeter</AppButton>
       </div>
     </div>
   </div>

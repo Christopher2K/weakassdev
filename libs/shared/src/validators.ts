@@ -146,30 +146,32 @@ export const adminPostsDataSchema = makeListResponseSchema(
 );
 export type AdminPostsData = z.infer<typeof adminPostsDataSchema>;
 
-export const adminReportsDataSchema = makeListResponseSchema(
+export const adminReportedPostsDataSchema = makeListResponseSchema(
   z.object({
     id: z.string(),
-    outcome: z.string().nullable(),
-    outcomeContext: z.string().nullable(),
-    post: z.object({
-      id: z.string(),
+    createdAt: z.string(),
+    content: z.object({
+      content: z.string(),
       createdAt: z.string(),
-      content: z.object({
-        content: z.string(),
-        createdAt: z.string(),
-      }),
-      author: z.object({
-        id: z.string(),
-        username: z.string(),
-      }),
     }),
-    reason: z.string(),
-    reasonContext: z.string(),
-    reporter: z.object({
+    author: z.object({
       id: z.string(),
       username: z.string(),
     }),
-    createdAt: z.string(),
+    reports: z.array(
+      z.object({
+        id: z.string(),
+        outcome: z.string().nullable(),
+        outcomeContext: z.string().nullable(),
+        reason: z.string(),
+        reasonContext: z.string(),
+        reporter: z.object({
+          id: z.string(),
+          username: z.string(),
+        }),
+        createdAt: z.string(),
+      }),
+    ),
   }),
 );
-export type AdminReportsData = z.infer<typeof adminReportsDataSchema>;
+export type AdminReportedPostsData = z.infer<typeof adminReportedPostsDataSchema>;

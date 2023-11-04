@@ -8,7 +8,7 @@ export default {
 
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
-import { AdminReportsData } from '@weakassdev/shared/validators';
+import { AdminReportedPostsData } from '@weakassdev/shared/validators';
 import { css } from '@style/css';
 import { vstack } from '@style/patterns';
 
@@ -17,7 +17,7 @@ import Pagination from '~/Components/Pagination.vue';
 import ReportItem from './components/ReportItem.vue';
 
 const props = defineProps<{
-  reports: AdminReportsData;
+  posts: AdminReportedPostsData;
 }>();
 
 function approveReport(reportId: string) {
@@ -58,18 +58,18 @@ function rejectReport(reportId: string) {
     "
   >
     <ReportItem
-      v-for="report of props.reports.data"
-      :key="report.id"
-      :report="report"
+      v-for="post of props.posts.data"
+      :key="post.id"
+      :post="post"
       @approve="approveReport($event)"
       @reject="rejectReport($event)"
     />
     <Pagination
-      v-if="props.reports.data.length > 0"
+      v-if="props.posts.data.length > 0"
       as="footer"
       baseUrl="/admin/reports"
-      :currentPage="props.reports.meta.currentPage"
-      :lastPage="props.reports.meta.lastPage"
+      :currentPage="props.posts.meta.currentPage"
+      :lastPage="props.posts.meta.lastPage"
     />
   </div>
 </template>

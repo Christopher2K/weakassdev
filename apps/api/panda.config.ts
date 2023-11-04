@@ -64,7 +64,7 @@ const textStyles = defineTextStyles({
   label: {
     value: {
       fontFamily: 'Inter',
-      fontWeight: 'medium',
+      fontWeight: 'bold',
       fontSize: 'sm',
     },
   },
@@ -74,6 +74,11 @@ const textStyles = defineTextStyles({
       fontWeight: 'bold',
       fontSize: 'xs',
       fontVariant: 'small-caps',
+    },
+  },
+  link: {
+    value: {
+      textDecoration: 'underline',
     },
   },
 });

@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 
-import type { AdminReportsData } from '@weakassdev/shared/validators';
-import { formatDate } from '@weakassdev/shared/utils';
+import type { AdminReportedPostsData } from '@weakassdev/shared/validators';
 import { css } from '@style/css';
-import { hstack, vstack } from '@style/patterns';
+import { hstack } from '@style/patterns';
 
 import AppButton from '~/Components/AppButton.vue';
-import DefinitionList from '~/Components/DefinitionList.vue';
 
 const props = defineProps<{
-  report: AdminReportsData['data'][number];
+  post: AdminReportedPostsData['data'][number];
 }>();
 
 const emits = defineEmits<{
@@ -20,103 +18,65 @@ const emits = defineEmits<{
 </script>
 
 <template>
-  <div
+  <dl
     :class="
-      vstack({
+      css({
         width: 'full',
-        gap: '3',
         bg: 'slate.100',
         px: 4,
         py: 5,
         borderRadius: 'md',
+        '& > dt': {
+          textStyle: 'label',
+          mb: '1',
+        },
+        '& > dd': {
+          mb: '5',
+        },
+        '& > dd:last-of-type': {
+          mb: '0',
+        },
       })
     "
   >
-    <div
-      :class="
-        vstack({
-          gap: '3',
-          w: 'full',
-          alignItems: 'stretch',
-        })
-      "
-    >
-      <p
-        :class="
-          css({
-            fontStyle: 'italic',
-            fontSize: 'sm',
-            color: 'gray.600',
-          })
-        "
-      >
-        Signalé par
-        <Link :href="`/admin/users/${report.reporter.id}`">{{
-          props.report.reporter.username
-        }}</Link
-        >, le
-        {{ formatDate(report.createdAt) }}
-      </p>
-      <DefinitionList
-        :items="[
-          ['Raison', report.reason],
-          ['Contexte', report.reasonContext],
-        ]"
-      />
-    </div>
+    <dt>Auteur / autrice</dt>
+    <dd>
+      <Link :href="`/admin/users/${props.post.author.id}`" :class="css({ textStyle: 'link' })">
+        {{ props.post.author.username }}
+      </Link>
+    </dd>
 
-    <div :class="vstack({ w: 'full', gap: '1', alignItems: 'stretch' })">
+    <dt>Contenu</dt>
+    <dd>
       <blockquote
         :class="
           css({
-            borderLeftWidth: 4,
-            borderLeftColor: 'gray.800',
+            borderLeftWidth: 'thick',
+            borderLeftStyle: 'solid',
+            borderColor: 'gray.500',
             fontStyle: 'italic',
-            pl: '5',
-            py: '2',
+            pl: '4',
           })
         "
       >
-        {{ props.report.post.content.content }}
+        {{ props.post.content.content }}
       </blockquote>
-      <p
-        :class="
-          css({
-            fontStyle: 'italic',
-            fontSize: 'sm',
-            color: 'gray.600',
-          })
-        "
-      >
-        Posté par
-        <Link :href="`/admin/users/${report.post.author.id}`">{{
-          props.report.post.author.username
-        }}</Link>
-        le {{ formatDate(props.report.post.createdAt) }}
-      </p>
-    </div>
+    </dd>
 
-    <div
-      :class="
-        vstack({
-          w: 'full',
-          gap: '2',
-        })
-      "
-    >
-      <div
-        :class="
-          hstack({
-            justifyContent: 'flex-end',
-            flexWrap: 'wrap',
-            gap: '5',
-            w: 'full',
-          })
-        "
+    <dt>Signalements</dt>
+    <dd>
+      <p>
+        Signalé par <strong>{{ props.post.reports.length }}</strong> membres
+      </p>
+      <Link :href="`/admin/reports/${props.post.id}`" :class="css({ textStyle: 'link' })"
+        >Voir en détails</Link
       >
-        <AppButton @click="emits('approve', report.id)">Approuver le blocage</AppButton>
-        <AppButton @click="emits('reject', report.id)">Rejeter</AppButton>
-      </div>
-    </div>
-  </div>
+    </dd>
+
+    <dt>Actions</dt>
+    <dd :class="hstack({})">
+      <AppButton @click="emits('approve', props.post.id)">Approuver le blocage</AppButton>
+      <AppButton @click="emits('reject', props.post.id)">Rejeter</AppButton>
+    </dd>
+  </dl>
 </template>

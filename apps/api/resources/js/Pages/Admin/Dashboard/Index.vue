@@ -15,6 +15,7 @@ import DashboardCard from './components/DashboardCard.vue';
 const props = defineProps<{
   postCount: string;
   userCount: string;
+  reportedPostCount: string;
 }>();
 </script>
 
@@ -29,6 +30,7 @@ const props = defineProps<{
     >
       <DashboardCard label="Comptes utilisateur" :count="+props.userCount" />
       <DashboardCard label="Posts crées" :count="+props.postCount" />
+      <DashboardCard label="Posts en instance de signalement" :count="+props.reportedPostCount" />
     </div>
   </section>
 </template>

@@ -3,6 +3,7 @@ import User from 'App/Models/User';
 
 import AdminLoginValidator from 'App/Validators/AdminLoginValidator';
 import * as GlobalManager from 'App/Manager/GlobalManager';
+import * as PostManager from 'App/Manager/PostManager';
 
 export default class AdminController {
   public async index({ inertia, auth, response }: HttpContextContract) {
@@ -15,8 +16,12 @@ export default class AdminController {
   }
 
   public async dashboard({ inertia }: HttpContextContract) {
-    const { postCount, userCount } = await GlobalManager.getEntitiesCount('Post', 'User');
-    return inertia.render('Admin/Dashboard/Index', { postCount, userCount });
+    const [{ postCount, userCount }, reportedPostCount] = await Promise.all([
+      GlobalManager.getEntitiesCount('Post', 'User'),
+      PostManager.getReportedPostsCount(),
+    ]);
+
+    return inertia.render('Admin/Dashboard/Index', { postCount, userCount, reportedPostCount });
   }
 
   // FORM SUBMISSIONS

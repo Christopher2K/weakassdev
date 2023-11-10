@@ -2,11 +2,11 @@
 import { computed, type ButtonHTMLAttributes } from 'vue';
 
 import { Link, type InertiaLinkProps } from '@inertiajs/vue3';
-import { css, cva, RecipeVariantProps } from '@style/css';
+import { cva, RecipeVariantProps } from '@style/css';
+import { hstack } from '@style/patterns';
 
 const props = defineProps<{
   btnSize?: RecipeVariantProps<typeof buttonStyle>['btnSize'];
-  theme?: RecipeVariantProps<typeof buttonStyle>['theme'];
   href?: InertiaLinkProps['href'];
   type?: ButtonHTMLAttributes['type'];
   disabled?: boolean;
@@ -26,65 +26,38 @@ const isLink = computed(() => Boolean(props.href));
 const buttonStyle = cva({
   base: {
     display: 'flex',
-    textStyle: 'button',
-    borderRadius: 'sm',
-    borderWidth: 'thin',
-    borderStyle: 'solid',
+    textStyle: 'bodyImportant',
+    borderRadius: 'md',
     cursor: 'pointer',
+    backgroundColor: 'whitesmoke.1000',
+    color: 'whitesmoke.100',
     _disabled: {
       cursor: 'not-allowed',
-      opacity: 0.5,
-      bg: 'gray.100',
-      color: 'gray.600',
+      background: 'whitesmoke.400',
+      color: 'whitesmoke.800',
+    },
+    '&:hover': {
+      backgroundColor: 'whitesmoke.800',
     },
   },
   variants: {
     disabled: {
       true: {
         cursor: 'not-allowed',
-        opacity: 0.5,
-        bg: 'gray.100',
-        color: 'gray.600',
+        background: 'whitesmoke.400',
+        color: 'whitesmoke.800',
         pointerEvents: 'none',
       },
     },
     btnSize: {
-      sm: {
-        p: '2',
-      },
       md: {
         px: '4',
-        py: '2',
-      },
-      lg: {
-        px: '6',
-        py: '4',
-      },
-    },
-    theme: {
-      primary: {
-        color: 'indigo.600',
-        backgroundColor: 'indigo.100',
-        borderColor: 'indigo.100',
-        _hover: {
-          backgroundColor: 'indigo.200',
-          borderColor: 'indigo.600',
-        },
-      },
-      secondary: {
-        color: 'lime.600',
-        backgroundColor: 'lime.100',
-        borderColor: 'lime.100',
-        _hover: {
-          backgroundColor: 'lime.200',
-          borderColor: 'lime.600',
-        },
+        py: '3',
       },
     },
   },
   defaultVariants: {
-    theme: 'primary',
-    btnSize: 'sm',
+    btnSize: 'md',
     disabled: false,
   },
 });
@@ -100,7 +73,6 @@ function preventLinkClick(event: MouseEvent) {
     :class="
       buttonStyle({
         btnSize: props.btnSize,
-        theme: props.theme,
         disabled,
       })
     "
@@ -112,9 +84,7 @@ function preventLinkClick(event: MouseEvent) {
   >
     <span
       :class="
-        css({
-          display: 'flex',
-          flexDir: 'row',
+        hstack({
           justifyContent: 'center',
           alignItems: 'center',
           gap: '2',

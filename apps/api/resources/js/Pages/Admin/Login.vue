@@ -1,21 +1,20 @@
-<script lang="ts">
-import AppLayout from '~/Pages/Layout.vue';
-
-export default {
-  layout: AppLayout,
-};
-</script>
-
 <script setup lang="ts">
+import AppLayout from '~/Pages/Layout.vue';
 import FieldContainer from '~/Components/FieldContainer.vue';
 import TextInput from '~/Components/TextInput.vue';
 import AppButton from '~/Components/AppButton.vue';
 import AppMessage from '~/Components/AppMessage.vue';
+import AppInput from '~/Components/AppInput.vue';
+import AppFieldContainer from '~/Components/AppFieldContainer.vue';
 
-import { computed, ref } from 'vue';
+import { computed, effect, ref } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { css } from '@style/css';
 import { vstack } from '@style/patterns';
+
+defineOptions({
+  layout: AppLayout,
+});
 
 const page = usePage();
 const form = useForm({
@@ -26,6 +25,10 @@ const hiddenErrors = ref<string[]>([]);
 
 const shouldDisplayErrorMessage = computed(() => {
   return !hiddenErrors.value.includes('login') && Boolean(page?.props?.errors?.login);
+});
+
+effect(() => {
+  console.log(page.props);
 });
 
 function submit(e: SubmitEvent) {
@@ -44,39 +47,54 @@ function submit(e: SubmitEvent) {
       vstack({
         justifyContent: 'center',
         alignItems: 'center',
+        gap: 0,
       })
     "
   >
+    <header
+      :class="
+        vstack({
+          justifyContent: 'center',
+          alignContent: 'center',
+          gap: 4,
+          mb: 20,
+        })
+      "
+    >
+      <h1 :class="css({ textStyle: 'heading1', color: 'whitesmoke.900' })">Weak A** Dev</h1>
+      <h2 :class="css({ textStyle: 'heading2', color: 'whitesmoke.700' })">
+        Platforme d'administration
+      </h2>
+    </header>
     <AppMessage
       v-if="shouldDisplayErrorMessage"
       kind="error"
-      @close="() => (hiddenErrors = [...hiddenErrors, 'login'])"
+      @close="hiddenErrors = [...hiddenErrors, 'login']"
     >
       Mot de passe ou utilisateur incorrect
     </AppMessage>
+
     <form
       @submit="submit"
       :class="
         vstack({
           justifyContent: 'center',
-          alignItems: 'flex-start',
-          gap: 3,
+          alignItems: 'center',
+          width: 'full',
+          maxWidth: '500px',
+          gap: '10',
         })
       "
     >
-      <FieldContainer>
-        <label :class="css({ textStyle: 'label' })" for="username"> Nom d'utilisateur </label>
-        <TextInput type="text" name="username" id="email" required v-model="form.username" />
-      </FieldContainer>
+      <AppFieldContainer label="Nom d'utilisateur" name="username">
+        <AppInput type="text" name="username" id="email" required v-model="form.username" />
+      </AppFieldContainer>
 
-      <FieldContainer>
-        <label :class="css({ textStyle: 'label' })" for="password"> Mot de passe </label>
-        <TextInput type="password" name="password" id="password" required v-model="form.password" />
-      </FieldContainer>
+      <AppFieldContainer label="Mot de passe" name="password">
+        <AppInput type="password" name="password" id="password" required v-model="form.password" />
+      </AppFieldContainer>
 
-      <FieldContainer alignment="center">
-        <AppButton :disabled="form.processing">Se connecter</AppButton>
-      </FieldContainer>
+      <AppButton :disabled="form.processing">Se connecter</AppButton>
     </form>
   </div>
 </template>

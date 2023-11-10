@@ -25,9 +25,15 @@ export default class AdminController {
   }
 
   // FORM SUBMISSIONS
-  public async login({ request, response, auth }: HttpContextContract) {
+  public async login({ request, response, auth, inertia, session }: HttpContextContract) {
     const data = await request.validate(AdminLoginValidator);
-    (await auth.attempt(data.username, data.password)) as Promise<User>;
+    try {
+      (await auth.attempt(data.username, data.password)) as Promise<User>;
+      return response.redirect().toRoute('AdminController.dashboard');
+    } catch (e) {
+      session.flash('feedback', ['error', 'Identifiant ou mot de passe incorrect.']);
+      return inertia.redirectBack();
+    }
 
     return response.redirect().toRoute('AdminController.dashboard');
   }

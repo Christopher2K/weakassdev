@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import AppLayout from '~/Pages/Layout.vue';
-import FieldContainer from '~/Components/FieldContainer.vue';
-import TextInput from '~/Components/TextInput.vue';
 import AppButton from '~/Components/AppButton.vue';
 import AppMessage from '~/Components/AppMessage.vue';
 import AppInput from '~/Components/AppInput.vue';
@@ -11,10 +8,6 @@ import { computed, effect, ref } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { css } from '@style/css';
 import { vstack } from '@style/patterns';
-
-defineOptions({
-  layout: AppLayout,
-});
 
 const page = usePage();
 const form = useForm({
@@ -48,6 +41,7 @@ function submit(e: SubmitEvent) {
         justifyContent: 'center',
         alignItems: 'center',
         gap: 0,
+        py: '10',
       })
     "
   >

@@ -5,8 +5,7 @@ import { HomeIcon, LogOutIcon, UsersIcon, NewspaperIcon, StopCircleIcon } from '
 import { css } from '@style/css';
 import { vstack } from '@style/patterns';
 
-import NavbarSection from './NavbarSection.vue';
-import NavbarItem from './NavbarItem.vue';
+import AppNavbarItem from './AppNavbarItem.vue';
 
 const ICON_SIZE = 20;
 const page = usePage();
@@ -15,66 +14,52 @@ const page = usePage();
 <template>
   <nav
     :class="
-      css({
-        width: '440px',
+      vstack({
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        gap: 0,
+        width: 'full',
         height: 'full',
+        backgroundColor: 'whitesmoke.100',
+        borderRightWidth: 'thin',
+        borderRightStyle: 'solid',
+        borderRightColor: 'whitesmoke.600',
+        px: 4,
+        py: 6,
       })
     "
   >
-    <div
-      :class="
-        css({
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: 'width',
-          height: 'full',
-          backgroundColor: 'gray.50',
-          borderRightWidth: 'thin',
-          borderColor: 'gray.100',
-          overflowY: 'auto',
-        })
-      "
-    >
-      <div :class="vstack({ w: 'full' })">
-        <NavbarSection>
-          <NavbarItem exact href="/admin/dashboard" label="Dashboard" :url="page.url">
-            <template #icon>
-              <HomeIcon :size="ICON_SIZE" />
-            </template>
-          </NavbarItem>
-        </NavbarSection>
+    <div :class="vstack({ w: 'full', h: 'fit-content', gap: 0 })">
+      <AppNavbarItem exact href="/admin/dashboard" label="Dashboard" :url="page.url">
+        <template #left-icon>
+          <HomeIcon :size="ICON_SIZE" />
+        </template>
+      </AppNavbarItem>
 
-        <NavbarSection title="Entités">
-          <NavbarItem href="/admin/users" label="Utilisateurs" :url="page.url">
-            <template #icon>
-              <UsersIcon :size="ICON_SIZE" />
-            </template>
-          </NavbarItem>
-          <NavbarItem href="/admin/posts" label="Posts" :url="page.url">
-            <template #icon>
-              <NewspaperIcon :size="ICON_SIZE" />
-            </template>
-          </NavbarItem>
+      <AppNavbarItem href="/admin/users" label="Utilisateurs" :url="page.url">
+        <template #left-icon>
+          <UsersIcon :size="ICON_SIZE" />
+        </template>
+      </AppNavbarItem>
+      <AppNavbarItem href="/admin/posts" label="Posts" :url="page.url">
+        <template #left-icon>
+          <NewspaperIcon :size="ICON_SIZE" />
+        </template>
+      </AppNavbarItem>
 
-          <NavbarItem href="/admin/reports" label="Modération" :url="page.url">
-            <template #icon>
-              <StopCircleIcon :size="ICON_SIZE" />
-            </template>
-          </NavbarItem>
-        </NavbarSection>
-      </div>
+      <AppNavbarItem href="/admin/reports" label="Modération" :url="page.url">
+        <template #left-icon>
+          <StopCircleIcon :size="ICON_SIZE" />
+        </template>
+      </AppNavbarItem>
+    </div>
 
-      <div :class="css({ w: 'full' })">
-        <NavbarSection>
-          <NavbarItem href="/admin/logout" label="Déconnexion" :url="page.url">
-            <template #icon>
-              <LogOutIcon :size="ICON_SIZE" />
-            </template>
-          </NavbarItem>
-        </NavbarSection>
-      </div>
+    <div :class="css({ w: 'full' })">
+      <AppNavbarItem href="/admin/logout" label="Déconnexion" :url="page.url">
+        <template #left-icon>
+          <LogOutIcon :size="ICON_SIZE" />
+        </template>
+      </AppNavbarItem>
     </div>
   </nav>
 </template>

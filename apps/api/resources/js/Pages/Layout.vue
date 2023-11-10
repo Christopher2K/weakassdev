@@ -11,29 +11,39 @@ const isLoggedIn = computed(() => page.props.user !== null);
 </script>
 
 <template>
-  <AppNavbar v-if="isLoggedIn" />
   <div
-    scroll-region="true"
     :class="
       css({
-        w: 'full',
-        h: 'full',
-        overflowY: 'auto',
+        display: 'grid',
+        gridTemplateColumns: '340px 1fr',
+        height: '100%',
       })
     "
   >
-    <main
+    <AppNavbar v-if="isLoggedIn" />
+    <div
+      scroll-region="true"
       :class="
         css({
-          p: '4',
-          px: '8',
-          width: 'full',
-          minHeight: 'full',
-          mx: 'auto',
+          w: 'full',
+          h: 'full',
+          overflowY: 'auto',
         })
       "
     >
-      <slot />
-    </main>
+      <main
+        :class="
+          css({
+            p: '4',
+            px: '8',
+            width: 'full',
+            minHeight: 'full',
+            mx: 'auto',
+          })
+        "
+      >
+        <slot />
+      </main>
+    </div>
   </div>
 </template>

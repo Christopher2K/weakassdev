@@ -4256,6 +4256,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/web-bluetooth@npm:^0.0.20":
+  version: 0.0.20
+  resolution: "@types/web-bluetooth@npm:0.0.20"
+  checksum: d6d61da683e876e8995ac57e2e5229d829d0f536deb3568d4430898fc626ebcb7e065fe7f655ac6a5205702f7f7049e6335abe689cd5291241eef6e39e8a4371
+  languageName: node
+  linkType: hard
+
 "@types/ws@npm:^8.5.5":
   version: 8.5.5
   resolution: "@types/ws@npm:8.5.5"
@@ -4492,6 +4499,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vueuse/core@npm:~10.6.0":
+  version: 10.6.0
+  resolution: "@vueuse/core@npm:10.6.0"
+  dependencies:
+    "@types/web-bluetooth": ^0.0.20
+    "@vueuse/metadata": 10.6.0
+    "@vueuse/shared": 10.6.0
+    vue-demi: ">=0.14.6"
+  checksum: 2126d48687b1172acf980fd84896498b049c0e4a8114345490036130570eec8954f0bd143375253123bc707a9d9ec421cacf41056f4dbbbd664ff3946aacf189
+  languageName: node
+  linkType: hard
+
+"@vueuse/metadata@npm:10.6.0":
+  version: 10.6.0
+  resolution: "@vueuse/metadata@npm:10.6.0"
+  checksum: 858c3ce10ed52cac86ebba3b91c6b57f85bb7031a09d1068b68b3f13c65df61232aebd9bf449c4ae952ad3d161a7c0d8154e5ac5e1b50f35e36388f7d614585c
+  languageName: node
+  linkType: hard
+
+"@vueuse/shared@npm:10.6.0":
+  version: 10.6.0
+  resolution: "@vueuse/shared@npm:10.6.0"
+  dependencies:
+    vue-demi: ">=0.14.6"
+  checksum: 25d818c4aa83879509500077a64609762ff17e8a62779bd45dcfbd6f3fc1bee351ae13227c65918dd9a6cd94e39181cad5ad48caddbe8591f4456809a5343a08
+  languageName: node
+  linkType: hard
+
 "@weakassdev/api@workspace:apps/api":
   version: 0.0.0-use.local
   resolution: "@weakassdev/api@workspace:apps/api"
@@ -4518,6 +4553,7 @@ __metadata:
     "@tanstack/vue-table": ~8.10.7
     "@types/proxy-addr": ~2.0.0
     "@types/source-map-support": ~0.5.6
+    "@vueuse/core": ~10.6.0
     "@weakassdev/config": "*"
     "@weakassdev/shared": "*"
     adonis-preset-ts: ~2.1.0
@@ -17578,6 +17614,22 @@ __metadata:
   version: 3.0.7
   resolution: "vscode-uri@npm:3.0.7"
   checksum: c899a0334f9f6ba53021328e083f6307978c09b94407d7e5fe86fcd8fcb8f1da0cb344123a335e55769055007a46d51aff83f9ee1dfc0296ee54b78f34ef0e4f
+  languageName: node
+  linkType: hard
+
+"vue-demi@npm:>=0.14.6":
+  version: 0.14.6
+  resolution: "vue-demi@npm:0.14.6"
+  peerDependencies:
+    "@vue/composition-api": ^1.0.0-rc.1
+    vue: ^3.0.0-0 || ^2.6.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+  bin:
+    vue-demi-fix: bin/vue-demi-fix.js
+    vue-demi-switch: bin/vue-demi-switch.js
+  checksum: 424b1f340d5111fc4d4a0f8042c14ae836ba983bc968773a6d955d6846202d7e6f951993ac1525be8732b0cfe0c81d94ab88f427c97bfa86ead08db06491279b
   languageName: node
   linkType: hard
 

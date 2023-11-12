@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { DateTime } from 'luxon';
 import { createColumnHelper, useVueTable, FlexRender, getCoreRowModel } from '@tanstack/vue-table';
-import { MoreVerticalIcon } from 'lucide-vue-next';
 
 import type { AdminUsersData } from '@weakassdev/shared/validators';
 
 import { css } from '@style/css';
 
 import AppLayout from '~/Pages/Layout.vue';
-import AppButton from '~/Components/AppButton.vue';
 import TableRoot from '~/Components/Table/TableRoot.vue';
 import TableHeader from '~/Components/Table/TableHeader.vue';
 import TableBody from '~/Components/Table/TableBody.vue';
@@ -16,6 +14,8 @@ import TableContainer from '~/Components/Table/TableContainer.vue';
 import TableFooter from '~/Components/Table/TableFooter.vue';
 import Pagination from '~/Components/Pagination.vue';
 import AppAdminPageCard from '~/Components/AppAdminPageCard.vue';
+import AppDropdown from '~/Components/AppDropdown.vue';
+import AppDropdownItem from '~/Components/AppDropdownItem.vue';
 import { addPlusPrefix } from '~/utils';
 
 defineOptions({
@@ -69,6 +69,14 @@ const table = useVueTable({
   columns,
   getCoreRowModel: getCoreRowModel(),
 });
+
+function onEditPressed(userId: string) {
+  console.log('EDIT', userId);
+}
+
+function onDeletePressed(userId: string) {
+  console.log('DELETE', userId);
+}
 </script>
 
 <template>
@@ -109,9 +117,14 @@ const table = useVueTable({
         <tr v-for="row of table.getRowModel().rows" :key="row.id">
           <td v-for="cell of row.getVisibleCells()" :key="cell.id">
             <div v-if="cell.column.id === 'actions'">
-              <AppButton :href="`/admin/users/${row.getValue('id')}`">
-                <MoreVerticalIcon #left-icon />
-              </AppButton>
+              <AppDropdown>
+                <AppDropdownItem
+                  label="Voir les détails"
+                  :href="`/admin/users/${row.getValue('id')}`"
+                />
+                <AppDropdownItem label="Éditer" @click="onEditPressed(row.getValue('id'))" />
+                <AppDropdownItem label="Supprimer" @click="onDeletePressed(row.getValue('id'))" />
+              </AppDropdown>
             </div>
 
             <FlexRender v-else :render="cell.column.columnDef.cell" :props="cell.getContext()" />

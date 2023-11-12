@@ -3,7 +3,7 @@ import { test } from '@japa/runner';
 
 import Database from '@ioc:Adonis/Lucid/Database';
 
-import * as GlobalManager from 'App/Manager/GlobalManager';
+import * as GlobalManager from 'App/Managers/GlobalManager';
 import Post from 'App/Models/Post';
 import User from 'App/Models/User';
 import PostFactory from 'Database/factories/PostFactory';

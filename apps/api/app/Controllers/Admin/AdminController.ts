@@ -2,8 +2,8 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import User from 'App/Models/User';
 
 import AdminLoginValidator from 'App/Validators/AdminLoginValidator';
-import * as GlobalManager from 'App/Manager/GlobalManager';
-import * as PostManager from 'App/Manager/PostManager';
+import * as GlobalManager from 'App/Managers/GlobalManager';
+import * as PostManager from 'App/Managers/PostManager';
 
 export default class AdminController {
   public async index({ inertia, auth, response }: HttpContextContract) {

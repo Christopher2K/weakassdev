@@ -51,3 +51,40 @@ export async function getEntitiesCurrentWeekCount(...tables: string[]): Promise<
     {},
   );
 }
+
+type EntityCountPeriod = {
+  today: number;
+  week: number;
+  month: number;
+};
+
+export async function getEntityCountPerPeriod(table: string): Promise<EntityCountPeriod> {
+  const now = DateTime.now().toUTC();
+  const startOfTheDay = now.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+  const startOfTheWeek = startOfTheDay.set({ weekday: 1 });
+  const startOfTheMonth = startOfTheDay.set({ day: 1 });
+
+  const result =
+    (
+      await Database.query().select(
+        Database.from(table)
+          .count('*')
+          .as('today')
+          .where('created_at', '>', startOfTheDay.toString()),
+        Database.from(table)
+          .count('*')
+          .as('week')
+          .where('created_at', '>', startOfTheWeek.toString()),
+        Database.from(table)
+          .count('*')
+          .as('month')
+          .where('created_at', '>', startOfTheMonth.toString()),
+      )
+    ).at(0) ?? {};
+
+  return {
+    today: +result.today ?? 0,
+    week: +result.week ?? 0,
+    month: +result.month ?? 0,
+  };
+}

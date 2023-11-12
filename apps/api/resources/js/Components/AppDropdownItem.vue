@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { css } from '@style/css';
 import { ComponentPublicInstance, computed, useAttrs } from 'vue';
+import { Link } from '@inertiajs/vue3';
+
+import { css } from '@style/css';
 
 const props = defineProps<{ label: string }>();
 const emits = defineEmits<{ click: [MouseEvent] }>();
 const attrs = useAttrs();
 
-const tag = computed(() => (attrs.href ? 'a' : 'button'));
+const tag = computed(() => (attrs.href ? Link : 'button'));
 
 function onClick(event: MouseEvent, parent: ComponentPublicInstance<Partial<{ isOpen: boolean }>>) {
   if (parent?.isOpen != null) {

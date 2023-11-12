@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next';
 
 import { css } from '@style/css';
@@ -36,33 +37,36 @@ const linkStyle = css({
 
 <template>
   <component :is="props.as" :class="hstack({ w: 'fit-content', gap: '2', textStyle: 'body' })">
-    <a :class="linkStyle" :href="`${baseUrl}?page=1`" :data-disabled="isPreviousNavigationDisabled"
-      >Première page</a
+    <Link
+      :class="linkStyle"
+      :href="`${baseUrl}?page=1`"
+      :data-disabled="isPreviousNavigationDisabled"
+      >Première page</Link
     >
     <span aria-hidden="true">•</span>
-    <a
+    <Link
       :class="linkStyle"
       :href="`${baseUrl}?page=${currentPage - 1}`"
       :data-disabled="isPreviousNavigationDisabled"
     >
       <ChevronLeftIcon />
       Page précédente
-    </a>
+    </Link>
     <span aria-hidden="true">•</span>
-    <a
+    <Link
       :class="linkStyle"
       :href="`${baseUrl}?page=${currentPage + 1}`"
       :data-disabled="isNextNavigationDisabled"
     >
       Page suivante
       <ChevronRightIcon />
-    </a>
+    </Link>
     <span aria-hidden="true">•</span>
-    <a
+    <Link
       :class="linkStyle"
       :href="`${baseUrl}?page=${lastPage}`"
       :data-disabled="isNextNavigationDisabled"
-      >Dernière page</a
+      >Dernière page</Link
     >
   </component>
 </template>

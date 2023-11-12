@@ -1,10 +1,18 @@
 import { test } from '@japa/runner';
+import Database from '@ioc:Adonis/Lucid/Database';
 
 import { postsIndexResponseSchema } from '@weakassdev/shared/validators';
 
 import Post from 'App/Models/Post';
+import PostFactory from 'Database/factories/PostFactory';
 
-test.group('[posts index handler]', () => {
+test.group('[posts index handler]', (group) => {
+  group.setup(async () => {
+    await Database.beginGlobalTransaction();
+    await PostFactory.with('author').with('content').createMany(40);
+    return () => Database.rollbackGlobalTransaction();
+  });
+
   test('responds to anonymous users', async ({ client }) => {
     const response = await client.get('/v1/posts').accept('json');
     response.assertStatus(200);

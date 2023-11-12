@@ -5,7 +5,7 @@ import { postStatusSchema } from '@weakassdev/shared/models';
 
 import Post from 'App/Models/Post';
 import PostFactory from 'Database/factories/PostFactory';
-import User from 'App/Models/User';
+import UserFactory from 'Database/factories/UserFactory';
 
 test.group('[posts destroy handler]', (group) => {
   let post: Post;
@@ -28,11 +28,13 @@ test.group('[posts destroy handler]', (group) => {
   });
 
   test('cannot delete a post that does not belongs to the current user', async ({ client }) => {
-    const randomUser = await User.query().first();
+    const randomUser = await UserFactory.create();
+
     const response = await client
       .delete(`/v1/posts/${post.id}`)
       .loginAs(randomUser!)
       .accept('json');
+
     response.assertStatus(403);
   });
 

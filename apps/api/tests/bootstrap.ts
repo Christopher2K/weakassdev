@@ -49,11 +49,35 @@ export const reporters: Required<Config>['reporters'] = [specReporter()];
 */
 export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
   setup: [
-    () => TestUtils.ace().loadCommands(),
-    () => TestUtils.db().truncate(),
-    () => TestUtils.httpServer().start(),
+    () => {
+      console.debug('====================================');
+      console.debug('[Setup] Load commands');
+      console.debug('====================================');
+      return TestUtils.ace().loadCommands();
+    },
+    () => {
+      console.debug('====================================');
+      console.debug('[Setup] Migrate / Truncate');
+      console.debug('[DATABASE]', Env.get('DATABASE_URL'));
+      console.debug('====================================');
+      return TestUtils.db().truncate();
+    },
+    // () => {
+    //   console.debug('====================================');
+    //   console.debug('[Setup] Seed');
+    //   console.debug('[DATABASE]', Env.get('DATABASE_URL'));
+    //   console.debug('====================================');
+    //   return TestUtils.db().seed();
+    // },
+    () => {
+      console.debug('====================================');
+      console.debug('[Setup] Start HTTP');
+      console.debug('====================================');
+      return TestUtils.httpServer().start();
+    },
   ],
-  teardown: [() => TestUtils.ace().loadCommands(), () => TestUtils.db().truncate()],
+  // teardown: [() => TestUtils.ace().loadCommands(), () => TestUtils.db().truncate()],
+  teardown: [],
 };
 
 /*
@@ -70,11 +94,5 @@ export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
 export const configureSuite: Required<Config>['configureSuite'] = (suite) => {
   if (suite.name === 'functional') {
     console.debug('DATABASE', Env.get('DATABASE_URL'));
-
-    suite.setup(async () => {
-      await TestUtils.db().truncate();
-      await TestUtils.db().migrate();
-      await TestUtils.db().seed();
-    });
   }
 };

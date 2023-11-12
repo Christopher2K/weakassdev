@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 import { adminUsersDataSchema } from '@weakassdev/shared/validators';
 
+import * as GlobalManager from 'App/Managers/GlobalManager';
 import User from 'App/Models/User';
 
 export default class AdminUsersController {
@@ -9,10 +10,14 @@ export default class AdminUsersController {
     const page = request.input('page', 1);
     const limit = request.input('limit', 30);
 
-    const users = await User.query().paginate(page, limit);
+    const [users, entityCount] = await Promise.all([
+      User.query().paginate(page, limit),
+      GlobalManager.getEntityCountPerPeriod('User'),
+    ]);
 
     return inertia.render('Admin/Users/Index', {
       users: adminUsersDataSchema.parse(users.serialize()),
+      entityCount,
     });
   }
 

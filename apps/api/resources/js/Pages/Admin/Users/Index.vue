@@ -1,11 +1,3 @@
-<script lang="ts">
-import AppLayout from '~/Pages/Layout.vue';
-
-export default {
-  layout: AppLayout,
-};
-</script>
-
 <script setup lang="ts">
 import { DateTime } from 'luxon';
 import { createColumnHelper, useVueTable, FlexRender, getCoreRowModel } from '@tanstack/vue-table';
@@ -14,6 +6,7 @@ import { css } from '@style/css';
 
 import type { AdminUsersData } from '@weakassdev/shared/validators';
 
+import AppLayout from '~/Pages/Layout.vue';
 import AppButton from '~/Components/AppButton.vue';
 import TableRoot from '~/Components/Table/TableRoot.vue';
 import TableHeader from '~/Components/Table/TableHeader.vue';
@@ -21,9 +14,19 @@ import TableBody from '~/Components/Table/TableBody.vue';
 import TableContainer from '~/Components/Table/TableContainer.vue';
 import TableFooter from '~/Components/Table/TableFooter.vue';
 import Pagination from '~/Components/Pagination.vue';
+import AppAdminPageCard from '~/Components/AppAdminPageCard.vue';
+import { addPlusPrefix } from '~/utils';
 
+defineOptions({
+  layout: AppLayout,
+});
 const props = defineProps<{
   users: AdminUsersData;
+  entityCount: {
+    today: number;
+    week: number;
+    month: number;
+  };
 }>();
 
 const columnHelpers = createColumnHelper<AdminUsersData['data'][number]>();
@@ -68,7 +71,18 @@ const table = useVueTable({
 </script>
 
 <template>
-  <h1 :class="css({ textStyle: 'h2', mb: '10' })">Utilisateurs</h1>
+  <h1 :class="css({ textStyle: 'heading1', mb: '10' })">Utilisateurs</h1>
+
+  <AppAdminPageCard
+    :class="css({ mb: 10 })"
+    title="Nouveaux inscrits"
+    :data="[
+      { label: 'Aujourd\'hui', text: addPlusPrefix(props.entityCount.today) },
+      { label: 'Cette semaine', text: addPlusPrefix(props.entityCount.week) },
+      { label: 'Ce mois', text: addPlusPrefix(props.entityCount.month) },
+    ]"
+  />
+
   <TableRoot>
     <TableContainer>
       <TableHeader>

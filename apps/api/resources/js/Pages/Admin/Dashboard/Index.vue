@@ -3,6 +3,7 @@ import { css } from '@style/css';
 
 import AppAdminPageCard from '~/Components/AppAdminPageCard.vue';
 import AppLayout from '~/Pages/Layout.vue';
+import { addPlusPrefix } from '~/utils';
 
 defineOptions({
   layout: AppLayout,
@@ -13,10 +14,6 @@ const props = defineProps<{
   userpostcontentreactionCount: number;
   reportedPostCount: number;
 }>();
-
-function addPlusPrefix(text: string | number) {
-  return '+' + text;
-}
 </script>
 
 <template>

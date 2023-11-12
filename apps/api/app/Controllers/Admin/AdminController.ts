@@ -16,12 +16,18 @@ export default class AdminController {
   }
 
   public async dashboard({ inertia }: HttpContextContract) {
-    const [{ postCount, userCount }, reportedPostCount] = await Promise.all([
-      GlobalManager.getEntitiesCount('Post', 'User'),
-      PostManager.getReportedPostsCount(),
-    ]);
+    const [{ postCount, userCount, userpostcontentreactionCount }, reportedPostCount] =
+      await Promise.all([
+        GlobalManager.getEntitiesCurrentWeekCount('Post', 'User', 'UserPostContentReaction'),
+        PostManager.getReportedPostsCount(),
+      ]);
 
-    return inertia.render('Admin/Dashboard/Index', { postCount, userCount, reportedPostCount });
+    return inertia.render('Admin/Dashboard/Index', {
+      postCount,
+      userCount,
+      reportedPostCount,
+      userpostcontentreactionCount,
+    });
   }
 
   // FORM SUBMISSIONS

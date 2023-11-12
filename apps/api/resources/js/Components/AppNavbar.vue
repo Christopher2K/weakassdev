@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { usePage } from '@inertiajs/vue3';
-import { HomeIcon, LogOutIcon, UsersIcon, NewspaperIcon, StopCircleIcon } from 'lucide-vue-next';
+import {
+  LayoutGridIcon,
+  HomeIcon,
+  LogOutIcon,
+  UsersIcon,
+  NewspaperIcon,
+  StopCircleIcon,
+} from 'lucide-vue-next';
 
 import { css } from '@style/css';
 import { vstack } from '@style/patterns';
@@ -32,7 +39,7 @@ const page = usePage();
     <div :class="vstack({ w: 'full', h: 'fit-content', gap: 0 })">
       <AppNavbarItem exact href="/admin/dashboard" label="Dashboard" :url="page.url">
         <template #left-icon>
-          <HomeIcon :size="ICON_SIZE" />
+          <LayoutGridIcon :size="ICON_SIZE" />
         </template>
       </AppNavbarItem>
 

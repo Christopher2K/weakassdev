@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-vue-next';
-import { hstack } from '@style/patterns';
 
-import AppButton from './AppButton.vue';
+import { css } from '@style/css';
+import { hstack } from '@style/patterns';
 
 const props = withDefaults(
   defineProps<{
@@ -17,40 +17,52 @@ const props = withDefaults(
 
 const isPreviousNavigationDisabled = computed(() => props.currentPage === 1);
 const isNextNavigationDisabled = computed(() => props.currentPage === props.lastPage);
+
+const linkStyle = css({
+  display: 'inline-flex',
+  flexDirection: 'row',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  textStyle: 'bodyUnderline',
+  color: 'whitesmoke.1000',
+
+  '&[data-disabled="true"]': {
+    pointerEvents: 'none',
+    cursor: 'not-allowed',
+    color: 'whitesmoke.500',
+  },
+});
 </script>
 
 <template>
-  <component :is="props.as" :class="hstack({ w: 'fit-content' })">
-    <AppButton btnSize="sm" :disabled="isPreviousNavigationDisabled" :href="`${baseUrl}?page=1`">
-      Début de liste
-    </AppButton>
-    <AppButton
-      btnSize="sm"
-      :disabled="isPreviousNavigationDisabled"
+  <component :is="props.as" :class="hstack({ w: 'fit-content', gap: '2', textStyle: 'body' })">
+    <a :class="linkStyle" :href="`${baseUrl}?page=1`" :data-disabled="isPreviousNavigationDisabled"
+      >Première page</a
+    >
+    <span aria-hidden="true">•</span>
+    <a
+      :class="linkStyle"
       :href="`${baseUrl}?page=${currentPage - 1}`"
+      :data-disabled="isPreviousNavigationDisabled"
     >
-      <template #left-icon>
-        <ChevronLeftIcon :size="20" />
-      </template>
+      <ChevronLeftIcon />
       Page précédente
-    </AppButton>
-
-    <AppButton
-      btnSize="sm"
-      :disabled="isNextNavigationDisabled"
+    </a>
+    <span aria-hidden="true">•</span>
+    <a
+      :class="linkStyle"
       :href="`${baseUrl}?page=${currentPage + 1}`"
+      :data-disabled="isNextNavigationDisabled"
     >
-      <template #right-icon>
-        <ChevronRightIcon :size="20" />
-      </template>
       Page suivante
-    </AppButton>
-    <AppButton
-      btnSize="sm"
-      :disabled="isNextNavigationDisabled"
+      <ChevronRightIcon />
+    </a>
+    <span aria-hidden="true">•</span>
+    <a
+      :class="linkStyle"
       :href="`${baseUrl}?page=${lastPage}`"
+      :data-disabled="isNextNavigationDisabled"
+      >Dernière page</a
     >
-      Fin de liste
-    </AppButton>
   </component>
 </template>

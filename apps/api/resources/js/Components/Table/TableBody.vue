@@ -7,14 +7,18 @@ import { css } from '@style/css';
     :class="
       css({
         '& tr > td': {
+          borderBottomWidth: 'thin',
+          borderBottomStyle: 'solid',
+          borderBottomColor: 'whitesmoke.400',
+          py: '6',
           px: '4',
-          py: '3',
+          textStyle: 'body',
           textAlign: 'left',
-          fontSize: 'sm',
           whiteSpace: 'nowrap',
         },
-        '& tr:nth-child(2n+1)': {
-          bg: 'gray.100',
+
+        '& tr:last-of-type > td': {
+          borderBottomColor: 'transparent',
         },
       })
     "

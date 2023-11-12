@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { DateTime } from 'luxon';
 import { createColumnHelper, useVueTable, FlexRender, getCoreRowModel } from '@tanstack/vue-table';
-
-import { css } from '@style/css';
+import { MoreVerticalIcon } from 'lucide-vue-next';
 
 import type { AdminUsersData } from '@weakassdev/shared/validators';
+
+import { css } from '@style/css';
 
 import AppLayout from '~/Pages/Layout.vue';
 import AppButton from '~/Components/AppButton.vue';
@@ -84,6 +85,13 @@ const table = useVueTable({
   />
 
   <TableRoot>
+    <Pagination
+      as="div"
+      baseUrl="/admin/users"
+      :class="css({ mb: '6' })"
+      :currentPage="props.users.meta.currentPage"
+      :lastPage="props.users.meta.lastPage"
+    />
     <TableContainer>
       <TableHeader>
         <tr v-for="headerGroup of table.getHeaderGroups()" :key="headerGroup.id">
@@ -101,8 +109,8 @@ const table = useVueTable({
         <tr v-for="row of table.getRowModel().rows" :key="row.id">
           <td v-for="cell of row.getVisibleCells()" :key="cell.id">
             <div v-if="cell.column.id === 'actions'">
-              <AppButton :href="`/admin/users/${row.getValue('id')}`" btnSize="sm">
-                Détails
+              <AppButton :href="`/admin/users/${row.getValue('id')}`">
+                <MoreVerticalIcon #left-icon />
               </AppButton>
             </div>
 

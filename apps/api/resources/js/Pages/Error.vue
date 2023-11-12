@@ -1,13 +1,6 @@
-<script lang="ts">
-import AppLayout from '~/Pages/Layout.vue';
+<script setup lang="ts">
 import { computed } from 'vue';
 
-export default {
-  layout: AppLayout,
-};
-</script>
-
-<script setup lang="ts">
 import { vstack } from '@style/patterns';
 import { css } from '@style/css';
 

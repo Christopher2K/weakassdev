@@ -6,15 +6,21 @@ import { css } from '@style/css';
   <thead
     :class="
       css({
-        borderTopRadius: 'md',
         '& tr > th': {
-          bg: 'gray.200',
-          p: '4',
-          fontFamily: 'Inter',
-          fontSize: 'md',
-          fontWeight: 'medium',
+          py: '6',
+          px: '4',
+          backgroundColor: 'whitesmoke.200',
+          textStyle: 'small',
           textAlign: 'left',
           whiteSpace: 'nowrap',
+        },
+
+        '& tr > th:first-of-type': {
+          borderTopLeftRadius: 'md',
+        },
+
+        '& tr > th:last-of-type': {
+          borderTopRightRadius: 'md',
         },
       })
     "

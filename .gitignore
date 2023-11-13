@@ -10,6 +10,7 @@ yarn-error.log
 # Environment
 .env
 .env*.local
+apps/api/.env.testing
 
 # dependencies
 node_modules

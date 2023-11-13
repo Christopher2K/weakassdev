@@ -9,8 +9,8 @@ yarn-error.log
 
 # Environment
 .env
+apps/api/.env.test
 .env*.local
-apps/api/.env.testing
 
 # dependencies
 node_modules

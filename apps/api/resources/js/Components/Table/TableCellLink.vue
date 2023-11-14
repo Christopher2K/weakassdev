@@ -9,15 +9,13 @@ const props = defineProps<{
   info: string;
   href: string;
 }>();
-
-// TODO: Set the button link component
 </script>
 
 <template>
   <span :class="hstack({})">
-    <AppButton btnSize="sm" theme="secondary" :href="props.href">
+    <AppButton theme="secondary" :href="props.href" btnSize="sm">
       <template #left-icon>
-        <ExternalLinkIcon :size="12" />
+        <ExternalLinkIcon :size="16" />
       </template>
     </AppButton>
 

@@ -22,6 +22,8 @@ import TableContainer from '~/Components/Table/TableContainer.vue';
 import TableFooter from '~/Components/Table/TableFooter.vue';
 import TableCellLink from '~/Components/Table/TableCellLink.vue';
 import Pagination from '~/Components/Pagination.vue';
+import AppDropdown from '~/Components/AppDropdown.vue';
+import AppDropdownItem from '~/Components/AppDropdownItem.vue';
 
 const props = defineProps<{
   posts: AdminPostsData;
@@ -67,11 +69,23 @@ const table = useVueTable({
   columns,
   getCoreRowModel: getCoreRowModel(),
 });
+
+function onDeletePressed(userId: string) {
+  console.log('DELETE', userId);
+}
 </script>
 
 <template>
-  <h1 :class="css({ textStyle: 'h2', mb: '10' })">Posts</h1>
+  <h1 :class="css({ textStyle: 'heading1', mb: '10' })">Posts</h1>
+
   <TableRoot>
+    <Pagination
+      as="div"
+      baseUrl="/admin/posts"
+      :currentPage="props.posts.meta.currentPage"
+      :lastPage="props.posts.meta.lastPage"
+      :class="css({ mb: '6' })"
+    />
     <TableContainer>
       <TableHeader>
         <tr v-for="headerGroup of table.getHeaderGroups()" :key="headerGroup.id">
@@ -110,9 +124,13 @@ const table = useVueTable({
             </span>
 
             <div v-else-if="cell.column.id === 'actions'">
-              <AppButton :href="`/admin/posts/${row.getValue('id')}`" btnSize="sm">
-                Détails
-              </AppButton>
+              <AppDropdown>
+                <AppDropdownItem
+                  label="Voir les détails"
+                  :href="`/admin/posts/${row.getValue('id')}`"
+                />
+                <AppDropdownItem label="Supprimer" @click="onDeletePressed(row.getValue('id'))" />
+              </AppDropdown>
             </div>
 
             <FlexRender v-else :render="cell.column.columnDef.cell" :props="cell.getContext()" />

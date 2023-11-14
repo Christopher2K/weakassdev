@@ -54,6 +54,9 @@ const buttonStyle = cva({
         px: '4',
         py: '3',
       },
+      sm: {
+        p: '2',
+      },
     },
   },
   defaultVariants: {

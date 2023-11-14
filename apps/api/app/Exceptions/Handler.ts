@@ -60,7 +60,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 
     switch (error.status) {
       case 401:
-        return inertia.render('Error', { error: 'unauthorized ' });
+        return inertia.render('Error', { error: 'unauthorized' });
       case 403:
         return inertia.render('Error', { error: 'forbidden' });
       case 404:

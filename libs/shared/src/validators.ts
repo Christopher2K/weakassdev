@@ -147,31 +147,41 @@ export const adminPostsDataSchema = makeListResponseSchema(
 export type AdminPostsData = z.infer<typeof adminPostsDataSchema>;
 
 export const adminReportedPostsDataSchema = makeListResponseSchema(
-  z.object({
-    id: z.string(),
-    createdAt: z.string(),
-    content: z.object({
-      content: z.string(),
-      createdAt: z.string(),
-    }),
-    author: z.object({
+  z
+    .object({
       id: z.string(),
-      username: z.string(),
-    }),
-    reports: z.array(
-      z.object({
-        id: z.string(),
-        outcome: z.string().nullable(),
-        outcomeContext: z.string().nullable(),
-        reason: z.string(),
-        reasonContext: z.string(),
-        reporter: z.object({
-          id: z.string(),
-          username: z.string(),
-        }),
+      createdAt: z.string(),
+      content: z.object({
+        content: z.string(),
         createdAt: z.string(),
       }),
-    ),
-  }),
+      author: z.object({
+        id: z.string(),
+        username: z.string(),
+        // Flagged posts
+        posts: z.array(z.object({ id: z.string() })),
+      }),
+      reports: z.array(
+        z.object({
+          id: z.string(),
+          outcome: z.string().nullable(),
+          outcomeContext: z.string().nullable(),
+          reason: z.string(),
+          reasonContext: z.string(),
+          reporter: z.object({
+            id: z.string(),
+            username: z.string(),
+          }),
+          createdAt: z.string(),
+        }),
+      ),
+    })
+    .transform(({ author: { posts, ...author }, ...obj }) => ({
+      ...obj,
+      author: {
+        ...author,
+        flaggedPosts: posts,
+      },
+    })),
 );
 export type AdminReportedPostsData = z.infer<typeof adminReportedPostsDataSchema>;

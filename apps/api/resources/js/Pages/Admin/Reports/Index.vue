@@ -1,21 +1,19 @@
-<script lang="ts">
-import Layout from '~/Pages/Layout.vue';
-
-export default {
-  layout: Layout,
-};
-</script>
-
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
+
 import { AdminReportedPostsData } from '@weakassdev/shared/validators';
+
 import { css } from '@style/css';
 import { vstack } from '@style/patterns';
 
 import Pagination from '~/Components/Pagination.vue';
+import Layout from '~/Pages/Layout.vue';
 
 import ReportItem from './components/ReportItem.vue';
 
+defineOptions({
+  layout: Layout,
+});
 const props = defineProps<{
   posts: AdminReportedPostsData;
 }>();
@@ -47,16 +45,26 @@ function rejectReport(reportId: string) {
 </script>
 
 <template>
-  <h1 :class="css({ textStyle: 'h2', mb: '10' })">Signalements</h1>
+  <h1 :class="css({ textStyle: 'heading1', mb: '10' })">Modération</h1>
+
   <div
     :class="
       vstack({
-        alignItems: 'flex-start',
         width: 'full',
-        gap: '3',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        gap: 5,
       })
     "
   >
+    <h2 :class="css({ textStyle: 'heading3' })">Liste des signalements</h2>
+    <Pagination
+      v-if="props.posts.data.length > 0"
+      as="div"
+      baseUrl="/admin/reports"
+      :currentPage="props.posts.meta.currentPage"
+      :lastPage="props.posts.meta.lastPage"
+    />
     <ReportItem
       v-for="post of props.posts.data"
       :key="post.id"
@@ -66,7 +74,7 @@ function rejectReport(reportId: string) {
     />
     <Pagination
       v-if="props.posts.data.length > 0"
-      as="footer"
+      as="div"
       baseUrl="/admin/reports"
       :currentPage="props.posts.meta.currentPage"
       :lastPage="props.posts.meta.lastPage"

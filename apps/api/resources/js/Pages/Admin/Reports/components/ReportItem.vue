@@ -22,15 +22,14 @@ const emits = defineEmits<{
     :class="
       css({
         width: 'full',
-        bg: 'slate.100',
-        px: 4,
-        py: 5,
+        p: 4,
+        bg: 'whitesmoke.100',
         borderRadius: 'md',
         '& > dt': {
-          textStyle: 'label',
-          mb: '1',
+          textStyle: 'smallImportant',
         },
         '& > dd': {
+          textStyle: 'body',
           mb: '5',
         },
         '& > dd:last-of-type': {
@@ -39,44 +38,41 @@ const emits = defineEmits<{
       })
     "
   >
-    <dt>Auteur / autrice</dt>
+    <dt>Contenu signalé</dt>
     <dd>
-      <Link :href="`/admin/users/${props.post.author.id}`" :class="css({ textStyle: 'link' })">
+      {{ props.post.content.content }}
+    </dd>
+
+    <dt>Posté le</dt>
+    <dd>
+      {{ props.post.createdAt }}
+    </dd>
+
+    <dt>Par</dt>
+    <dd>
+      <Link
+        :href="`/admin/users/${props.post.author.id}`"
+        :class="css({ textStyle: 'bodyUnderline' })"
+      >
         {{ props.post.author.username }}
       </Link>
     </dd>
 
-    <dt>Contenu</dt>
-    <dd>
-      <blockquote
-        :class="
-          css({
-            borderLeftWidth: 'thick',
-            borderLeftStyle: 'solid',
-            borderColor: 'gray.500',
-            fontStyle: 'italic',
-            pl: '4',
-          })
-        "
-      >
-        {{ props.post.content.content }}
-      </blockquote>
-    </dd>
-
-    <dt>Signalements</dt>
+    <dt>Informations</dt>
     <dd>
       <p>
-        Signalé par <strong>{{ props.post.reports.length }}</strong> membres
+        <strong>{{ props.post.reports.length }}</strong> signalements ()
       </p>
-      <Link :href="`/admin/reports/${props.post.id}`" :class="css({ textStyle: 'link' })"
-        >Voir en détails</Link
-      >
+      <p v-if="post.author.flaggedPosts.length > 0">
+        Cet utilisateur a déjà eu {{ post.author.flaggedPosts.length }} posts restreints
+      </p>
+      <p v-else>Cet utilisateur n'a jamais eu de post restreint.</p>
     </dd>
 
     <dt>Actions</dt>
     <dd :class="hstack({})">
-      <AppButton @click="emits('approve', props.post.id)">Approuver le blocage</AppButton>
-      <AppButton @click="emits('reject', props.post.id)">Rejeter</AppButton>
+      <AppButton @click="emits('approve', props.post.id)">Resteindre le post</AppButton>
+      <AppButton @click="emits('reject', props.post.id)">Rejeter les signalements</AppButton>
     </dd>
   </dl>
 </template>

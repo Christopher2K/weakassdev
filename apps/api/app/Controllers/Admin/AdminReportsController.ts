@@ -16,10 +16,14 @@ export default class AdminReportsController {
     const posts = await Post.query()
       .whereNot('status', postStatusSchema.Values.FLAGGED)
       .andWhereHas('reports', (query) => query.whereNull('outcome'))
-      .preload('author')
+      .preload('author', (author) =>
+        author.preload('posts', (posts) => posts.where('status', postStatusSchema.Values.FLAGGED)),
+      )
       .preload('content')
       .preload('reports', (report) => report.preload('reporter'))
       .paginate(page, limit);
+
+    console.log('hey');
 
     return inertia.render('Admin/Reports/Index', {
       posts: adminReportedPostsDataSchema.parse(posts.serialize()),

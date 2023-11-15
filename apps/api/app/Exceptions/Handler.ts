@@ -65,7 +65,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
         return inertia.render('Error', { error: 'forbidden' });
       case 404:
         return inertia.render('Error', { error: 'not-found' });
-      case undefined:
+      default:
         return inertia.render('Error', { error: 'server-error' });
     }
 

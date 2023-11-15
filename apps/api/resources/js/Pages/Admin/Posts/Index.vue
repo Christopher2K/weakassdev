@@ -43,7 +43,7 @@ const columns = [
     header: () => 'Statut',
     cell: (info) => info.getValue(),
   }),
-  columnHelpers.accessor('revisions', {
+  columnHelpers.accessor('meta.revisions', {
     header: () => 'Révisions',
     cell: (info) => info.getValue(),
   }),

@@ -141,7 +141,9 @@ export const adminPostsDataSchema = makeListResponseSchema(
       username: z.string(),
       avatarUrl: z.string().url().nullish(),
     }),
-    revisions: z.coerce.number(),
+    meta: z.object({
+      revisions: z.coerce.number(),
+    }),
   }),
 );
 export type AdminPostsData = z.infer<typeof adminPostsDataSchema>;

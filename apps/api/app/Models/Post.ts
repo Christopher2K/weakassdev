@@ -18,6 +18,8 @@ import PostContent from './PostContent';
 import PostReport from './PostReport';
 
 export default class Post extends BaseModel {
+  public serializeExtras = true;
+
   @column({ isPrimary: true })
   public id: string;
 
@@ -70,11 +72,5 @@ export default class Post extends BaseModel {
     const now = DateTime.now().toUTC();
 
     return now < limit;
-  }
-
-  public serializeExtras() {
-    return {
-      revisions: +this.$extras.revisions,
-    };
   }
 }

@@ -141,7 +141,7 @@ export const adminPostsDataSchema = makeListResponseSchema(
       username: z.string(),
       avatarUrl: z.string().url().nullish(),
     }),
-    revisions: z.number(),
+    revisions: z.coerce.number(),
   }),
 );
 export type AdminPostsData = z.infer<typeof adminPostsDataSchema>;
@@ -175,6 +175,10 @@ export const adminReportedPostsDataSchema = makeListResponseSchema(
           createdAt: z.string(),
         }),
       ),
+      meta: z.object({
+        offensiveCount: z.coerce.number().default(0),
+        duplicateCount: z.coerce.number().default(0),
+      }),
     })
     .transform(({ author: { posts, ...author }, ...obj }) => ({
       ...obj,

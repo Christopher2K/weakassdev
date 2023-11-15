@@ -1,3 +1,4 @@
+import Database from '@ioc:Adonis/Lucid/Database';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 import Post from 'App/Models/Post';
@@ -6,6 +7,8 @@ import { postStatusSchema, postReportOutcomeSchema } from '@weakassdev/shared/mo
 import { adminReportedPostsDataSchema } from '@weakassdev/shared/validators';
 
 import PostReport from 'App/Models/PostReport';
+import { postReportReasonDbName } from '@weakassdev/shared/models';
+import { postReportReasonSchema } from '@weakassdev/shared/models';
 
 export default class AdminReportsController {
   public async index({ request, inertia }: HttpContextContract) {
@@ -21,9 +24,21 @@ export default class AdminReportsController {
       )
       .preload('content')
       .preload('reports', (report) => report.preload('reporter'))
+      .withAggregate('reports', (query) =>
+        query
+          .count('*')
+          .groupBy('reason')
+          .where('reason', postReportReasonSchema.Values.OFFENSIVE)
+          .as('offensiveCount'),
+      )
+      .withAggregate('reports', (query) =>
+        query
+          .count('*')
+          .groupBy('reason')
+          .where('reason', postReportReasonSchema.Values.DUPLICATE)
+          .as('duplicateCount'),
+      )
       .paginate(page, limit);
-
-    console.log('hey');
 
     return inertia.render('Admin/Reports/Index', {
       posts: adminReportedPostsDataSchema.parse(posts.serialize()),

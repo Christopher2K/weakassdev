@@ -15,6 +15,11 @@ const emits = defineEmits<{
   approve: [string];
   reject: [string];
 }>();
+
+const reportReasonCopy = {
+  offensiveCount: 'contenu offensant',
+  duplicateCount: 'duplication'
+}
 </script>
 
 <template>
@@ -61,7 +66,14 @@ const emits = defineEmits<{
     <dt>Informations</dt>
     <dd>
       <p>
-        <strong>{{ props.post.reports.length }}</strong> signalements ()
+        <strong>{{ props.post.reports.length }}</strong> signalements
+        <ul>
+          <template v-for="[category, count] of Object.entries(props.post.meta)">
+            <li v-if="count > 0" :class="css({ textStyle: 'small', listStyle: 'inside', ml: 2 })">
+              {{ count }} pour {{ reportReasonCopy[category] }}
+            </li>
+          </template>
+        </ul> 
       </p>
       <p v-if="post.author.flaggedPosts.length > 0">
         Cet utilisateur a déjà eu {{ post.author.flaggedPosts.length }} posts restreints
@@ -70,7 +82,7 @@ const emits = defineEmits<{
     </dd>
 
     <dt>Actions</dt>
-    <dd :class="hstack({})">
+    <dd :class="hstack({ gap: 4 })">
       <AppButton @click="emits('approve', props.post.id)">Resteindre le post</AppButton>
       <AppButton @click="emits('reject', props.post.id)">Rejeter les signalements</AppButton>
     </dd>

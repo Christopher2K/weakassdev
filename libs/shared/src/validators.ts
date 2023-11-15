@@ -108,6 +108,7 @@ export const postsReportResponseSchema = z.object({
 });
 export type PostsReportResponse = z.infer<typeof postsStoreRequestSchema>;
 
+// TODO: Factorize this
 export const adminUsersDataSchema = makeListResponseSchema(
   z.object({
     id: z.string(),
@@ -124,6 +125,37 @@ export const adminUsersDataSchema = makeListResponseSchema(
   }),
 );
 export type AdminUsersData = z.infer<typeof adminUsersDataSchema>;
+
+export const adminUserDataSchema = z.object({
+  id: z.string(),
+  username: z.string(),
+  email: z.string().email(),
+  status: userStatusSchema,
+  role: userRoleSchema,
+  createdAt: z.string(),
+  avatarUrl: z.string().url().nullish(),
+  biography: z.string().nullish(),
+  externalLinks: z.object({
+    value: z.array(z.record(z.string().url())),
+  }),
+  posts: z.array(
+    z.object({
+      id: z.string(),
+      status: postStatusSchema,
+      createdAt: z.string(),
+      updatedAt: z.string(),
+      content: z.object({
+        id: z.string(),
+        content: z.string(),
+        createdAt: z.string(),
+      }),
+      meta: z.object({
+        revisions: z.coerce.number(),
+      }),
+    }),
+  ),
+});
+export type AdminUserData = z.infer<typeof adminUserDataSchema>;
 
 export const adminPostsDataSchema = makeListResponseSchema(
   z.object({

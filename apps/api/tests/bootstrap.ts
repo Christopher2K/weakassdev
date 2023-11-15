@@ -10,6 +10,8 @@ import TestUtils from '@ioc:Adonis/Core/TestUtils';
 import Env from '@ioc:Adonis/Core/Env';
 import { assert, runFailedTests, specReporter, apiClient } from '@japa/preset-adonis';
 
+import './japaConfig';
+
 /*
 |--------------------------------------------------------------------------
 | Japa Plugins

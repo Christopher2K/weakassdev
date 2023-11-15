@@ -1,4 +1,3 @@
-import Database from '@ioc:Adonis/Lucid/Database';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 import Post from 'App/Models/Post';
@@ -7,7 +6,6 @@ import { postStatusSchema, postReportOutcomeSchema } from '@weakassdev/shared/mo
 import { adminReportedPostsDataSchema } from '@weakassdev/shared/validators';
 
 import PostReport from 'App/Models/PostReport';
-import { postReportReasonDbName } from '@weakassdev/shared/models';
 import { postReportReasonSchema } from '@weakassdev/shared/models';
 
 export default class AdminReportsController {

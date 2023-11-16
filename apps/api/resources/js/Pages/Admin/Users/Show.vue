@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createColumnHelper, useVueTable, FlexRender, getCoreRowModel } from '@tanstack/vue-table';
+import { computed } from 'vue';
 
 import { css } from '@style/css';
 import { hstack, vstack } from '@style/patterns';
@@ -10,13 +10,7 @@ import Layout from '~/Pages/Layout.vue';
 import AppBreadcrumbs from '~/Components/AppBreadcrumbs.vue';
 import AppButton from '~/Components/AppButton.vue';
 import AppDefinitionList from '~/Components/AppDefinitionList.vue';
-import TableRoot from '~/Components/Table/TableRoot.vue';
-import TableHeader from '~/Components/Table/TableHeader.vue';
-import TableBody from '~/Components/Table/TableBody.vue';
-import TableContainer from '~/Components/Table/TableContainer.vue';
-import TableFooter from '~/Components/Table/TableFooter.vue';
-import AppDropdown from '~/Components/AppDropdown.vue';
-import AppDropdownItem from '~/Components/AppDropdownItem.vue';
+import AppPostsTable from '~/Components/AppPostsTable.vue';
 import { formatDate, userStatusDefinition, userRoleDefinition } from '~/utils';
 
 defineOptions({
@@ -24,42 +18,17 @@ defineOptions({
 });
 const props = defineProps<{ user: AdminUserData; posts: AdminUserPostsData }>();
 
-const columnHelpers = createColumnHelper<AdminUserPostsData['data'][number]>();
-
-const columns = [
-  columnHelpers.accessor('id', {
-    header: () => 'Identifiant',
-    cell: (info) => info.getValue().slice(30),
-  }),
-  columnHelpers.accessor('status', {
-    header: () => 'Statut',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelpers.accessor('meta.revisions', {
-    header: () => 'Révisions',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelpers.accessor('content.content', {
-    header: () => 'Contenu',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelpers.accessor('createdAt', {
-    header: () => 'Posté le',
-    cell: (info) => formatDate(info.getValue()),
-  }),
-  columnHelpers.display({
-    id: 'actions',
-    header: () => 'Actions',
-  }),
-];
-
-const table = useVueTable({
-  get data() {
-    return props.posts.data;
-  },
-  columns,
-  getCoreRowModel: getCoreRowModel(),
-});
+const data = computed(() =>
+  props.posts.data.map((post) => ({
+    id: post.id,
+    author: props.user.username,
+    authorId: props.user.id,
+    status: post.status,
+    revisions: post.meta.revisions,
+    content: post.content.content,
+    createdAt: post.createdAt,
+  })),
+);
 
 const sectionStyle = vstack({
   gap: 6,
@@ -135,61 +104,7 @@ const sectionStyle = vstack({
 
   <section>
     <h2 :class="css({ textStyle: 'heading3', mb: 6 })">Posts</h2>
-
-    <TableRoot v-if="props.posts.data.length > 0">
-      <!-- TODO: PAGINATION COMPONENT -->
-      <TableContainer>
-        <TableHeader>
-          <tr v-for="headerGroup of table.getHeaderGroups()" :key="headerGroup.id">
-            <th v-for="header of headerGroup.headers" :key="header.id">
-              <FlexRender
-                v-if="!header.isPlaceholder"
-                :render="header.column.columnDef.header"
-                :props="header.getContext()"
-              />
-            </th>
-          </tr>
-        </TableHeader>
-
-        <TableBody>
-          <tr v-for="row of table.getRowModel().rows" :key="row.id">
-            <td v-for="cell of row.getVisibleCells()" :key="cell.id">
-              <span
-                v-if="cell.column.id === 'content_content'"
-                :class="
-                  css({
-                    display: 'inline-block',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    maxWidth: '300px',
-                    textOverflow: 'ellipsis',
-                    wordBreak: 'break-all',
-                  })
-                "
-              >
-                {{ row.getValue('content_content') }}
-              </span>
-
-              <div v-else-if="cell.column.id === 'actions'">
-                <AppDropdown>
-                  <AppDropdownItem
-                    label="Voir les détails"
-                    :href="`/admin/posts/${row.getValue('id')}`"
-                  />
-                </AppDropdown>
-              </div>
-
-              <FlexRender v-else :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-            </td>
-          </tr>
-        </TableBody>
-
-        <TableFooter :length="columns.length">
-          <!-- TODO: PAGINATION COMPONENT -->
-        </TableFooter>
-      </TableContainer>
-    </TableRoot>
-
+    <AppPostsTable v-if="props.posts.data.length > 0" :data="data" :excludedColumns="['author']" />
     <p v-else :class="css({ textStyle: 'body' })">Aucun post!</p>
   </section>
 </template>

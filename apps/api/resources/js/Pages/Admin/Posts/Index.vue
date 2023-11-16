@@ -1,12 +1,5 @@
-<script lang="ts">
-export default {
-  layout: AppLayout,
-};
-</script>
-
 <script setup lang="ts">
-import { DateTime } from 'luxon';
-import { createColumnHelper, useVueTable, FlexRender, getCoreRowModel } from '@tanstack/vue-table';
+import { computed } from 'vue';
 
 import { css } from '@style/css';
 import { vstack } from '@style/patterns';
@@ -14,64 +7,26 @@ import { vstack } from '@style/patterns';
 import { AdminPostsData } from '@weakassdev/shared/validators';
 
 import AppLayout from '~/Pages/Layout.vue';
-import TableRoot from '~/Components/Table/TableRoot.vue';
-import TableHeader from '~/Components/Table/TableHeader.vue';
-import TableBody from '~/Components/Table/TableBody.vue';
-import TableContainer from '~/Components/Table/TableContainer.vue';
-import TableFooter from '~/Components/Table/TableFooter.vue';
-import TableCellLink from '~/Components/Table/TableCellLink.vue';
-import Pagination from '~/Components/Pagination.vue';
-import AppDropdown from '~/Components/AppDropdown.vue';
-import AppDropdownItem from '~/Components/AppDropdownItem.vue';
+import AppPostsTable from '~/Components/AppPostsTable.vue';
 
+defineOptions({
+  layout: AppLayout,
+});
 const props = defineProps<{
   posts: AdminPostsData;
 }>();
 
-const columnHelpers = createColumnHelper<AdminPostsData['data'][number]>();
-
-const columns = [
-  columnHelpers.accessor('id', {
-    header: () => 'Identifiant',
-    cell: (info) => info.getValue().slice(30),
-  }),
-  columnHelpers.accessor('author.username', {
-    header: () => 'Auteur(e)',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelpers.accessor('status', {
-    header: () => 'Statut',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelpers.accessor('meta.revisions', {
-    header: () => 'Révisions',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelpers.accessor('content.content', {
-    header: () => 'Contenu',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelpers.accessor('createdAt', {
-    header: () => 'Posté le',
-    cell: (info) => DateTime.fromISO(info.getValue()).toLocaleString(DateTime.DATETIME_MED),
-  }),
-  columnHelpers.display({
-    id: 'actions',
-    header: () => 'Actions',
-  }),
-];
-
-const table = useVueTable({
-  get data() {
-    return props.posts.data;
-  },
-  columns,
-  getCoreRowModel: getCoreRowModel(),
-});
-
-function onDeletePressed(userId: string) {
-  console.log('DELETE', userId);
-}
+const data = computed(() =>
+  props.posts.data.map((post) => ({
+    id: post.id,
+    author: post.author.username,
+    authorId: post.author.id,
+    status: post.status,
+    revisions: post.meta.revisions,
+    content: post.content.content,
+    createdAt: post.createdAt,
+  })),
+);
 </script>
 
 <template>
@@ -81,75 +36,6 @@ function onDeletePressed(userId: string) {
     :class="vstack({ gap: 5, justifyContent: 'flex-start', alignItems: 'flex-start', w: 'full' })"
   >
     <h2 :class="css({ textStyle: 'heading3' })">Liste des posts</h2>
-    <TableRoot>
-      <Pagination
-        as="div"
-        baseUrl="/admin/posts"
-        :currentPage="props.posts.meta.currentPage"
-        :lastPage="props.posts.meta.lastPage"
-        :class="css({ mb: '6' })"
-      />
-      <TableContainer>
-        <TableHeader>
-          <tr v-for="headerGroup of table.getHeaderGroups()" :key="headerGroup.id">
-            <th v-for="header of headerGroup.headers" :key="header.id">
-              <FlexRender
-                v-if="!header.isPlaceholder"
-                :render="header.column.columnDef.header"
-                :props="header.getContext()"
-              />
-            </th>
-          </tr>
-        </TableHeader>
-
-        <TableBody>
-          <tr v-for="row of table.getRowModel().rows" :key="row.id">
-            <td v-for="cell of row.getVisibleCells()" :key="cell.id">
-              <TableCellLink
-                v-if="cell.column.id === 'author_username'"
-                :info="cell.row.original.author.username"
-                :href="`/admin/users/${cell.row.original.author.id}`"
-              />
-              <span
-                v-else-if="cell.column.id === 'content_content'"
-                :class="
-                  css({
-                    display: 'inline-block',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    maxWidth: '300px',
-                    textOverflow: 'ellipsis',
-                    wordBreak: 'break-all',
-                  })
-                "
-              >
-                {{ row.getValue('content_content') }}
-              </span>
-
-              <div v-else-if="cell.column.id === 'actions'">
-                <AppDropdown>
-                  <AppDropdownItem
-                    label="Voir les détails"
-                    :href="`/admin/posts/${row.getValue('id')}`"
-                  />
-                  <AppDropdownItem label="Supprimer" @click="onDeletePressed(row.getValue('id'))" />
-                </AppDropdown>
-              </div>
-
-              <FlexRender v-else :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-            </td>
-          </tr>
-        </TableBody>
-
-        <TableFooter :length="columns.length">
-          <Pagination
-            as="span"
-            baseUrl="/admin/posts"
-            :currentPage="props.posts.meta.currentPage"
-            :lastPage="props.posts.meta.lastPage"
-          />
-        </TableFooter>
-      </TableContainer>
-    </TableRoot>
+    <AppPostsTable :data="data" />
   </div>
 </template>

@@ -6,6 +6,7 @@ import { css } from '@style/css';
 import { hstack } from '@style/patterns';
 
 import AppButton from '~/Components/AppButton.vue';
+import AppDefinitionList from '~/Components/AppDefinitionList.vue'; 
 
 const props = defineProps<{
   post: AdminReportedPostsData['data'][number];
@@ -23,26 +24,11 @@ const reportReasonCopy = {
 </script>
 
 <template>
-  <dl
-    :class="
-      css({
-        width: 'full',
-        p: 4,
-        bg: 'whitesmoke.100',
-        borderRadius: 'md',
-        '& > dt': {
-          textStyle: 'smallImportant',
-        },
-        '& > dd': {
-          textStyle: 'body',
-          mb: '5',
-        },
-        '& > dd:last-of-type': {
-          mb: '0',
-        },
-      })
-    "
-  >
+  <AppDefinitionList :class="css({
+    bg: 'whitesmoke.100',
+    p: 6,
+    borderRadius: 'md',
+  })">
     <dt>Contenu signalé</dt>
     <dd>
       {{ props.post.content.content }}
@@ -86,5 +72,5 @@ const reportReasonCopy = {
       <AppButton @click="emits('approve', props.post.id)">Resteindre le post</AppButton>
       <AppButton @click="emits('reject', props.post.id)">Rejeter les signalements</AppButton>
     </dd>
-  </dl>
+  </AppDefinitionList>
 </template>

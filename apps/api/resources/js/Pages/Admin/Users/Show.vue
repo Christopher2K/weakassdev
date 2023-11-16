@@ -2,7 +2,7 @@
 import { css } from '@style/css';
 import { hstack, vstack } from '@style/patterns';
 
-import type { AdminUserData } from '@weakassdev/shared/validators';
+import type { AdminUserData, AdminUserPostsData } from '@weakassdev/shared/validators';
 
 import Layout from '~/Pages/Layout.vue';
 import AppBreadcrumbs from '~/Components/AppBreadcrumbs.vue';
@@ -13,7 +13,7 @@ import { formatDate, userStatusDefinition, userRoleDefinition } from '~/utils';
 defineOptions({
   layout: Layout,
 });
-const props = defineProps<{ user: AdminUserData }>();
+const props = defineProps<{ user: AdminUserData; posts: AdminUserPostsData }>();
 
 const sectionStyle = vstack({
   gap: 6,

@@ -11,9 +11,7 @@ export default class AdminPostsController {
     const posts = await Post.query()
       .preload('author')
       .preload('content')
-      .withAggregate('postVersions', (query) => {
-        return query.count('*').as('revisions').groupBy('post_id');
-      })
+      .withCount('postVersions', (query) => query.as('revisions'))
       .paginate(page, limit);
 
     return inertia.render('Admin/Posts/Index', {

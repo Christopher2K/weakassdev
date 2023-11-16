@@ -1,9 +1,14 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
-import { adminUsersDataSchema, adminUserDataSchema } from '@weakassdev/shared/validators';
+import {
+  adminUsersDataSchema,
+  adminUserDataSchema,
+  adminUserPostsDataSchema,
+} from '@weakassdev/shared/validators';
 
 import * as GlobalManager from 'App/Managers/GlobalManager';
 import User from 'App/Models/User';
+import Post from 'App/Models/Post';
 
 export default class AdminUsersController {
   public async index({ request, inertia }: HttpContextContract) {
@@ -23,16 +28,21 @@ export default class AdminUsersController {
 
   public async show({ request, inertia }: HttpContextContract) {
     const userUuid = request.param('id');
+    const postsPage = request.input('postsPage', 1);
+    const postsLimit = request.input('postsLimit', 10);
 
-    const user = await User.query()
-      .where('id', userUuid)
-      .preload('posts', (posts) =>
-        posts.preload('content').withCount('postVersions', (query) => query.as('revisions')),
-      )
-      .firstOrFail();
+    const [user, posts] = await Promise.all([
+      User.findOrFail(userUuid),
+      Post.query()
+        .where('authorId', userUuid)
+        .preload('content')
+        .withCount('postVersions', (query) => query.as('revisions'))
+        .paginate(postsPage, postsLimit),
+    ]);
 
     return inertia.render('Admin/Users/Show', {
       user: adminUserDataSchema.parse(user.serialize()),
+      posts: adminUserPostsDataSchema.parse(posts.serialize()),
     });
   }
 

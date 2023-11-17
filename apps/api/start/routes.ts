@@ -20,6 +20,7 @@
 
 import Route from '@ioc:Adonis/Core/Route';
 
+// API ROUTES
 Route.group(() => {
   // AUTHENTICATION
   Route.group(() => {
@@ -45,11 +46,11 @@ Route.group(() => {
   .namespace('App/Controllers/V1')
   .prefix('v1');
 
+// ADMIN ROUTES
 Route.group(() => {
   // PAGES
   Route.get('', 'AdminController.index');
   Route.get('logout', 'AdminController.logout');
-
   // FORM SUBMISSIONS
   Route.post('login', 'AdminController.login');
 

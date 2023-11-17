@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 
 import { css } from '@style/css';
-import { hstack, vstack } from '@style/patterns';
+import { hstack } from '@style/patterns';
 
 import type { AdminUserData, AdminUserPostsData } from '@weakassdev/shared/validators';
 
@@ -11,6 +11,7 @@ import AppBreadcrumbs from '~/Components/AppBreadcrumbs.vue';
 import AppButton from '~/Components/AppButton.vue';
 import AppDefinitionList from '~/Components/AppDefinitionList.vue';
 import AppPostsTable from '~/Components/AppPostsTable.vue';
+import AppDetailsSection from '~/Components/AppDetailsSection.vue';
 import { formatDate, userStatusDefinition, userRoleDefinition } from '~/utils';
 
 defineOptions({
@@ -29,14 +30,6 @@ const data = computed(() =>
     createdAt: post.createdAt,
   })),
 );
-
-const sectionStyle = vstack({
-  gap: 6,
-  justifyContent: 'flex-start',
-  alignItems: 'flex-start',
-  flexBasis: '1/2',
-  flex: 1,
-});
 </script>
 
 <template>
@@ -55,9 +48,7 @@ const sectionStyle = vstack({
       })
     "
   >
-    <section :class="sectionStyle">
-      <h2 :class="css({ textStyle: 'heading3' })">Informations</h2>
-
+    <AppDetailsSection title="Informations">
       <img
         v-if="props.user.avatarUrl"
         :alt="`Photo de profil de ${props.user.username}`"
@@ -92,14 +83,13 @@ const sectionStyle = vstack({
         <dt>Rôle</dt>
         <dd>{{ userRoleDefinition[props.user.role] }}</dd>
       </AppDefinitionList>
-    </section>
+    </AppDetailsSection>
 
-    <section :class="sectionStyle">
-      <h2 :class="css({ textStyle: 'heading3' })">Actions</h2>
+    <AppDetailsSection title="Actions">
       <AppButton>Réinitialiser le mot de passe</AppButton>
       <AppButton>Bannir définitivement</AppButton>
       <AppButton>Bannir temporairement</AppButton>
-    </section>
+    </AppDetailsSection>
   </div>
 
   <section>

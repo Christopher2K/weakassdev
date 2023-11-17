@@ -4,6 +4,7 @@ import Database from '@ioc:Adonis/Lucid/Database';
 
 import User from 'App/Models/User';
 import UserFactory from 'Database/factories/UserFactory';
+import PostFactory from 'Database/factories/PostFactory';
 
 test.group('[index handler]', (group) => {
   const password = 'Password123';
@@ -119,5 +120,42 @@ test.group('[show handler]', (group) => {
       .loginAs(adminUser);
 
     response.assertStatus(404);
+  });
+
+  test('returns the corresponding user', async ({ client }) => {
+    const user = await UserFactory.create();
+    const response = await client.get(`/admin/users/${user.id}`).inertia().loginAs(adminUser);
+
+    response.assertInertiaPropsContains({ user: { id: user.id } });
+  });
+
+  test('returns posts associated to the user', async ({ client, assert }) => {
+    const user = await UserFactory.create();
+    await PostFactory.merge({ authorId: user.id }).with('content').createMany(3);
+
+    const response = await client.get(`/admin/users/${user.id}`).inertia().loginAs(adminUser);
+
+    response.assertInertiaPropsContains({ posts: { data: [] } });
+    assert.equal(response.inertiaProps().posts.data.length, 3);
+  });
+
+  test('paginates the posts associated to the user', async ({ client, assert }) => {
+    const user = await UserFactory.create();
+    await PostFactory.merge({ authorId: user.id }).with('content').createMany(11);
+
+    const response1 = await client.get(`/admin/users/${user.id}`).inertia().loginAs(adminUser);
+    assert.equal(response1.inertiaProps().posts.data.length, 10);
+
+    const response2 = await client
+      .get(`/admin/users/${user.id}?postsPage=2`)
+      .inertia()
+      .loginAs(adminUser);
+    assert.equal(response2.inertiaProps().posts.data.length, 1);
+
+    const response3 = await client
+      .get(`/admin/users/${user.id}?postsPage=3`)
+      .inertia()
+      .loginAs(adminUser);
+    assert.equal(response3.inertiaProps().posts.data.length, 0);
   });
 });

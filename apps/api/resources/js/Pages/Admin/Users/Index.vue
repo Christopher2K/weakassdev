@@ -13,7 +13,7 @@ import TableHeader from '~/Components/Table/TableHeader.vue';
 import TableBody from '~/Components/Table/TableBody.vue';
 import TableContainer from '~/Components/Table/TableContainer.vue';
 import TableFooter from '~/Components/Table/TableFooter.vue';
-import Pagination from '~/Components/Pagination.vue';
+import AppPagination from '~/Components/AppPagination.vue';
 import AppAdminPageCard from '~/Components/AppAdminPageCard.vue';
 import AppDropdown from '~/Components/AppDropdown.vue';
 import AppDropdownItem from '~/Components/AppDropdownItem.vue';
@@ -98,7 +98,7 @@ function onDeletePressed(userId: string) {
   >
     <h2 :class="css({ textStyle: 'heading3' })">Liste des utilisateurs</h2>
     <TableRoot>
-      <Pagination
+      <AppPagination
         as="div"
         baseUrl="/admin/users"
         :class="css({ mb: '6' })"
@@ -138,7 +138,7 @@ function onDeletePressed(userId: string) {
         </TableBody>
 
         <TableFooter :length="columns.length">
-          <Pagination
+          <AppPagination
             as="span"
             baseUrl="/admin/users"
             :currentPage="props.users.meta.currentPage"

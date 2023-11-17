@@ -2,7 +2,6 @@
 import { usePage } from '@inertiajs/vue3';
 import {
   LayoutGridIcon,
-  HomeIcon,
   LogOutIcon,
   UsersIcon,
   NewspaperIcon,

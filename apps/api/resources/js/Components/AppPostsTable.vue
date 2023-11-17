@@ -9,7 +9,7 @@ import TableBody from './Table/TableBody.vue';
 import TableContainer from './Table/TableContainer.vue';
 import TableFooter from './Table/TableFooter.vue';
 import TableCellLink from './Table/TableCellLink.vue';
-import Pagination from '~/Components/Pagination.vue';
+import AppPagination from '~/Components/AppPagination.vue';
 import AppDropdown from './AppDropdown.vue';
 import AppDropdownItem from './AppDropdownItem.vue';
 
@@ -85,7 +85,7 @@ const table = useVueTable({
 </script>
 
 <template>
-  <Pagination
+  <AppPagination
     :class="css({ mb: '5' })"
     :baseUrl="props.baseUrl"
     :currentPage="props.currentPage"
@@ -145,7 +145,7 @@ const table = useVueTable({
       </TableBody>
 
       <TableFooter :length="columns.length">
-        <Pagination
+        <AppPagination
           :baseUrl="props.baseUrl"
           :currentPage="props.currentPage"
           :pageParam="props.pageParam"

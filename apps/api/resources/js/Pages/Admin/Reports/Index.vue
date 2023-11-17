@@ -6,7 +6,7 @@ import { AdminReportedPostsData } from '@weakassdev/shared/validators';
 import { css } from '@style/css';
 import { vstack } from '@style/patterns';
 
-import Pagination from '~/Components/Pagination.vue';
+import AppPagination from '~/Components/AppPagination.vue';
 import Layout from '~/Pages/Layout.vue';
 
 import ReportItem from './components/ReportItem.vue';
@@ -58,7 +58,7 @@ function rejectReport(reportId: string) {
     "
   >
     <h2 :class="css({ textStyle: 'heading3' })">Liste des signalements</h2>
-    <Pagination
+    <AppPagination
       v-if="props.posts.data.length > 0"
       as="div"
       baseUrl="/admin/reports"
@@ -72,7 +72,7 @@ function rejectReport(reportId: string) {
       @approve="approveReport($event)"
       @reject="rejectReport($event)"
     />
-    <Pagination
+    <AppPagination
       v-if="props.posts.data.length > 0"
       as="div"
       baseUrl="/admin/reports"

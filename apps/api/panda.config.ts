@@ -26,7 +26,6 @@ const colors = defineTokens.colors({
 const DEFAULT_TEXT_SIZE = 18;
 const getTextSize = (remSize: number) => `${(DEFAULT_TEXT_SIZE * remSize).toFixed(3)}px`;
 const textStyles = defineTextStyles({
-  // NEW STYLES
   heading1: {
     value: {
       fontFamily: 'Inter',
@@ -110,67 +109,6 @@ const textStyles = defineTextStyles({
       fontFamily: 'Inter',
       lineHeight: '175%',
       fontSize: getTextSize(0.684),
-    },
-  },
-
-  // OLD STYLES
-  h1: {
-    value: {
-      fontFamily: 'Inter',
-      fontWeight: 'semibold',
-      fontSize: '6xl',
-      lineHeight: '140%',
-    },
-  },
-  h2: {
-    value: {
-      fontFamily: 'Inter',
-      fontWeight: 'medium',
-      fontSize: '5xl',
-      lineHeight: '140%',
-    },
-  },
-  h3: {
-    value: {
-      fontFamily: 'Inter',
-      fontWeight: 'normal',
-      fontSize: '4xl',
-      lineHeight: '140%',
-    },
-  },
-  bigBody: {
-    value: {
-      fontFamily: 'Inter',
-      fontWeight: 'normal',
-      fontSize: 'xl',
-      lineHeight: '140%',
-    },
-  },
-  button: {
-    value: {
-      fontFamily: 'Inter',
-      fontWeight: 'bold',
-      fontSize: 'sm',
-    },
-  },
-  label: {
-    value: {
-      fontFamily: 'Inter',
-      fontWeight: 'bold',
-      fontSize: 'sm',
-    },
-  },
-  caption: {
-    value: {
-      fontFamily: 'Inter',
-      fontWeight: 'bold',
-      fontSize: 'xs',
-      fontVariant: 'small-caps',
-    },
-  },
-  link: {
-    value: {
-      textDecoration: 'underline',
     },
   },
 });

@@ -32,7 +32,7 @@ const props = defineProps<{
   baseUrl: string;
   currentPage: number;
   lastPage: number;
-  pageParam: string;
+  pageParam?: string;
 }>();
 
 const columnHelpers = createColumnHelper<BasePost>();

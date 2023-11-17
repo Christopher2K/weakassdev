@@ -36,6 +36,11 @@ const data = computed(() =>
     :class="vstack({ gap: 5, justifyContent: 'flex-start', alignItems: 'flex-start', w: 'full' })"
   >
     <h2 :class="css({ textStyle: 'heading3' })">Liste des posts</h2>
-    <AppPostsTable :data="data" />
+    <AppPostsTable
+      :data="data"
+      :currentPage="props.posts.meta.currentPage"
+      :lastPage="props.posts.meta.lastPage"
+      baseUrl="/admin/posts"
+    />
   </div>
 </template>

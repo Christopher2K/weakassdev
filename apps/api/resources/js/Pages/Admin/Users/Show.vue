@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 
 import { css } from '@style/css';
-import { hstack } from '@style/patterns';
 
 import type { AdminUserData, AdminUserPostsData } from '@weakassdev/shared/validators';
 
@@ -11,7 +10,7 @@ import AppBreadcrumbs from '~/Components/AppBreadcrumbs.vue';
 import AppButton from '~/Components/AppButton.vue';
 import AppDefinitionList from '~/Components/AppDefinitionList.vue';
 import AppPostsTable from '~/Components/AppPostsTable.vue';
-import AppDetailsSection from '~/Components/AppDetailsSection.vue';
+import AppResourceDetails from '~/Templates/AppResourceDetails.vue';
 import { formatDate, userStatusDefinition, userRoleDefinition } from '~/utils';
 
 defineOptions({
@@ -33,22 +32,13 @@ const data = computed(() =>
 </script>
 
 <template>
-  <h1 :class="css({ textStyle: 'heading1', mb: 10 })">Détails de l'utilisateur</h1>
-  <AppBreadcrumbs
-    :links="[{ href: '/admin/users', name: 'Liste des utilisateurs' }, { name: 'Détails' }]"
-  />
-  <div
-    :class="
-      hstack({
-        width: 'full',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        gap: 6,
-        mb: 10,
-      })
-    "
-  >
-    <AppDetailsSection title="Informations">
+  <AppResourceDetails title="Détails de l'utilisateur">
+    <template #header>
+      <AppBreadcrumbs
+        :links="[{ href: '/admin/users', name: 'Liste des utilisateurs' }, { name: 'Détails' }]"
+      />
+    </template>
+    <template #informations>
       <img
         v-if="props.user.avatarUrl"
         :alt="`Photo de profil de ${props.user.username}`"
@@ -83,26 +73,26 @@ const data = computed(() =>
         <dt>Rôle</dt>
         <dd>{{ userRoleDefinition[props.user.role] }}</dd>
       </AppDefinitionList>
-    </AppDetailsSection>
+    </template>
 
-    <AppDetailsSection title="Actions">
+    <template #actions>
       <AppButton>Réinitialiser le mot de passe</AppButton>
       <AppButton>Bannir définitivement</AppButton>
       <AppButton>Bannir temporairement</AppButton>
-    </AppDetailsSection>
-  </div>
+    </template>
 
-  <section>
-    <h2 :class="css({ textStyle: 'heading3', mb: 6 })">Posts</h2>
-    <AppPostsTable
-      v-if="props.posts.data.length > 0"
-      :data="data"
-      :excludedColumns="['author']"
-      :currentPage="props.posts.meta.currentPage"
-      :lastPage="props.posts.meta.lastPage"
-      pageParam="postsPage"
-      :baseUrl="`/admin/users/${props.user.id}`"
-    />
-    <p v-else :class="css({ textStyle: 'body' })">Aucun post!</p>
-  </section>
+    <section>
+      <h2 :class="css({ textStyle: 'heading3', mb: 6 })">Posts</h2>
+      <AppPostsTable
+        v-if="props.posts.data.length > 0"
+        :data="data"
+        :excludedColumns="['author']"
+        :currentPage="props.posts.meta.currentPage"
+        :lastPage="props.posts.meta.lastPage"
+        pageParam="postsPage"
+        :baseUrl="`/admin/users/${props.user.id}`"
+      />
+      <p v-else :class="css({ textStyle: 'body' })">Aucun post!</p>
+    </section>
+  </AppResourceDetails>
 </template>

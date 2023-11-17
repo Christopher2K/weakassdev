@@ -2,15 +2,15 @@
 import { Link } from '@inertiajs/vue3';
 
 import { css } from '@style/css';
-import { hstack } from '@style/patterns';
+
+import type { AdminPostData } from '@weakassdev/shared/validators';
 
 import AppDefinitionList from '~/Components/AppDefinitionList.vue';
-import AppDetailsSection from '~/Components/AppDetailsSection.vue';
 import AppBreadcrumbs from '~/Components/AppBreadcrumbs.vue';
 import AppButton from '~/Components/AppButton.vue';
+import AppResourceDetails from '~/Templates/AppResourceDetails.vue';
 import Layout from '~/Pages/Layout.vue';
 
-import { type AdminPostData } from '@weakassdev/shared/validators';
 import { formatDate } from '~/utils';
 
 defineOptions({
@@ -23,21 +23,14 @@ const props = defineProps<{
 </script>
 
 <template>
-  <h1 :class="css({ textStyle: 'heading1', mb: 10 })">Détails du post</h1>
-  <AppBreadcrumbs :links="[{ href: '/admin/posts', name: 'Posts' }, { name: 'Détails du post' }]" />
+  <AppResourceDetails title="Détails du post">
+    <template #header>
+      <AppBreadcrumbs
+        :links="[{ href: '/admin/posts', name: 'Posts' }, { name: 'Détails du post' }]"
+      />
+    </template>
 
-  <div
-    :class="
-      hstack({
-        width: 'full',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        gap: 6,
-        mb: 10,
-      })
-    "
-  >
-    <AppDetailsSection title="Informations">
+    <template #informations>
       <AppDefinitionList>
         <dt>Auteur</dt>
         <dd>
@@ -63,12 +56,11 @@ const props = defineProps<{
           {{ props.post.content.content }}
         </dd>
       </AppDefinitionList>
-    </AppDetailsSection>
-
-    <AppDetailsSection title="Actions">
+    </template>
+    <template #actions>
       <AppButton>Resteindre le post</AppButton>
       <AppButton>Bannir l'auteur définitivement</AppButton>
       <AppButton>Bannir l'auteur temporairement</AppButton>
-    </AppDetailsSection>
-  </div>
+    </template>
+  </AppResourceDetails>
 </template>

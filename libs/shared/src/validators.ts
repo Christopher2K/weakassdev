@@ -159,27 +159,28 @@ export const adminUserPostsDataSchema = makeListResponseSchema(
 );
 export type AdminUserPostsData = z.infer<typeof adminUserPostsDataSchema>;
 
-export const adminPostsDataSchema = makeListResponseSchema(
-  z.object({
+export const adminPostDataSchema = z.object({
+  id: z.string(),
+  status: postStatusSchema,
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  content: z.object({
     id: z.string(),
-    status: postStatusSchema,
+    content: z.string(),
     createdAt: z.string(),
-    updatedAt: z.string(),
-    content: z.object({
-      id: z.string(),
-      content: z.string(),
-      createdAt: z.string(),
-    }),
-    author: z.object({
-      id: z.string(),
-      username: z.string(),
-      avatarUrl: z.string().url().nullish(),
-    }),
-    meta: z.object({
-      revisions: z.coerce.number(),
-    }),
   }),
-);
+  author: z.object({
+    id: z.string(),
+    username: z.string(),
+    avatarUrl: z.string().url().nullish(),
+  }),
+  meta: z.object({
+    revisions: z.coerce.number(),
+  }),
+});
+export type AdminPostData = z.infer<typeof adminPostDataSchema>;
+
+export const adminPostsDataSchema = makeListResponseSchema(adminPostDataSchema);
 export type AdminPostsData = z.infer<typeof adminPostsDataSchema>;
 
 export const adminReportedPostsDataSchema = makeListResponseSchema(

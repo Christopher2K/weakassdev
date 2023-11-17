@@ -1,5 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import { adminPostsDataSchema } from '@weakassdev/shared/validators';
+import { adminPostsDataSchema, adminPostDataSchema } from '@weakassdev/shared/validators';
 
 import Post from 'App/Models/Post';
 
@@ -19,7 +19,18 @@ export default class AdminPostsController {
     });
   }
 
-  public async show({ inertia }: HttpContextContract) {
-    return inertia.render('Admin/Posts/Show', {});
+  public async show({ request, inertia }: HttpContextContract) {
+    const id = request.param('id');
+
+    const post = await Post.query()
+      .preload('author')
+      .preload('content')
+      .withCount('postVersions', (query) => query.as('revisions'))
+      .where('id', id)
+      .firstOrFail();
+
+    return inertia.render('Admin/Posts/Show', {
+      post: adminPostDataSchema.parse(post.serialize()),
+    });
   }
 }

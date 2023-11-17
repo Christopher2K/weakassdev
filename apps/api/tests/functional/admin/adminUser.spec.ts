@@ -28,12 +28,12 @@ test.group('[index handler]', (group) => {
     response.assertInertiaTemplate('Admin/Users/Index');
   });
 
-  test('returns no users', async ({ client }) => {
+  test('returns no users', async ({ client, assert }) => {
     const response = await client.get('/admin/users').inertia().loginAs(adminUser);
-    response.assertInertiaPropsContains({ users: { data: [] } });
+    assert.equal(response.inertiaProps().users.data.length, 1); // 1 for admin
 
     const paginatedResponse = await client.get('/admin/users?page=4').inertia().loginAs(adminUser);
-    paginatedResponse.assertInertiaPropsContains({ users: { data: [] } });
+    assert.equal(paginatedResponse.inertiaProps().users.data.length, 0);
   });
 
   test('returns all users (max 30 per page)', async ({ assert, client }) => {

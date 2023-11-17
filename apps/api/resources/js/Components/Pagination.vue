@@ -10,10 +10,11 @@ const props = withDefaults(
   defineProps<{
     as?: string;
     baseUrl: string;
+    pageParam?: string;
     currentPage: number;
     lastPage: number;
   }>(),
-  { as: 'div' },
+  { as: 'div', pageParam: 'page' },
 );
 
 const isPreviousNavigationDisabled = computed(() => props.currentPage === 1);
@@ -39,14 +40,14 @@ const linkStyle = css({
   <component :is="props.as" :class="hstack({ w: 'fit-content', gap: '2', textStyle: 'body' })">
     <Link
       :class="linkStyle"
-      :href="`${baseUrl}?page=1`"
+      :href="`${props.baseUrl}?${props.pageParam}=1`"
       :data-disabled="isPreviousNavigationDisabled"
       >Première page</Link
     >
     <span aria-hidden="true">•</span>
     <Link
       :class="linkStyle"
-      :href="`${baseUrl}?page=${currentPage - 1}`"
+      :href="`${props.baseUrl}?${props.pageParam}=${currentPage - 1}`"
       :data-disabled="isPreviousNavigationDisabled"
     >
       <ChevronLeftIcon />
@@ -55,7 +56,7 @@ const linkStyle = css({
     <span aria-hidden="true">•</span>
     <Link
       :class="linkStyle"
-      :href="`${baseUrl}?page=${currentPage + 1}`"
+      :href="`${props.baseUrl}?${props.pageParam}=${currentPage + 1}`"
       :data-disabled="isNextNavigationDisabled"
     >
       Page suivante
@@ -64,7 +65,7 @@ const linkStyle = css({
     <span aria-hidden="true">•</span>
     <Link
       :class="linkStyle"
-      :href="`${baseUrl}?page=${lastPage}`"
+      :href="`${props.baseUrl}?${props.pageParam}=${lastPage}`"
       :data-disabled="isNextNavigationDisabled"
       >Dernière page</Link
     >

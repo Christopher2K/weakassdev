@@ -104,7 +104,15 @@ const sectionStyle = vstack({
 
   <section>
     <h2 :class="css({ textStyle: 'heading3', mb: 6 })">Posts</h2>
-    <AppPostsTable v-if="props.posts.data.length > 0" :data="data" :excludedColumns="['author']" />
+    <AppPostsTable
+      v-if="props.posts.data.length > 0"
+      :data="data"
+      :excludedColumns="['author']"
+      :currentPage="props.posts.meta.currentPage"
+      :lastPage="props.posts.meta.lastPage"
+      pageParam="postsPage"
+      :baseUrl="`/admin/users/${props.user.id}`"
+    />
     <p v-else :class="css({ textStyle: 'body' })">Aucun post!</p>
   </section>
 </template>

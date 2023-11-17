@@ -26,7 +26,14 @@ export type BasePost = {
   createdAt: string;
 };
 
-const props = defineProps<{ data: BasePost[]; excludedColumns?: Array<keyof BasePost> }>();
+const props = defineProps<{
+  data: BasePost[];
+  excludedColumns?: Array<keyof BasePost>;
+  baseUrl: string;
+  currentPage: number;
+  lastPage: number;
+  pageParam: string;
+}>();
 
 const columnHelpers = createColumnHelper<BasePost>();
 
@@ -78,7 +85,13 @@ const table = useVueTable({
 </script>
 
 <template>
-  <!-- TODO: Pagination -->
+  <Pagination
+    :class="css({ mb: '5' })"
+    :baseUrl="props.baseUrl"
+    :currentPage="props.currentPage"
+    :pageParam="props.pageParam"
+    :lastPage="props.lastPage"
+  />
   <TableRoot>
     <TableContainer>
       <TableHeader>
@@ -132,7 +145,12 @@ const table = useVueTable({
       </TableBody>
 
       <TableFooter :length="columns.length">
-        <!-- TODO: Pagination -->
+        <Pagination
+          :baseUrl="props.baseUrl"
+          :currentPage="props.currentPage"
+          :pageParam="props.pageParam"
+          :lastPage="props.lastPage"
+        />
       </TableFooter>
     </TableContainer>
   </TableRoot>

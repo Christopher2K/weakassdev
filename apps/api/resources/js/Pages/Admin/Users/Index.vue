@@ -5,7 +5,6 @@ import { createColumnHelper, useVueTable, FlexRender, getCoreRowModel } from '@t
 import type { AdminUsersData } from '@weakassdev/shared/validators';
 
 import { css } from '@style/css';
-import { vstack } from '@style/patterns';
 
 import AppLayout from '~/Pages/Layout.vue';
 import TableRoot from '~/Components/Table/TableRoot.vue';
@@ -17,6 +16,7 @@ import AppPagination from '~/Components/AppPagination.vue';
 import AppAdminPageCard from '~/Components/AppAdminPageCard.vue';
 import AppDropdown from '~/Components/AppDropdown.vue';
 import AppDropdownItem from '~/Components/AppDropdownItem.vue';
+import AppResourceIndex from '~/Templates/AppResourceIndex.vue';
 import { addPlusPrefix } from '~/utils';
 
 defineOptions({
@@ -81,71 +81,76 @@ function onDeletePressed(userId: string) {
 </script>
 
 <template>
-  <h1 :class="css({ textStyle: 'heading1', mb: '10' })">Utilisateurs</h1>
-
-  <AppAdminPageCard
-    :class="css({ mb: 10 })"
-    title="Nouveaux inscrits"
-    :data="[
-      { label: 'Aujourd\'hui', text: addPlusPrefix(props.entityCount.today) },
-      { label: 'Cette semaine', text: addPlusPrefix(props.entityCount.week) },
-      { label: 'Ce mois', text: addPlusPrefix(props.entityCount.month) },
-    ]"
-  />
-
-  <div
-    :class="vstack({ gap: 5, justifyContent: 'flex-start', alignItems: 'flex-start', w: 'full' })"
-  >
-    <h2 :class="css({ textStyle: 'heading3' })">Liste des utilisateurs</h2>
-    <TableRoot>
-      <AppPagination
-        as="div"
-        baseUrl="/admin/users"
-        :class="css({ mb: '6' })"
-        :currentPage="props.users.meta.currentPage"
-        :lastPage="props.users.meta.lastPage"
+  <AppResourceIndex showTable title="Utilisateurs" contentTitle="Liste des utilisateurs">
+    <template #header>
+      <AppAdminPageCard
+        :class="css({ mb: 10 })"
+        title="Nouveaux inscrits"
+        :data="[
+          { label: 'Aujourd\'hui', text: addPlusPrefix(props.entityCount.today) },
+          { label: 'Cette semaine', text: addPlusPrefix(props.entityCount.week) },
+          { label: 'Ce mois', text: addPlusPrefix(props.entityCount.month) },
+        ]"
       />
-      <TableContainer>
-        <TableHeader>
-          <tr v-for="headerGroup of table.getHeaderGroups()" :key="headerGroup.id">
-            <th v-for="header of headerGroup.headers" :key="header.id">
-              <FlexRender
-                v-if="!header.isPlaceholder"
-                :render="header.column.columnDef.header"
-                :props="header.getContext()"
-              />
-            </th>
-          </tr>
-        </TableHeader>
+    </template>
+    <template #content>
+      <TableRoot>
+        <AppPagination
+          as="div"
+          baseUrl="/admin/users"
+          :class="css({ mb: '6' })"
+          :currentPage="props.users.meta.currentPage"
+          :lastPage="props.users.meta.lastPage"
+        />
+        <TableContainer>
+          <TableHeader>
+            <tr v-for="headerGroup of table.getHeaderGroups()" :key="headerGroup.id">
+              <th v-for="header of headerGroup.headers" :key="header.id">
+                <FlexRender
+                  v-if="!header.isPlaceholder"
+                  :render="header.column.columnDef.header"
+                  :props="header.getContext()"
+                />
+              </th>
+            </tr>
+          </TableHeader>
 
-        <TableBody>
-          <tr v-for="row of table.getRowModel().rows" :key="row.id">
-            <td v-for="cell of row.getVisibleCells()" :key="cell.id">
-              <div v-if="cell.column.id === 'actions'">
-                <AppDropdown>
-                  <AppDropdownItem
-                    label="Voir les détails"
-                    :href="`/admin/users/${row.getValue('id')}`"
-                  />
-                  <AppDropdownItem label="Éditer" @click="onEditPressed(row.getValue('id'))" />
-                  <AppDropdownItem label="Supprimer" @click="onDeletePressed(row.getValue('id'))" />
-                </AppDropdown>
-              </div>
+          <TableBody>
+            <tr v-for="row of table.getRowModel().rows" :key="row.id">
+              <td v-for="cell of row.getVisibleCells()" :key="cell.id">
+                <div v-if="cell.column.id === 'actions'">
+                  <AppDropdown>
+                    <AppDropdownItem
+                      label="Voir les détails"
+                      :href="`/admin/users/${row.getValue('id')}`"
+                    />
+                    <AppDropdownItem label="Éditer" @click="onEditPressed(row.getValue('id'))" />
+                    <AppDropdownItem
+                      label="Supprimer"
+                      @click="onDeletePressed(row.getValue('id'))"
+                    />
+                  </AppDropdown>
+                </div>
 
-              <FlexRender v-else :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-            </td>
-          </tr>
-        </TableBody>
+                <FlexRender
+                  v-else
+                  :render="cell.column.columnDef.cell"
+                  :props="cell.getContext()"
+                />
+              </td>
+            </tr>
+          </TableBody>
 
-        <TableFooter :length="columns.length">
-          <AppPagination
-            as="span"
-            baseUrl="/admin/users"
-            :currentPage="props.users.meta.currentPage"
-            :lastPage="props.users.meta.lastPage"
-          />
-        </TableFooter>
-      </TableContainer>
-    </TableRoot>
-  </div>
+          <TableFooter :length="columns.length">
+            <AppPagination
+              as="span"
+              baseUrl="/admin/users"
+              :currentPage="props.users.meta.currentPage"
+              :lastPage="props.users.meta.lastPage"
+            />
+          </TableFooter>
+        </TableContainer>
+      </TableRoot>
+    </template>
+  </AppResourceIndex>
 </template>

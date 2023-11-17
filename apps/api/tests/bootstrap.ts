@@ -64,21 +64,7 @@ export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
       console.debug('====================================');
       return TestUtils.db().truncate();
     },
-    // () => {
-    //   console.debug('====================================');
-    //   console.debug('[Setup] Seed');
-    //   console.debug('[DATABASE]', Env.get('DATABASE_URL'));
-    //   console.debug('====================================');
-    //   return TestUtils.db().seed();
-    // },
-    () => {
-      console.debug('====================================');
-      console.debug('[Setup] Start HTTP');
-      console.debug('====================================');
-      return TestUtils.httpServer().start();
-    },
   ],
-  // teardown: [() => TestUtils.ace().loadCommands(), () => TestUtils.db().truncate()],
   teardown: [],
 };
 
@@ -94,7 +80,14 @@ export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
 | the HTTP server when it is a functional suite.
 */
 export const configureSuite: Required<Config>['configureSuite'] = (suite) => {
+  console.debug('USING DATABASE:', Env.get('DATABASE_URL'));
+
   if (suite.name === 'functional') {
-    console.debug('DATABASE', Env.get('DATABASE_URL'));
+    suite.setup(() => {
+      console.debug('====================================');
+      console.debug('[Setup] Start HTTP');
+      console.debug('====================================');
+      return TestUtils.httpServer().start();
+    });
   }
 };

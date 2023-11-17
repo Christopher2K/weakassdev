@@ -70,14 +70,6 @@ const table = useVueTable({
   columns,
   getCoreRowModel: getCoreRowModel(),
 });
-
-function onEditPressed(userId: string) {
-  console.log('EDIT', userId);
-}
-
-function onDeletePressed(userId: string) {
-  console.log('DELETE', userId);
-}
 </script>
 
 <template>
@@ -122,12 +114,7 @@ function onDeletePressed(userId: string) {
                   <AppDropdown>
                     <AppDropdownItem
                       label="Voir les détails"
-                      :href="`/admin/users/${row.getValue('id')}`"
-                    />
-                    <AppDropdownItem label="Éditer" @click="onEditPressed(row.getValue('id'))" />
-                    <AppDropdownItem
-                      label="Supprimer"
-                      @click="onDeletePressed(row.getValue('id'))"
+                      :href="`/admin/users/${row.original.id}`"
                     />
                   </AppDropdown>
                 </div>

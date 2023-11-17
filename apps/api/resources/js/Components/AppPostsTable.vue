@@ -133,8 +133,8 @@ const table = useVueTable({
             <div v-else-if="cell.column.id === 'actions'">
               <AppDropdown>
                 <AppDropdownItem
-                  label="Détails"
-                  :href="`/admin/posts/${cell.row.getValue('id')}`"
+                  label="Voir les détails"
+                  :href="`/admin/posts/${cell.row.original.id}`"
                 />
               </AppDropdown>
             </div>

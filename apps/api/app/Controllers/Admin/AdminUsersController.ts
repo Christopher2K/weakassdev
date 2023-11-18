@@ -17,7 +17,7 @@ export default class AdminUsersController {
     const limit = request.input('limit', 30);
 
     const [users, entityCount] = await Promise.all([
-      User.query().paginate(page, limit),
+      User.query().orderBy('createdAt', 'desc').paginate(page, limit),
       GlobalManager.getEntityCountPerPeriod('User'),
     ]);
 
@@ -51,9 +51,14 @@ export default class AdminUsersController {
     });
   }
 
-  public async delete({ request, inertia, session }: HttpContextContract) {
+  public async delete({ request, inertia, session, auth }: HttpContextContract) {
     const userUuid = request.param('id');
     const user = await User.findOrFail(userUuid);
+
+    if (user.id === auth.user?.id) {
+      session.flash('feedback', ['error', "Impossible d'archiver l'utilisateur courant."]);
+      return inertia.redirectBack();
+    }
 
     if (!user.canBeDeleted) {
       session.flash('feedback', ['error', 'Cet utilisateur ne peut pas être archivé.']);

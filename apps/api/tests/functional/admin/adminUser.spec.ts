@@ -215,6 +215,19 @@ test.group('[archive handler]', (group) => {
     response.assertStatus(303);
     response.assertFlashMessage('feedback', ['error', 'Cet utilisateur ne peut pas être archivé.']);
   });
+
+  test('cannot archive the current current admin logged in', async ({ client }) => {
+    const response = await client
+      .patch(`/admin/users/${adminUser.id}/delete`)
+      .redirects(0)
+      .inertia()
+      .loginAs(adminUser);
+
+    response.assertFlashMessage('feedback', [
+      'error',
+      "Impossible d'archiver l'utilisateur courant.",
+    ]);
+  });
 });
 
 test.group('[unarchive handler]', (group) => {

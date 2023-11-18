@@ -7,3 +7,7 @@ coverage
 tmp
 public/assets/entrypoints.json
 public/assets/manifest.json
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

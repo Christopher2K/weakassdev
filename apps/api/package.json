@@ -10,7 +10,8 @@
     "build": "node ace build --production",
     "start": "node server.js",
     "test": "node ace test",
-    "test:local": "dotenv -o -e .env.testing node ace test"
+    "test:local": "dotenv -o -e .env.testing node ace test",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
     "@adonisjs/assembler": "~5.9.5",
@@ -20,7 +21,9 @@
     "@japa/preset-adonis": "~1.2.0",
     "@japa/runner": "~2.5.1",
     "@pandacss/dev": "~0.17.5",
+    "@playwright/test": "~1.40.0",
     "@symfony/webpack-encore": "~4.4.0",
+    "@types/node": "~20.9.1",
     "@types/proxy-addr": "~2.0.0",
     "@types/source-map-support": "~0.5.6",
     "@weakassdev/config": "*",

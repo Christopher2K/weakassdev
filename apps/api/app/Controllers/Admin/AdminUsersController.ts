@@ -5,6 +5,7 @@ import {
   adminUserDataSchema,
   adminUserPostsDataSchema,
 } from '@weakassdev/shared/validators';
+import { userStatusSchema } from '@weakassdev/shared/models';
 
 import * as GlobalManager from 'App/Managers/GlobalManager';
 import User from 'App/Models/User';
@@ -43,14 +44,40 @@ export default class AdminUsersController {
     return inertia.render('Admin/Users/Show', {
       user: adminUserDataSchema.parse(user.serialize()),
       posts: adminUserPostsDataSchema.parse(posts.serialize()),
+      ui: {
+        showDeleteBtr: user.canBeDeleted,
+        showRestoreBtn: user.canBeRestored,
+      },
     });
   }
 
-  public async edit({ inertia }: HttpContextContract) {
-    return inertia.render('Admin/Users/Edit');
+  public async delete({ request, inertia, session }: HttpContextContract) {
+    const userUuid = request.param('id');
+    const user = await User.findOrFail(userUuid);
+
+    if (!user.canBeDeleted) {
+      session.flash('feedback', ['error', 'Cet utilisateur ne peut pas être archivé.']);
+      return inertia.redirectBack();
+    }
+
+    user.status = userStatusSchema.Values.DELETED;
+    await user.save();
+
+    return inertia.redirectBack();
   }
 
-  public async update({}: HttpContextContract) {}
+  public async restore({ request, inertia, session }: HttpContextContract) {
+    const userUuid = request.param('id');
+    const user = await User.findOrFail(userUuid);
 
-  public async destroy({}: HttpContextContract) {}
+    if (!user.canBeRestored) {
+      session.flash('feedback', ['error', 'Ce compte utilisateur ne pas pas être restauré.']);
+      return inertia.redirectBack();
+    }
+
+    user.status = userStatusSchema.Values.ACTIVE;
+    await user.save();
+
+    return inertia.redirectBack();
+  }
 }

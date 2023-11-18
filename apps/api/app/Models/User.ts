@@ -57,4 +57,26 @@ export default class User extends BaseModel {
       user.password = await Hash.make(user.password);
     }
   }
+
+  // Properties
+  public get canBeDeleted(): boolean {
+    switch (this.status) {
+      case userStatusSchema.Values.ACTIVE:
+        return true;
+      case userStatusSchema.Values.BANNED:
+      case userStatusSchema.Values.DELETED:
+        return false;
+    }
+  }
+
+  public get canBeRestored(): boolean {
+    switch (this.status) {
+      case userStatusSchema.Values.ACTIVE:
+        return false;
+      case userStatusSchema.Values.BANNED:
+        return false;
+      case userStatusSchema.Values.DELETED:
+        return true;
+    }
+  }
 }

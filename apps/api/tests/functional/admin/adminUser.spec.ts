@@ -5,6 +5,7 @@ import Database from '@ioc:Adonis/Lucid/Database';
 import User from 'App/Models/User';
 import UserFactory from 'Database/factories/UserFactory';
 import PostFactory from 'Database/factories/PostFactory';
+import { userStatusSchema } from '@weakassdev/shared/models';
 
 test.group('[index handler]', (group) => {
   const password = 'Password123';
@@ -157,5 +158,138 @@ test.group('[show handler]', (group) => {
       .inertia()
       .loginAs(adminUser);
     assert.equal(response3.inertiaProps().posts.data.length, 0);
+  });
+});
+
+test.group('[archive handler]', (group) => {
+  let adminUser: User;
+  const password = 'Password123';
+
+  group.each.setup(async () => {
+    await Database.beginGlobalTransaction();
+
+    adminUser = await UserFactory.merge({
+      password,
+      role: 'ADMIN',
+    }).create();
+
+    return () => Database.rollbackGlobalTransaction();
+  });
+
+  test('archive an active user and redirects to prev page', async ({ client, assert }) => {
+    const user = await UserFactory.create();
+    const response = await client
+      .patch(`/admin/users/${user.id}/delete`)
+      .inertia()
+      .headers({
+        referrer: `/admin/users/${user.id}`,
+      })
+      .loginAs(adminUser);
+    await user.refresh();
+
+    response.assertStatus(200);
+    assert.equal(user.status, userStatusSchema.Values.DELETED);
+  });
+
+  test('cannot archive a non existant user', async ({ client }) => {
+    const uuid = 'ecdcc9d8-b8ab-4aab-9f54-6e1cd25d7b5e';
+    const response = await client
+      .patch(`/admin/users/${uuid}/delete`)
+      .inertia()
+      .redirects(0)
+      .loginAs(adminUser);
+
+    response.assertStatus(404);
+  });
+
+  test('cannot archive a banner user', async ({ client, assert }) => {
+    const user = await UserFactory.merge({ status: userStatusSchema.Values.BANNED }).create();
+
+    const response = await client
+      .patch(`/admin/users/${user.id}/delete`)
+      .redirects(0)
+      .inertia()
+      .loginAs(adminUser);
+
+    assert.notEqual(user.status, userStatusSchema.Values.DELETED);
+    response.assertStatus(303);
+    response.assertFlashMessage('feedback', ['error', 'Cet utilisateur ne peut pas être archivé.']);
+  });
+});
+
+test.group('[unarchive handler]', (group) => {
+  let adminUser: User;
+  const password = 'Password123';
+
+  group.each.setup(async () => {
+    await Database.beginGlobalTransaction();
+
+    adminUser = await UserFactory.merge({
+      password,
+      role: 'ADMIN',
+    }).create();
+
+    return () => Database.rollbackGlobalTransaction();
+  });
+
+  test('restore a deleted user and redirects to prev page', async ({ client, assert }) => {
+    const user = await UserFactory.merge({ status: userStatusSchema.Values.DELETED }).create();
+
+    const response = await client
+      .patch(`/admin/users/${user.id}/restore`)
+      .inertia()
+      .headers({
+        referrer: `/admin/users/${user.id}`,
+      })
+      .loginAs(adminUser);
+    await user.refresh();
+
+    response.assertStatus(200);
+    assert.equal(user.status, userStatusSchema.Values.ACTIVE);
+  });
+
+  test('cannot restore a non existant user', async ({ client }) => {
+    const uuid = 'ecdcc9d8-b8ab-4aab-9f54-6e1cd25d7b5e';
+    const response = await client
+      .patch(`/admin/users/${uuid}/restore`)
+      .inertia()
+      .redirects(0)
+      .loginAs(adminUser);
+
+    response.assertStatus(404);
+  });
+
+  test('cannot restore an active user', async ({ client, assert }) => {
+    const user = await UserFactory.merge({ status: userStatusSchema.Values.ACTIVE }).create();
+
+    const response = await client
+      .patch(`/admin/users/${user.id}/restore`)
+      .redirects(0)
+      .inertia()
+      .loginAs(adminUser);
+
+    assert.equal(user.status, userStatusSchema.Values.ACTIVE);
+    response.assertStatus(303);
+    response.assertFlashMessage('feedback', [
+      'error',
+      'Ce compte utilisateur ne pas pas être restauré.',
+    ]);
+  });
+
+  test('cannot restore a banned user', async ({ client, assert }) => {
+    const user = await UserFactory.merge({ status: userStatusSchema.Values.BANNED }).create();
+
+    const response = await client
+      .patch(`/admin/users/${user.id}/restore`)
+      .redirects(0)
+      .inertia()
+      .loginAs(adminUser);
+
+    assert.equal(user.status, userStatusSchema.Values.BANNED);
+    response.assertStatus(303);
+    response.assertFlashMessage('feedback', [
+      'error',
+      'Ce compte utilisateur ne pas pas être restauré.',
+    ]);
   });
 });

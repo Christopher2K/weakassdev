@@ -59,6 +59,12 @@ Route.group(() => {
     Route.get('dashboard', 'AdminController.dashboard');
 
     Route.resource('users', 'AdminUsersController').except(['store', 'create']).as('adminUsers');
+    Route.group(() => {
+      // Single user actions
+      Route.patch('users/:id/delete', 'AdminUsersController.delete');
+      Route.patch('users/:id/restore', 'AdminUsersController.restore');
+    });
+
     Route.resource('posts', 'AdminPostsController').except(['store', 'create']).as('adminPosts');
 
     Route.resource('reports', 'AdminReportsController')

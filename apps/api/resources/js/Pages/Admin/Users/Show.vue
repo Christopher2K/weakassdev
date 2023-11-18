@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { router } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 import { css } from '@style/css';
@@ -16,7 +17,14 @@ import { formatDate, userStatusDefinition, userRoleDefinition } from '~/utils';
 defineOptions({
   layout: Layout,
 });
-const props = defineProps<{ user: AdminUserData; posts: AdminUserPostsData }>();
+const props = defineProps<{
+  user: AdminUserData;
+  posts: AdminUserPostsData;
+  ui: {
+    showDeleteBtn: boolean;
+    showRestoreBtn: boolean;
+  };
+}>();
 
 const data = computed(() =>
   props.posts.data.map((post) => ({
@@ -29,6 +37,14 @@ const data = computed(() =>
     createdAt: post.createdAt,
   })),
 );
+
+function onArchiveClick() {
+  router.patch(`/admin/users/${props.user.id}/delete`);
+}
+
+function onRestoreClick() {
+  router.patch(`/admin/users/${props.user.id}/restore`);
+}
 </script>
 
 <template>
@@ -76,9 +92,17 @@ const data = computed(() =>
     </template>
 
     <template #actions>
+      <!--
       <AppButton>Réinitialiser le mot de passe</AppButton>
       <AppButton>Bannir définitivement</AppButton>
       <AppButton>Bannir temporairement</AppButton>
+      -->
+      <AppButton v-if="props.ui.showDeleteBtn" @click="onArchiveClick()"
+        >Archiver ce compte</AppButton
+      >
+      <AppButton v-if="props.ui.showRestoreBtn" @click="onRestoreClick()"
+        >Restorer ce compte</AppButton
+      >
     </template>
 
     <section>

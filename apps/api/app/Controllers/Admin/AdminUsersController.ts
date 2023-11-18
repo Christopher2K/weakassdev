@@ -45,7 +45,7 @@ export default class AdminUsersController {
       user: adminUserDataSchema.parse(user.serialize()),
       posts: adminUserPostsDataSchema.parse(posts.serialize()),
       ui: {
-        showDeleteBtr: user.canBeDeleted,
+        showDeleteBtn: user.canBeDeleted,
         showRestoreBtn: user.canBeRestored,
       },
     });
@@ -62,6 +62,7 @@ export default class AdminUsersController {
 
     user.status = userStatusSchema.Values.DELETED;
     await user.save();
+    session.flash('feedback', ['success', 'Compte archivé avec succès']);
 
     return inertia.redirectBack();
   }
@@ -77,6 +78,7 @@ export default class AdminUsersController {
 
     user.status = userStatusSchema.Values.ACTIVE;
     await user.save();
+    session.flash('feedback', ['success', 'Compte restauré avec succès']);
 
     return inertia.redirectBack();
   }

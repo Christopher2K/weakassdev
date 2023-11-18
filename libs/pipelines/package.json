@@ -1,0 +1,13 @@
+{
+  "name": "@weakassdev/pipelines",
+  "private": true,
+  "packageManager": "yarn@3.6.2",
+  "scripts": {
+    "dagger": "node --loader ts-node/esm ./index.mts"
+  },
+  "devDependencies": {
+    "@dagger.io/dagger": "~0.9.3",
+    "ts-node": "~10.9.1",
+    "typescript": "~5.2.0"
+  }
+}

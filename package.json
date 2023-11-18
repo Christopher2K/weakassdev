@@ -25,6 +25,7 @@
     "web": "yarn workspace @weakassdev/web",
     "api": "yarn workspace @weakassdev/api",
     "shared": "yarn workspace @weakassdev/shared",
+    "pipelines": "yarn workspace @weakassdev/pipelines",
     "test": "turbo test"
   },
   "devDependencies": {

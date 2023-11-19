@@ -16,7 +16,7 @@
     "@weakassdev/config": "*",
     "esbuild": "~0.14.54",
     "postcss": "~8.4.27",
-    "solid-start-node": "~0.2.19",
+    "solid-start-node": "~0.3.10",
     "tsc-silent": "~1.2.2",
     "typescript": "~5.2.0",
     "vite": "~4.4.6"
@@ -26,8 +26,8 @@
     "@solidjs/router": "~0.8.2",
     "@weakassdev/shared": "*",
     "autoprefixer": "~10.4.14",
-    "solid-js": "~1.7.8",
-    "solid-start": "~0.2.30",
+    "solid-js": "~1.8.5",
+    "solid-start": "~0.3.10",
     "undici": "~5.15.1"
   },
   "engines": {

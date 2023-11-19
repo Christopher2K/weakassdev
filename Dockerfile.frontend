@@ -28,7 +28,6 @@ COPY libs/config /usr/app/libs/config
 
 ENV NODE_ENV=production
 
-RUN yarn web prepare
 RUN yarn build:web
 RUN rm -rf node_modules
 

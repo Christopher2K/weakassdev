@@ -10,7 +10,7 @@ runs:
     - name: Install dependencies
       if: steps.dependencies.outputs.cache-hit != 'true'
       shell: sh
-      run: yarn install --immutable
+      run: yarn install
     - name: Cache node modules
       if: steps.dependencies.outputs.cache-hit != 'true'
       uses: ./.github/actions/cacheJsPkg

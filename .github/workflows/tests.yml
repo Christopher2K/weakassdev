@@ -56,3 +56,18 @@ jobs:
       - uses: ./.github/actions/installJsDependencies
       - name: Run tests
         run: yarn test
+
+  integration-test:
+    name: API Integration tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install deps
+        run: yarn workspaces focus @weakassdev/api
+      - name: Install Dagger CLI
+        run: cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
+      - name: Run Dagger pipeline
+        run: yarn pipeline admine2e

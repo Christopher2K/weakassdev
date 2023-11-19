@@ -6,12 +6,10 @@ function urlToPath(url: URL): string {
 
 const workspaceDir = urlToPath(new URL('../../', import.meta.url));
 
-// initialize Dagger client
 connect(
   async (client) => {
     const contextDir = client.host().directory(workspaceDir);
 
-    // SET UP SERVICES
     const dbService = client
       .container()
       .from('postgres:15.3-alpine3.18')
@@ -21,54 +19,44 @@ connect(
       .withExposedPort(5432)
       .asService();
 
-    const backendService = contextDir
-      .dockerBuild({
-        dockerfile: 'Dockerfile.backend',
-        buildArgs: [
-          { name: 'APP_KEY', value: '_AaX8Bp3Tz0BPqhup7ZonKmhnnCrQRhB' },
-          {
-            name: 'DATABASE_URL',
-            value: 'postgres://weakasstest:weakasstest@db:5432/weakasstest',
-          },
-          {
-            name: 'PORT',
-            value: '1234',
-          },
-        ],
-      })
-      .withServiceBinding('db', dbService)
-      .withExposedPort(1234)
-      .withEnvVariable('SESSION_DRIVER', 'cookie')
-      .withEnvVariable('SESSION_COOKIE_NAME', 'wad')
-      .asService();
-
-    const backendAddr = await backendService.endpoint({ port: 1234, scheme: 'http' });
-
-    const source = client
+    const backend = client
       .container()
       .from('mcr.microsoft.com/playwright:v1.40.0-jammy')
       .withDirectory('/src', contextDir, {
         exclude: [
           '.git',
+          '.env*',
           'node_modules',
           'apps/api/node_modules',
+          'apps/api/.env*',
           'apps/web/node_modules',
           'libs/config/node_modules',
           'libs/shared/node_modules',
           'libs/pipelines',
         ],
-      });
+      })
+      .withServiceBinding('db', dbService)
+      .withEnvVariable('APP_KEY', '_AaX8Bp3Tz0BPqhup7ZonKmhnnCrQRhB')
+      .withEnvVariable('APP_NAME', 'wad')
+      .withEnvVariable('DATABASE_URL', 'postgres://weakasstest:weakasstest@db:5432/weakasstest')
+      .withEnvVariable('DRIVE_DISK', 'local')
+      .withEnvVariable('HOST', '0.0.0.0')
+      .withEnvVariable('NODE_ENV', 'development')
+      .withEnvVariable('PORT', '1234')
+      .withEnvVariable('SESSION_COOKIE_NAME', 'wad')
+      .withEnvVariable('SESSION_DRIVER', 'cookie')
+      .withWorkdir('/src')
+      .withExec(['yarn', 'install'])
+      .withExec(['yarn', 'build:api'])
+      .withExec(['yarn', 'api', 'ace', 'migration:run']);
 
-    const runner = source.withWorkdir('/src').withExec(['yarn', 'install']);
-
-    const out = await runner
+    const e2eTests = await backend
       .withEnvVariable('CI', 'true')
-      .withServiceBinding('backend', backendService)
-      .withEnvVariable('PW_URL', backendAddr)
-      .withExec(['yarn', 'api', 'playwright', 'test'])
+      .withEnvVariable('PW_URL', 'http://localhost:1234')
+      .withExec(['yarn', 'api', 'test:e2e'])
       .stderr();
 
-    console.log(out);
+    console.log(e2eTests);
   },
   { LogOutput: process.stdout },
 );

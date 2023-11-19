@@ -7,8 +7,7 @@
     "typecheck": "tsc --noEmit",
     "ace": "node ace",
     "dev": "node ace serve --watch --encore-args=\"--host 0.0.0.0 --public https://api.weakassdev.test\"",
-    "build": "node ace build --production",
-    "start": "node server.js",
+    "build": "panda codegen && node ace build --production",
     "test": "node ace test",
     "test:local": "dotenv -o -e .env.testing node ace test",
     "test:e2e": "playwright test"

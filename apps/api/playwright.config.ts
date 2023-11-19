@@ -1,14 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
-
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
 export default defineConfig({
   testDir: './tests/e2e',
   /* Run tests in files in parallel */
@@ -20,7 +11,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: process.env.CI ? 'list' : 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 
   use: {
@@ -49,10 +40,15 @@ export default defineConfig({
       use: { ...devices['Desktop Safari'] },
     },
   ],
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  // command: 'npm run start',
-  // url: 'https://api.weakassdev.test',
-  // reuseExistingServer: !process.env.CI,
-  // },
+
+  webServer: process.env.CI
+    ? {
+        command: 'node ./dist/server.js',
+        ignoreHTTPSErrors: true,
+        stderr: 'pipe',
+        stdout: 'pipe',
+        url: process.env.PW_URL + '/admin',
+        reuseExistingServer: false,
+      }
+    : undefined,
 });

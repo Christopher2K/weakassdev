@@ -21,7 +21,6 @@ COPY apps/api /usr/app/apps/api
 COPY libs/shared /usr/app/libs/shared
 COPY libs/config /usr/app/libs/config
 
-RUN yarn api prepare
 RUN yarn build:api
 RUN rm -rf node_modules
 

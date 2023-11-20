@@ -10,6 +10,13 @@ connect(
   async (client) => {
     const contextDir = client.host().directory(workspaceDir);
 
+    // Caches
+    const rootNode = client.cacheVolume('rootNode');
+    const apiNode = client.cacheVolume('apiNode');
+    const webNode = client.cacheVolume('webNode');
+    const sharedNode = client.cacheVolume('sharedNode');
+    const configNode = client.cacheVolume('configNode');
+
     const dbService = client
       .container()
       .from('postgres:15.3-alpine3.18')
@@ -35,6 +42,11 @@ connect(
           'libs/pipelines',
         ],
       })
+      .withMountedCache('node_modules', rootNode)
+      .withMountedCache('apps/api/node_modules', apiNode)
+      .withMountedCache('apps/web/node_modules', webNode)
+      .withMountedCache('libs/shared/node_modules', sharedNode)
+      .withMountedCache('libs/config/node_modules', configNode)
       .withServiceBinding('db', dbService)
       .withEnvVariable('APP_KEY', '_AaX8Bp3Tz0BPqhup7ZonKmhnnCrQRhB')
       .withEnvVariable('APP_NAME', 'wad')

@@ -3,7 +3,7 @@
   "private": true,
   "packageManager": "yarn@3.6.2",
   "scripts": {
-    "admine2e": "node --loader ts-node/esm ./admin-e2e.mts"
+    "e2e:admin": "node --loader ts-node/esm ./e2e-admin.mts"
   },
   "devDependencies": {
     "@dagger.io/dagger": "~0.9.3",

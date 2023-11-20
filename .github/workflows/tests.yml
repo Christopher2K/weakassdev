@@ -70,4 +70,4 @@ jobs:
       - name: Install Dagger CLI
         run: cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
       - name: Run Dagger pipeline
-        run: yarn pipelines admine2e
+        run: yarn pipelines e2e:admin

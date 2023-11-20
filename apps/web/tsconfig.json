@@ -12,6 +12,6 @@
     },
     "types": ["../../node_modules/solid-start/env"]
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "react"]
 }

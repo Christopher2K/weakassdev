@@ -3640,12 +3640,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solidjs/meta@npm:~0.28.2":
-  version: 0.28.7
-  resolution: "@solidjs/meta@npm:0.28.7"
+"@solidjs/meta@npm:~0.29.1":
+  version: 0.29.1
+  resolution: "@solidjs/meta@npm:0.29.1"
   peerDependencies:
-    solid-js: ">=1.4.0"
-  checksum: 59818647c4537b75b7e69eb0398fef5064994938639828c37bf22af7b47983fe66d2d28987550c09029751839c7b9521b0f6ec1e932a45d68ab966d4d427a7bc
+    solid-js: ">=1.8.4"
+  checksum: 562f08fd708af1827e4504950fb986600aab3e50355d5026c9933640549c211b4babd8e648be818fda3f236eba532e19fc6481dd627486d49bd6c335145c6c00
   languageName: node
   linkType: hard
 
@@ -4835,7 +4835,7 @@ __metadata:
   resolution: "@weakassdev/web@workspace:apps/web"
   dependencies:
     "@pandacss/dev": ~0.17.5
-    "@solidjs/meta": ~0.28.2
+    "@solidjs/meta": ~0.29.1
     "@solidjs/router": ~0.8.2
     "@types/node": ~18.11.18
     "@weakassdev/config": "*"

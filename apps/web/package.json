@@ -22,7 +22,7 @@
     "vite": "~4.4.6"
   },
   "dependencies": {
-    "@solidjs/meta": "~0.28.2",
+    "@solidjs/meta": "~0.29.1",
     "@solidjs/router": "~0.8.2",
     "@weakassdev/shared": "*",
     "autoprefixer": "~10.4.14",

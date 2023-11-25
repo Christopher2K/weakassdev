@@ -5,6 +5,7 @@ import type { AdminReportedPostsData } from '@weakassdev/shared/validators';
 
 import AppResourceIndex from '~/Templates/AppResourceIndex.vue';
 import AppPagination from '~/Components/AppPagination.vue';
+import AppEmptyData from '~/Components/AppEmptyData.vue';
 import Layout from '~/Pages/Layout.vue';
 
 import ReportItem from './components/ReportItem.vue';
@@ -66,6 +67,7 @@ function rejectReport(reportId: string) {
         :currentPage="props.posts.meta.currentPage"
         :lastPage="props.posts.meta.lastPage"
       />
+      <AppEmptyData v-else />
     </template>
   </AppResourceIndex>
 </template>

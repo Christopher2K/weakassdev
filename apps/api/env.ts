@@ -24,4 +24,8 @@ export default Env.rules({
   DATABASE_URL: Env.schema.string(),
   SESSION_DRIVER: Env.schema.string(),
   SESSION_COOKIE_NAME: Env.schema.string(),
+
+  ADMIN_EMAIL: Env.schema.string.optional(),
+  ADMIN_DEFAULT_PASSWORD: Env.schema.string.optional(),
+  ADMIN_USERNAME: Env.schema.string.optional(),
 });

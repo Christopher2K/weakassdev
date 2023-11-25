@@ -49,4 +49,4 @@ COPY --from=builder /usr/app/node_modules /usr/app/node_modules
 COPY --from=builder /usr/app/libs/shared/dist /usr/app/node_modules/@weakassdev/shared/dist
 COPY --from=builder /usr/app/libs/shared/package.json /usr/app/node_modules/@weakassdev/shared/package.json
 
-CMD ["/bin/sh", "-c", "node /usr/app/ace migration:run --force && node /usr/app/server.js"]
+CMD ["/bin/sh", "-c", "node /usr/app/ace migration:run --force && node /usr/app/ace admin:create --no-interactive --fail-silently && node /usr/app/server.js"]

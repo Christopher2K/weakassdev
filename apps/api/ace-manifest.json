@@ -10,7 +10,18 @@
       "description": "Create a new admin user",
       "args": [],
       "aliases": [],
-      "flags": []
+      "flags": [
+        {
+          "name": "interactive",
+          "propertyName": "interactive",
+          "type": "boolean"
+        },
+        {
+          "name": "fail-silently",
+          "propertyName": "failSilently",
+          "type": "boolean"
+        }
+      ]
     },
     "dump:rcfile": {
       "settings": {},

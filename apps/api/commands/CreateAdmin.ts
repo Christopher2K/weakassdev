@@ -1,4 +1,4 @@
-import { BaseCommand } from '@adonisjs/core/build/standalone';
+import { BaseCommand, flags } from '@adonisjs/core/build/standalone';
 
 export default class AdminCreate extends BaseCommand {
   /**
@@ -27,24 +27,62 @@ export default class AdminCreate extends BaseCommand {
     stayAlive: false,
   };
 
+  @flags.boolean()
+  public interactive: boolean = true;
+
+  @flags.boolean()
+  public failSilently: boolean = false;
+
   public async run() {
     const { default: User } = await import('App/Models/User');
+    const { default: Env } = await import('@ioc:Adonis/Core/Env');
 
     this.logger.info('🔥 New admin creation!');
 
-    const email = await this.prompt.ask('Enter email');
-    const username = await this.prompt.ask('Choose an username');
-    const password = await this.prompt.secure('Choose a password');
+    let email: string | undefined = Env.get('ADMIN_EMAIL');
+    let username: string | undefined = Env.get('ADMIN_USERNAME');
+    let password: string | undefined = Env.get('ADMIN_DEFAULT_PASSWORD');
+
+    if (this.interactive) {
+      email = await this.prompt.ask('Enter email');
+      username = await this.prompt.ask('Choose an username');
+      password = await this.prompt.secure('Choose a password');
+    }
 
     this.logger.info('🔄 Processing...');
 
-    await User.create({
-      email,
-      password,
-      username,
-      role: 'ADMIN',
-    });
+    try {
+      await User.create({
+        email,
+        password,
+        username,
+        role: 'ADMIN',
+      });
+      this.logger.success('✅ Done!');
+    } catch (e) {
+      switch (e.code) {
+        // UNIQUE VIOLATION
+        case '23505':
+          await this.onError('❌ An admin with this username or this email does already exist.');
+          break;
+        // NOT NULL VIOLATION
+        case '23502':
+          await this.onError(
+            '❌ Make sure that ADMIN_EMAIL ADMIN_USERNAME and ADMIN_DEFAULT_PASSWORD env vars are defined.',
+          );
+          break;
+        default:
+          this.logger.error(e);
+          await this.onError('❌ Admin was not created');
+      }
+    }
+  }
 
-    this.logger.success('✅ Done!');
+  private async onError(message: string) {
+    this.logger.error(message);
+    if (!this.failSilently) {
+      this.exitCode = 1;
+    }
+    await this.exit();
   }
 }

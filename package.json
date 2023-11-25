@@ -26,7 +26,8 @@
     "api": "yarn workspace @weakassdev/api",
     "shared": "yarn workspace @weakassdev/shared",
     "pipelines": "yarn workspace @weakassdev/pipelines",
-    "test": "turbo test"
+    "test": "turbo test",
+    "e2e": "turbo e2e"
   },
   "devDependencies": {
     "dotenv-cli": "~7.2.1",

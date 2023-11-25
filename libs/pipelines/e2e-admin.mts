@@ -86,10 +86,10 @@ connect(
       .withEnvVariable('SESSION_COOKIE_NAME', 'wad')
       .withEnvVariable('SESSION_DRIVER', 'cookie')
       .withWorkdir('/src')
-      .withExec(['yarn', 'install'])
+      .withExec(['yarn', 'install', '--silent'])
       .withEnvVariable('CI', 'true')
       .withEnvVariable('PW_URL_ADMIN', backendHostname)
-      .withExec(['yarn', 'api', 'e2e'])
+      .withExec(['yarn', 'e2e'])
       .stderr();
 
     console.log(testRunner);

@@ -32,6 +32,7 @@ kernel
     configure({
       ...kernel.application.rcFile.tests,
       ...processCliArgs(process.argv.slice(2)),
+      // ...processCliArgs([...process.argv.slice(2), '--headed', '--slow=500']),
       ...config,
       ...{
         importer: (filePath) => import(filePath),

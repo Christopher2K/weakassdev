@@ -35,7 +35,7 @@ const messageStyle = cva({
 </script>
 
 <template>
-  <article :class="messageStyle({ kind: props.kind })">
+  <article :class="messageStyle({ kind: props.kind })" role="status" :data-kind="props.kind">
     <p :class="css({ textStyle: 'body' })">
       <slot />
     </p>

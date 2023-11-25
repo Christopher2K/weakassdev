@@ -81,11 +81,11 @@ function submit(e: SubmitEvent) {
       "
     >
       <AppFieldContainer label="Nom d'utilisateur" name="username">
-        <AppInput type="text" name="username" id="email" required v-model="form.username" />
+        <AppInput type="text" name="username" required v-model="form.username" />
       </AppFieldContainer>
 
       <AppFieldContainer label="Mot de passe" name="password">
-        <AppInput type="password" name="password" id="password" required v-model="form.password" />
+        <AppInput type="password" name="password" required v-model="form.password" />
       </AppFieldContainer>
 
       <AppButton :disabled="form.processing">Se connecter</AppButton>

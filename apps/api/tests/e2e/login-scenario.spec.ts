@@ -1,8 +1,14 @@
 import { test } from '@japa/runner';
+import TestUtils from '@ioc:Adonis/Core/TestUtils';
 
 import UserFactory from 'Database/factories/UserFactory';
 
-test.group('login scenarii', () => {
+test.group('login scenarii', (group) => {
+  // This belongs to the configure suite function BUT there's a bug
+  group.each.setup(async () => {
+    return TestUtils.db().truncate();
+  });
+
   test('show a 404 when not logged in ', async ({ visit }) => {
     const page = await visit('/admin/dashboard');
     await page.assertText('p', "Vous n'avez pas les autorisations requises");
@@ -22,7 +28,7 @@ test.group('login scenarii', () => {
   test('throw an error when the account password is incorrect', async ({ visit, assert }) => {
     await UserFactory.merge({
       username: 'testUser',
-      email: 'test@admin.fr',
+      email: 'teste2e@admin.fr',
       password: 'password',
       role: 'ADMIN',
     }).create();
@@ -40,7 +46,7 @@ test.group('login scenarii', () => {
   test('logs in', async ({ visit }) => {
     await UserFactory.merge({
       username: 'testuser',
-      email: 'test@admin.fr',
+      email: 'teste2e@admin.fr',
       password: 'password',
       role: 'ADMIN',
     }).create();

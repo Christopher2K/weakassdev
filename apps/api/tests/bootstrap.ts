@@ -94,11 +94,12 @@ export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
 export const configureSuite: Required<Config>['configureSuite'] = (suite) => {
   suite.setup(async () => {
     console.debug('====================================');
-    console.debug('[Setup] Suite ', suite.name.toUpperCase());
+    console.debug('[Setup] Suite', suite.name.toUpperCase());
     if (suite.name === 'functional') {
       console.debug('[Setup] Start HTTP');
       await TestUtils.httpServer().start();
     }
+
     console.debug('====================================');
   });
 };

@@ -4,8 +4,8 @@ import TestUtils from '@ioc:Adonis/Core/TestUtils';
 import UserFactory from 'Database/factories/UserFactory';
 
 test.group('login scenarii', (group) => {
-  // This belongs to the configure suite function BUT there's a bug
-  group.each.setup(async () => {
+  // TODO: This belongs to the configure suite function BUT there's a bug
+  group.each.setup(() => {
     return TestUtils.db().truncate();
   });
 

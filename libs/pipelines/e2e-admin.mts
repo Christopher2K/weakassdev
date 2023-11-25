@@ -49,6 +49,9 @@ connect(
       .withExposedPort(1234)
       .withEnvVariable('SESSION_DRIVER', 'cookie')
       .withEnvVariable('SESSION_COOKIE_NAME', 'wad')
+      .withEnvVariable('ADMIN_USERNAME', 'admin')
+      .withEnvVariable('ADMIN_DEFAULT_PASSWORD', 'password')
+      .withEnvVariable('ADMIN_EMAIL', 'test@test.fr')
       .asService();
 
     const backendHostname = await backendService.endpoint({ port: 1234, scheme: 'http' });
@@ -76,6 +79,7 @@ connect(
       .withMountedCache('libs/config/node_modules', configNode)
       .withServiceBinding('db', dbService)
       .withServiceBinding('app', backendService)
+      .withExec(['ls'])
       .withEnvVariable('APP_KEY', '_AaX8Bp3Tz0BPqhup7ZonKmhnnCrQRhB')
       .withEnvVariable('APP_NAME', 'wad')
       .withEnvVariable('DATABASE_URL', 'postgres://weakasstest:weakasstest@db:5432/weakasstest')

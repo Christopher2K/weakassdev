@@ -26,6 +26,7 @@ test.group('user admin scenarii', (group) => {
     const adminPage = await visit(AdminPage);
     const page = await adminPage.loginAs({ username: adminUsername, password: adminPassword });
     await page.getByRole('navigation').getByRole('link', { name: 'Utilisateurs' }).click();
+    await page.waitForSelector('table');
     const rowCount = await page.getByRole('table').getByRole('row').count();
 
     assert.equal(rowCount, 3);
@@ -37,6 +38,7 @@ test.group('user admin scenarii', (group) => {
     const adminPage = await visit(AdminPage);
     const page = await adminPage.loginAs({ username: adminUsername, password: adminPassword });
     await page.getByRole('navigation').getByRole('link', { name: 'Utilisateurs' }).click();
+    await page.waitForSelector('table');
     const rowCount = await page.getByRole('table').getByRole('row').count();
 
     assert.equal(rowCount, 32);
@@ -51,21 +53,25 @@ test.group('user admin scenarii', (group) => {
 
     let rowCount = 0;
 
+    await page.waitForSelector('table');
     rowCount = await page.getByRole('table').getByRole('row').count();
     assert.equal(rowCount, 32);
 
     await page.getByRole('link', { name: 'Page suivante' }).first().click();
     await page.waitForURL(/\?page=2/);
+    await page.waitForSelector('table');
     rowCount = await page.getByRole('table').getByRole('row').count();
     assert.equal(rowCount, 32);
 
     await page.getByRole('link', { name: 'Page suivante' }).first().click();
     await page.waitForURL(/\?page=3/);
+    await page.waitForSelector('table');
     rowCount = await page.getByRole('table').getByRole('row').count();
     assert.equal(rowCount, 32);
 
     await page.getByRole('link', { name: 'Page suivante' }).first().click();
     await page.waitForURL(/\?page=4/);
+    await page.waitForSelector('table');
     rowCount = await page.getByRole('table').getByRole('row').count();
     assert.equal(rowCount, 13);
   });

@@ -11,6 +11,7 @@
     "postinstall": "husky install",
     "clean": "rm -rf ./apps/web/true",
     "compose": "yarn run clean; docker compose -f ./docker/dev/docker-compose.yaml",
+    "compose:test": "yarn run clean; docker compose -f ./docker/dev/docker-compose-test.yaml",
     "c:u": "yarn compose up",
     "c:u:rebuild": "yarn compose up --force-recreate --build",
     "c:d": "yarn compose down",

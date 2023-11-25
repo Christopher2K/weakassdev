@@ -1,0 +1,52 @@
+version: '3'
+services:
+  apps:
+    env_file: ../../.env
+    environment:
+      DATABASE_URL: postgres://weakasstest:weakasstest@db-test:5432/weakasstest
+    build:
+      context: ../../
+      dockerfile: ./docker/dev/Dockerfile
+    volumes:
+      - /usr/src/app/.yarn/cache
+      - /usr/src/app/.turbo
+      - /usr/src/app/node_modules
+      - /usr/src/app/apps/web/node_modules
+      - /usr/src/app/apps/web/.turbo
+      - /usr/src/app/apps/api/node_modules
+      - /usr/src/app/apps/api/.turbo
+      - /usr/src/app/libs/shared/node_modules
+      - /usr/src/app/libs/shared/.turbo
+      - ../../:/usr/src/app
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db-test
+    links:
+      - 'db-test:db-test'
+    command: /bin/bash -c 'yarn && yarn dev'
+
+  proxy:
+    env_file: ../../.env
+    image: caddy:2.6.4-alpine
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ../certs:/usr/local/etc/caddy/certs
+      - caddy_data:/data
+      - caddy_config:/config
+
+  db-test:
+    env_file: ../../.env.testing
+    image: postgres:15.3-alpine3.18
+    restart: always
+    ports:
+      - '5433:5432'
+
+volumes:
+  caddy_data:
+  caddy_config:
+  postgres_data:

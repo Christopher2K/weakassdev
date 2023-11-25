@@ -1,5 +1,7 @@
 FROM node:18.15-bullseye-slim as builder
 
+ENV NODE_ENV=production
+
 RUN corepack enable
 RUN mkdir -p /usr/app
 RUN mkdir /usr/app/.yarn

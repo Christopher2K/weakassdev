@@ -46,6 +46,11 @@
         "name": "unit",
         "files": ["tests/unit/**/*.spec(.ts|.js)"],
         "timeout": 60000
+      },
+      {
+        "name": "e2e",
+        "files": ["tests/e2e/**/*.spec(.ts|.js)"],
+        "timeout": 60000
       }
     ]
   },

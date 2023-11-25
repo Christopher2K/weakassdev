@@ -9,6 +9,7 @@ import type { Config } from '@japa/runner';
 import TestUtils from '@ioc:Adonis/Core/TestUtils';
 import Env from '@ioc:Adonis/Core/Env';
 import { assert, runFailedTests, specReporter, apiClient } from '@japa/preset-adonis';
+import { browserClient } from '@japa/browser-client';
 
 import './japaConfig';
 
@@ -23,7 +24,18 @@ import './japaConfig';
 | Feel free to remove existing plugins or add more.
 |
 */
-export const plugins: Required<Config>['plugins'] = [assert(), runFailedTests(), apiClient()];
+export const plugins: Required<Config>['plugins'] = [
+  assert(),
+  runFailedTests(),
+  apiClient(),
+  browserClient({
+    contextOptions: {
+      baseURL: process.env.PW_URL_ADMIN ?? 'http://localhost:8001',
+      ignoreHTTPSErrors: true,
+    },
+    runInSuites: ['e2e'],
+  }),
+];
 
 /*
 |--------------------------------------------------------------------------
@@ -80,14 +92,13 @@ export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
 | the HTTP server when it is a functional suite.
 */
 export const configureSuite: Required<Config>['configureSuite'] = (suite) => {
-  console.debug('USING DATABASE:', Env.get('DATABASE_URL'));
-
-  if (suite.name === 'functional') {
-    suite.setup(() => {
-      console.debug('====================================');
+  suite.setup(async () => {
+    console.debug('====================================');
+    console.debug('[Setup] Suite ', suite.name.toUpperCase());
+    if (suite.name === 'functional') {
       console.debug('[Setup] Start HTTP');
-      console.debug('====================================');
-      return TestUtils.httpServer().start();
-    });
-  }
+      await TestUtils.httpServer().start();
+    }
+    console.debug('====================================');
+  });
 };

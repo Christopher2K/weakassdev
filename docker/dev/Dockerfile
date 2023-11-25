@@ -1,4 +1,5 @@
-FROM node:18.15-bullseye
+# FROM node:18.15-bullseye
+FROM mcr.microsoft.com/playwright:v1.40.0-jammy
 
 ENV SHELL=bash
 
@@ -18,4 +19,8 @@ COPY libs/shared/package.json ./libs/shared/
 
 COPY libs/config/package.json ./libs/config/
 
-RUN yarn install
+# RUN yarn install
+
+# RUN yarn api playwright install 
+
+# RUN yarn api playwright install-depsapps/api/tests/functional/posts/index.spec.ts

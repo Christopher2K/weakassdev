@@ -233,6 +233,10 @@ config.optimization = {
   usedExports: false,
 };
 
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+  config.output.publicPath = 'http://localhost:8080/assets/';
+}
+
 /*
 |--------------------------------------------------------------------------
 | Export config

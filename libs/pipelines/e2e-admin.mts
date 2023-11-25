@@ -26,7 +26,34 @@ connect(
       .withExposedPort(5432)
       .asService();
 
-    const backend = client
+    const backendService = contextDir
+      .dockerBuild({
+        dockerfile: 'Dockerfile.backend',
+        buildArgs: [
+          { name: 'APP_KEY', value: '_AaX8Bp3Tz0BPqhup7ZonKmhnnCrQRhB' },
+          {
+            name: 'DATABASE_URL',
+            value: 'postgres://weakasstest:weakasstest@db:5432/weakasstest',
+          },
+          {
+            name: 'PORT',
+            value: '1234',
+          },
+          {
+            name: 'NODE_ENV',
+            value: 'production',
+          },
+        ],
+      })
+      .withServiceBinding('db', dbService)
+      .withExposedPort(1234)
+      .withEnvVariable('SESSION_DRIVER', 'cookie')
+      .withEnvVariable('SESSION_COOKIE_NAME', 'wad')
+      .asService();
+
+    const backendHostname = await backendService.endpoint({ port: 1234, scheme: 'http' });
+
+    const testRunner = await client
       .container()
       .from('mcr.microsoft.com/playwright:v1.40.0-jammy')
       .withDirectory('/src', contextDir, {
@@ -48,6 +75,7 @@ connect(
       .withMountedCache('libs/shared/node_modules', sharedNode)
       .withMountedCache('libs/config/node_modules', configNode)
       .withServiceBinding('db', dbService)
+      .withServiceBinding('app', backendService)
       .withEnvVariable('APP_KEY', '_AaX8Bp3Tz0BPqhup7ZonKmhnnCrQRhB')
       .withEnvVariable('APP_NAME', 'wad')
       .withEnvVariable('DATABASE_URL', 'postgres://weakasstest:weakasstest@db:5432/weakasstest')
@@ -59,16 +87,12 @@ connect(
       .withEnvVariable('SESSION_DRIVER', 'cookie')
       .withWorkdir('/src')
       .withExec(['yarn', 'install'])
-      .withExec(['yarn', 'build:api'])
-      .withExec(['yarn', 'api', 'ace', 'migration:run']);
-
-    const e2eTests = await backend
       .withEnvVariable('CI', 'true')
-      .withEnvVariable('PW_URL', 'http://localhost:1234')
-      .withExec(['yarn', 'api', 'test:e2e'])
+      .withEnvVariable('PW_URL_ADMIN', backendHostname)
+      .withExec(['yarn', 'api', 'e2e'])
       .stderr();
 
-    console.log(e2eTests);
+    console.log(testRunner);
   },
   { LogOutput: process.stdout },
 );

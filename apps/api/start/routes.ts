@@ -72,8 +72,11 @@ Route.group(() => {
     Route.resource('reports', 'AdminReportsController')
       .except(['store', 'create'])
       .as('adminReports');
-    Route.post('reports/approve', 'AdminReportsController.approveReport');
-    Route.post('reports/reject', 'AdminReportsController.rejectReport');
+    Route.group(() => {
+      // Single report actions
+      Route.post('reports/approve', 'AdminReportsController.approveReport');
+      Route.post('reports/reject', 'AdminReportsController.rejectReport');
+    });
   })
     .middleware('auth')
     .middleware('admin');

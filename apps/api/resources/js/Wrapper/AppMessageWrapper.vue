@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, effect } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 import { css } from '@style/css';
 
 import AppMessage from '~/Components/AppMessage.vue';
@@ -18,6 +18,10 @@ effect(() => {
   if (page.props?.feedback) {
     displayedMessage.value = page.props.feedback;
   }
+});
+
+router.on('start', () => {
+  displayedMessage.value = undefined;
 });
 </script>
 

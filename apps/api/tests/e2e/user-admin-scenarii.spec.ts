@@ -99,4 +99,25 @@ test.group('user admin scenarii', (group) => {
     const snackbarKind = await page.getByRole('status').getAttribute('data-kind');
     assert.equal(snackbarKind, 'error');
   });
+
+  test('archive and restore any other account', async ({ visit, assert }) => {
+    const user = await UserFactory.create();
+
+    const adminPage = await visit(AdminPage);
+    const page = await adminPage.loginAs({ username: adminUsername, password: adminPassword });
+    await page.getByRole('navigation').getByRole('link', { name: 'Utilisateurs' }).click();
+    await page.getByRole('row', { name: user.username }).getByRole('button').click();
+    await page.getByRole('link', { name: 'Voir les détails' }).click();
+    await page.getByRole('button', { name: 'Archiver ce compte' }).click();
+
+    let snackbarKind: string | null;
+    snackbarKind = await page.getByRole('status').getAttribute('data-kind');
+    assert.equal(snackbarKind, 'success');
+
+    await page.assertVisible(page.getByText('Compte supprimé'));
+    await page.getByRole('button', { name: 'Restorer ce compte' }).click();
+
+    snackbarKind = await page.getByRole('status').getAttribute('data-kind');
+    assert.equal(snackbarKind, 'success');
+  });
 });

@@ -1,4 +1,6 @@
 import Database from '@ioc:Adonis/Lucid/Database';
+import { postStatusSchema } from '@weakassdev/shared/models';
+import Post from 'App/Models/Post';
 
 /**
  * Get how many posts with active reports are currently pending an admin review
@@ -12,4 +14,27 @@ export async function getReportedPostsCount(): Promise<number> {
     );
 
   return +request.at(0).count;
+}
+
+/**
+ * Set all published post as archived. Useful when a user is banned and we want to make
+ * their posts inaccessible.
+ */
+export async function archiveAllUserPost({ userId }: { userId: string }) {
+  return Post.query()
+    .update({ status: postStatusSchema.Values.ARCHIVED })
+    .where('status', postStatusSchema.Values.PUBLISHED)
+    .andWhere('authorId', userId)
+    .returning('*');
+}
+
+/**
+ * Set all archived posts as published for a specific user
+ */
+export async function unarchiveAllUserPost({ userId }: { userId: string }) {
+  return Post.query()
+    .update({ status: postStatusSchema.Values.PUBLISHED })
+    .where('status', postStatusSchema.Values.ARCHIVED)
+    .andWhere('authorId', userId)
+    .returning('*');
 }

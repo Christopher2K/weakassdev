@@ -39,7 +39,7 @@ const data = computed(() =>
 );
 
 function onArchiveClick() {
-  router.patch(`/admin/users/${props.user.id}/delete`);
+  router.patch(`/admin/users/${props.user.id}/archive`);
 }
 
 function onRestoreClick() {

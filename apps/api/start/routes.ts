@@ -61,8 +61,10 @@ Route.group(() => {
     Route.resource('users', 'AdminUsersController').except(['store', 'create']).as('adminUsers');
     Route.group(() => {
       // Single user actions
-      Route.patch('users/:id/delete', 'AdminUsersController.delete');
+      Route.patch('users/:id/archive', 'AdminUsersController.archive');
       Route.patch('users/:id/restore', 'AdminUsersController.restore');
+      Route.patch('users/:id/ban', 'AdminUsersController.ban');
+      Route.patch('users/:id/unban', 'AdminUsersController.unban');
     });
 
     Route.resource('posts', 'AdminPostsController').except(['store', 'create']).as('adminPosts');

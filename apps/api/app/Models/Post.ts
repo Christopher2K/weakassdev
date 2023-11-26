@@ -66,7 +66,7 @@ export default class Post extends BaseModel {
   })
   public reports: HasMany<typeof PostReport>;
 
-  // Getter / Setter
+  // COMPUTED
   public get canBeUpdated() {
     const limit = this.createdAt.plus({ minutes: 30 });
     const now = DateTime.now().toUTC();

@@ -45,13 +45,13 @@ export default class AdminUsersController {
       user: adminUserDataSchema.parse(user.serialize()),
       posts: adminUserPostsDataSchema.parse(posts.serialize()),
       ui: {
-        showDeleteBtn: user.canBeDeleted,
+        showDeleteBtn: user.canBeArchived,
         showRestoreBtn: user.canBeRestored,
       },
     });
   }
 
-  public async delete({ request, inertia, session, auth }: HttpContextContract) {
+  public async archive({ request, inertia, session, auth }: HttpContextContract) {
     const userUuid = request.param('id');
     const user = await User.findOrFail(userUuid);
 
@@ -60,13 +60,12 @@ export default class AdminUsersController {
       return inertia.redirectBack();
     }
 
-    if (!user.canBeDeleted) {
+    if (!user.canBeArchived) {
       session.flash('feedback', ['error', 'Cet utilisateur ne peut pas être archivé.']);
       return inertia.redirectBack();
     }
 
-    user.status = userStatusSchema.Values.DELETED;
-    await user.save();
+    await user.archive();
     session.flash('feedback', ['success', 'Compte archivé avec succès']);
 
     return inertia.redirectBack();
@@ -81,10 +80,13 @@ export default class AdminUsersController {
       return inertia.redirectBack();
     }
 
-    user.status = userStatusSchema.Values.ACTIVE;
-    await user.save();
+    await user.restore();
     session.flash('feedback', ['success', 'Compte restauré avec succès']);
 
     return inertia.redirectBack();
   }
+
+  public async ban({ request }: HttpContextContract) {}
+
+  public async unban({ request }: HttpContextContract) {}
 }

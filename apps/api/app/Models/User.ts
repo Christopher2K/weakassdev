@@ -10,6 +10,7 @@ import {
 } from '@weakassdev/shared/models';
 
 import Post from './Post';
+import ForbiddenUserActionException from 'App/Exceptions/ForbiddenUserActionException';
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -59,24 +60,56 @@ export default class User extends BaseModel {
   }
 
   // Properties
-  public get canBeDeleted(): boolean {
-    switch (this.status) {
-      case userStatusSchema.Values.ACTIVE:
-        return true;
-      case userStatusSchema.Values.BANNED:
-      case userStatusSchema.Values.DELETED:
-        return false;
-    }
+  public get canBeArchived(): boolean {
+    return this.status === userStatusSchema.Values.ACTIVE;
   }
 
   public get canBeRestored(): boolean {
-    switch (this.status) {
-      case userStatusSchema.Values.ACTIVE:
-        return false;
-      case userStatusSchema.Values.BANNED:
-        return false;
-      case userStatusSchema.Values.DELETED:
-        return true;
-    }
+    return this.status === userStatusSchema.Values.DELETED;
+  }
+
+  public get canBeBanned(): boolean {
+    return this.status === userStatusSchema.Values.ACTIVE;
+  }
+
+  public get canBeUnbanned(): boolean {
+    return this.status === userStatusSchema.Values.BANNED;
+  }
+
+  // Actions
+  public archive() {
+    if (!this.canBeArchived)
+      throw new ForbiddenUserActionException("Impossible d'archiver cet utilisateur.");
+
+    this.status = userStatusSchema.Values.DELETED;
+    return this.save();
+  }
+
+  public restore() {
+    if (!this.canBeRestored)
+      throw new ForbiddenUserActionException('Impossible de restorer cet utilisateur.');
+
+    this.status = userStatusSchema.Values.ACTIVE;
+    return this.save();
+  }
+
+  public async ban() {
+    if (!this.canBeBanned)
+      throw new ForbiddenUserActionException('Impossible de bannir cet utilisateur.');
+
+    this.status = userStatusSchema.Values.BANNED;
+    const user = await this.save();
+
+    return user;
+  }
+
+  public async unban() {
+    if (!this.canBeUnbanned)
+      throw new ForbiddenUserActionException('Impossible de rétablir cet utilisateur.');
+
+    this.status = userStatusSchema.Values.ACTIVE;
+    const user = await this.save();
+
+    return user;
   }
 }

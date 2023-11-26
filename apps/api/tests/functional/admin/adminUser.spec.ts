@@ -179,7 +179,7 @@ test.group('[archive handler]', (group) => {
   test('archive an active user and redirects to prev page', async ({ client, assert }) => {
     const user = await UserFactory.create();
     const response = await client
-      .patch(`/admin/users/${user.id}/delete`)
+      .patch(`/admin/users/${user.id}/archive`)
       .inertia()
       .headers({
         referrer: `/admin/users/${user.id}`,
@@ -194,7 +194,7 @@ test.group('[archive handler]', (group) => {
   test('cannot archive a non existant user', async ({ client }) => {
     const uuid = 'ecdcc9d8-b8ab-4aab-9f54-6e1cd25d7b5e';
     const response = await client
-      .patch(`/admin/users/${uuid}/delete`)
+      .patch(`/admin/users/${uuid}/archive`)
       .inertia()
       .redirects(0)
       .loginAs(adminUser);
@@ -206,7 +206,7 @@ test.group('[archive handler]', (group) => {
     const user = await UserFactory.merge({ status: userStatusSchema.Values.BANNED }).create();
 
     const response = await client
-      .patch(`/admin/users/${user.id}/delete`)
+      .patch(`/admin/users/${user.id}/archive`)
       .redirects(0)
       .inertia()
       .loginAs(adminUser);
@@ -218,7 +218,7 @@ test.group('[archive handler]', (group) => {
 
   test('cannot archive the current current admin logged in', async ({ client }) => {
     const response = await client
-      .patch(`/admin/users/${adminUser.id}/delete`)
+      .patch(`/admin/users/${adminUser.id}/archive`)
       .redirects(0)
       .inertia()
       .loginAs(adminUser);
@@ -245,7 +245,7 @@ test.group('[unarchive handler]', (group) => {
     return () => Database.rollbackGlobalTransaction();
   });
 
-  test('restore a deleted user and redirects to prev page', async ({ client, assert }) => {
+  test('restore a archived user and redirects to prev page', async ({ client, assert }) => {
     const user = await UserFactory.merge({ status: userStatusSchema.Values.DELETED }).create();
 
     const response = await client

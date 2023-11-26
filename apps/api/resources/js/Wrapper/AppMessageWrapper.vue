@@ -36,6 +36,7 @@ router.on('start', () => {
         transform: 'translateX(-50%)',
         width: 'fit-content',
         height: 'fit-content',
+        zIndex: '100',
       })
     "
   >

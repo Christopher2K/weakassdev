@@ -120,4 +120,37 @@ test.group('user admin scenarii', (group) => {
     snackbarKind = await page.getByRole('status').getAttribute('data-kind');
     assert.equal(snackbarKind, 'success');
   });
+
+  test('cannot ban the currently logged account', async ({ visit, assert }) => {
+    const adminPage = await visit(AdminPage);
+    const page = await adminPage.loginAs({ username: adminUsername, password: adminPassword });
+    await page.getByRole('navigation').getByRole('link', { name: 'Utilisateurs' }).click();
+    await page.getByRole('row', { name: adminUsername }).getByRole('button').click();
+    await page.getByRole('link', { name: 'Voir les détails' }).click();
+    await page.getByRole('button', { name: 'Bannir définitivement' }).click();
+
+    const snackbarKind = await page.getByRole('status').getAttribute('data-kind');
+    assert.equal(snackbarKind, 'error');
+  });
+
+  test('ban and unban any other account', async ({ visit, assert }) => {
+    const user = await UserFactory.create();
+
+    const adminPage = await visit(AdminPage);
+    const page = await adminPage.loginAs({ username: adminUsername, password: adminPassword });
+    await page.getByRole('navigation').getByRole('link', { name: 'Utilisateurs' }).click();
+    await page.getByRole('row', { name: user.username }).getByRole('button').click();
+    await page.getByRole('link', { name: 'Voir les détails' }).click();
+    await page.getByRole('button', { name: 'Bannir définitivement' }).click();
+
+    let snackbarKind: string | null;
+    snackbarKind = await page.getByRole('status').getAttribute('data-kind');
+    assert.equal(snackbarKind, 'success');
+
+    await page.assertVisible(page.getByText('Banni', { exact: true }));
+    await page.getByRole('button', { name: 'Lever le ban' }).click();
+
+    snackbarKind = await page.getByRole('status').getAttribute('data-kind');
+    assert.equal(snackbarKind, 'success');
+  });
 });

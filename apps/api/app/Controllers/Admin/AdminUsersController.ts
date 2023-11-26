@@ -5,7 +5,7 @@ import {
   adminUserDataSchema,
   adminUserPostsDataSchema,
 } from '@weakassdev/shared/validators';
-import { userStatusSchema } from '@weakassdev/shared/models';
+import * as PostManager from 'App/Managers/PostManager';
 
 import * as GlobalManager from 'App/Managers/GlobalManager';
 import User from 'App/Models/User';
@@ -47,6 +47,8 @@ export default class AdminUsersController {
       ui: {
         showDeleteBtn: user.canBeArchived,
         showRestoreBtn: user.canBeRestored,
+        showBanBtn: user.canBeBanned,
+        showUnbanBtn: user.canBeUnbanned,
       },
     });
   }
@@ -76,17 +78,48 @@ export default class AdminUsersController {
     const user = await User.findOrFail(userUuid);
 
     if (!user.canBeRestored) {
-      session.flash('feedback', ['error', 'Ce compte utilisateur ne pas pas être restauré.']);
+      session.flash('feedback', ['error', 'Ce compte utilisateur ne peut pas pas être restoré.']);
       return inertia.redirectBack();
     }
 
     await user.restore();
-    session.flash('feedback', ['success', 'Compte restauré avec succès']);
+    session.flash('feedback', ['success', 'Compte restoré avec succès']);
 
     return inertia.redirectBack();
   }
 
-  public async ban({ request }: HttpContextContract) {}
+  public async ban({ request, inertia, session, auth }: HttpContextContract) {
+    const userUuid = request.param('id');
+    const user = await User.findOrFail(userUuid);
 
-  public async unban({ request }: HttpContextContract) {}
+    if (user.id === auth.user?.id) {
+      session.flash('feedback', ['error', "Impossible de bannir l'utilisateur courant."]);
+      return inertia.redirectBack();
+    }
+
+    if (!user.canBeBanned) {
+      session.flash('feedback', ['error', 'Ce compte utilisateur ne peut pas être banni.']);
+      return inertia.redirectBack();
+    }
+
+    await Promise.all([user.ban(), PostManager.archiveAllUserPost({ userId: userUuid })]);
+
+    session.flash('feedback', ['success', 'Utilisateur banni']);
+    return inertia.redirectBack();
+  }
+
+  public async unban({ request, inertia, session }: HttpContextContract) {
+    const userUuid = request.param('id');
+    const user = await User.findOrFail(userUuid);
+
+    if (!user.canBeUnbanned) {
+      session.flash('feedback', ['error', 'Ce compte utilisateur ne peut pas pas être restoré.']);
+      return inertia.redirectBack();
+    }
+
+    await Promise.all([user.unban(), PostManager.unarchiveAllUserPost({ userId: userUuid })]);
+
+    session.flash('feedback', ['success', 'Ban levé']);
+    return inertia.redirectBack();
+  }
 }

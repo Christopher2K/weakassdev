@@ -5,7 +5,8 @@ import Database from '@ioc:Adonis/Lucid/Database';
 import User from 'App/Models/User';
 import UserFactory from 'Database/factories/UserFactory';
 import PostFactory from 'Database/factories/PostFactory';
-import { userStatusSchema } from '@weakassdev/shared/models';
+import { postStatusSchema, userStatusSchema } from '@weakassdev/shared/models';
+import Post from 'App/Models/Post';
 
 test.group('[index handler]', (group) => {
   const password = 'Password123';
@@ -285,7 +286,7 @@ test.group('[unarchive handler]', (group) => {
     response.assertStatus(303);
     response.assertFlashMessage('feedback', [
       'error',
-      'Ce compte utilisateur ne pas pas être restauré.',
+      'Ce compte utilisateur ne peut pas pas être restoré.',
     ]);
   });
 
@@ -302,7 +303,100 @@ test.group('[unarchive handler]', (group) => {
     response.assertStatus(303);
     response.assertFlashMessage('feedback', [
       'error',
-      'Ce compte utilisateur ne pas pas être restauré.',
+      'Ce compte utilisateur ne peut pas pas être restoré.',
+    ]);
+  });
+});
+
+// test.group('[ban handler]', (group) => {
+//   let adminUser: User;
+//   const password = 'Password123';
+//
+//   group.each.setup(async () => {
+//     await Database.beginGlobalTransaction();
+//
+//     adminUser = await UserFactory.merge({
+//       password,
+//       role: 'ADMIN',
+//     }).create();
+//
+//     return () => Database.rollbackGlobalTransaction();
+//   });
+// });
+
+test.group('[ban handler]', (group) => {
+  let adminUser: User;
+  const password = 'Password123';
+
+  group.each.setup(async () => {
+    await Database.beginGlobalTransaction();
+
+    adminUser = await UserFactory.merge({
+      password,
+      role: 'ADMIN',
+    }).create();
+
+    return () => Database.rollbackGlobalTransaction();
+  });
+
+  test('ban an active user, archive their posts, and redirects to prev page', async ({
+    client,
+    assert,
+  }) => {
+    const user = await UserFactory.create();
+    await PostFactory.merge({
+      authorId: user.id,
+      status: postStatusSchema.Values.PUBLISHED,
+    })
+      .with('content')
+      .createMany(10);
+
+    const response = await client
+      .patch(`/admin/users/${user.id}/ban`)
+      .inertia()
+      .headers({
+        referrer: `/admin/users/${user.id}`,
+      })
+      .loginAs(adminUser);
+    await user.refresh();
+
+    const updatedPosts = await Post.query().where('authorId', user.id);
+    const allPostsAreArchived = updatedPosts.every(
+      (p) => p.status === postStatusSchema.Values.ARCHIVED,
+    );
+
+    response.assertStatus(200);
+    assert.equal(user.status, userStatusSchema.Values.BANNED);
+    assert.isTrue(allPostsAreArchived);
+  });
+
+  test('cannot ban an archived user', async ({ client, assert }) => {
+    const user = await UserFactory.merge({ status: userStatusSchema.Values.DELETED }).create();
+
+    const response = await client
+      .patch(`/admin/users/${user.id}/ban`)
+      .redirects(0)
+      .inertia()
+      .loginAs(adminUser);
+
+    assert.notEqual(user.status, userStatusSchema.Values.BANNED);
+    response.assertStatus(303);
+    response.assertFlashMessage('feedback', [
+      'error',
+      'Ce compte utilisateur ne peut pas être banni.',
+    ]);
+  });
+
+  test('cannot ban the current admin logged in', async ({ client }) => {
+    const response = await client
+      .patch(`/admin/users/${adminUser.id}/ban`)
+      .redirects(0)
+      .inertia()
+      .loginAs(adminUser);
+
+    response.assertFlashMessage('feedback', [
+      'error',
+      "Impossible de bannir l'utilisateur courant.",
     ]);
   });
 });

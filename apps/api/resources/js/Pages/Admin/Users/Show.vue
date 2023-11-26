@@ -23,6 +23,8 @@ const props = defineProps<{
   ui: {
     showDeleteBtn: boolean;
     showRestoreBtn: boolean;
+    showBanBtn: boolean;
+    showUnbanBtn: boolean;
   };
 }>();
 
@@ -44,6 +46,14 @@ function onArchiveClick() {
 
 function onRestoreClick() {
   router.patch(`/admin/users/${props.user.id}/restore`);
+}
+
+function onBanClick() {
+  router.patch(`/admin/users/${props.user.id}/ban`);
+}
+
+function onUnbanClick() {
+  router.patch(`/admin/users/${props.user.id}/unban`);
 }
 </script>
 
@@ -92,17 +102,14 @@ function onRestoreClick() {
     </template>
 
     <template #actions>
-      <!--
-      <AppButton>Réinitialiser le mot de passe</AppButton>
-      <AppButton>Bannir définitivement</AppButton>
-      <AppButton>Bannir temporairement</AppButton>
-      -->
       <AppButton v-if="props.ui.showDeleteBtn" @click="onArchiveClick()"
         >Archiver ce compte</AppButton
       >
       <AppButton v-if="props.ui.showRestoreBtn" @click="onRestoreClick()"
         >Restorer ce compte</AppButton
       >
+      <AppButton v-if="props.ui.showBanBtn" @click="onBanClick()">Bannir définitivement</AppButton>
+      <AppButton v-if="props.ui.showUnbanBtn" @click="onUnbanClick()">Lever le ban</AppButton>
     </template>
 
     <section>

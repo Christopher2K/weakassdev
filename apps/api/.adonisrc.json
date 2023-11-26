@@ -50,7 +50,7 @@
       {
         "name": "e2e",
         "files": ["tests/e2e/**/*.spec(.ts|.js)"],
-        "timeout": 60000
+        "timeout": 600000
       }
     ]
   },

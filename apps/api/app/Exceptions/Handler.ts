@@ -68,7 +68,5 @@ export default class ExceptionHandler extends HttpExceptionHandler {
       default:
         return inertia.render('Error', { error: 'server-error' });
     }
-
-    return super.handle(error, ctx);
   }
 }

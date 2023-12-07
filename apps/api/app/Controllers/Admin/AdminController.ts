@@ -40,8 +40,6 @@ export default class AdminController {
       session.flash('feedback', ['error', 'Identifiant ou mot de passe incorrect.']);
       return inertia.redirectBack();
     }
-
-    return response.redirect().toRoute('AdminController.dashboard');
   }
 
   public async logout({ auth, response }: HttpContextContract) {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 
 import { css } from '@style/css';
 
@@ -19,7 +19,19 @@ defineOptions({
 
 const props = defineProps<{
   post: AdminPostData;
+  ui: {
+    showFlagButton: boolean;
+    showUnflagButton: boolean;
+  };
 }>();
+
+function flag() {
+  router.patch(`/admin/posts/${props.post.id}/flag`);
+}
+
+function unflag() {
+  router.patch(`/admin/posts/${props.post.id}/unflag`);
+}
 </script>
 
 <template>
@@ -37,8 +49,9 @@ const props = defineProps<{
           <Link
             :href="`/admin/users/${props.post.author.id}`"
             :class="css({ textStyle: 'bodyUnderline' })"
-            >{{ props.post.author.username }}</Link
           >
+            {{ props.post.author.username }}
+          </Link>
         </dd>
 
         <dt>Posté le</dt>
@@ -58,7 +71,8 @@ const props = defineProps<{
       </AppDefinitionList>
     </template>
     <template #actions>
-      <AppButton>Resteindre le post</AppButton>
+      <AppButton v-if="props.ui.showFlagButton" @click="flag()">Resteindre le post</AppButton>
+      <AppButton v-if="props.ui.showUnflagButton" @click="unflag()">Restaurer le post</AppButton>
       <AppButton>Bannir l'auteur définitivement</AppButton>
       <AppButton>Bannir l'auteur temporairement</AppButton>
     </template>

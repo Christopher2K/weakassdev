@@ -68,6 +68,11 @@ Route.group(() => {
     });
 
     Route.resource('posts', 'AdminPostsController').except(['store', 'create']).as('adminPosts');
+    Route.group(() => {
+      // Single post actions
+      Route.patch('posts/:id/flag', 'AdminPostsController.flag');
+      Route.patch('posts/:id/unflag', 'AdminPostsController.unflag');
+    });
 
     Route.resource('reports', 'AdminReportsController')
       .except(['store', 'create'])

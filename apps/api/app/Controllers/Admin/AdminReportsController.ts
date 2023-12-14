@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
+import * as PostManager from 'App/Managers/PostManager';
 import Post from 'App/Models/Post';
 
 import { postStatusSchema, postReportOutcomeSchema } from '@weakassdev/shared/models';
@@ -59,8 +60,7 @@ export default class AdminReportsController {
       .where('postId', post.id);
 
     // Mark the post as flagged
-    post.status = postStatusSchema.Values.FLAGGED;
-    await post.save();
+    await PostManager.flagPost({ postId: post.id });
 
     // Redirect to the list page using Inertia
     session.flash('feedback', ['success', 'Signalement accepté, le poste à bien été restreint']);

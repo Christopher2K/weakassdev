@@ -16,6 +16,7 @@ import User from 'App/Models/User';
 
 import PostContent from './PostContent';
 import PostReport from './PostReport';
+import ForbiddenUserActionException from 'App/Exceptions/ForbiddenUserActionException';
 
 export default class Post extends BaseModel {
   public serializeExtras = true;
@@ -66,11 +67,35 @@ export default class Post extends BaseModel {
   })
   public reports: HasMany<typeof PostReport>;
 
-  // COMPUTED
+  // Properties
   public get canBeUpdated() {
     const limit = this.createdAt.plus({ minutes: 30 });
     const now = DateTime.now().toUTC();
 
     return now < limit;
+  }
+
+  public get canBeFlagged() {
+    return this.status === postStatusSchema.Values.PUBLISHED;
+  }
+
+  public get canBeUnflagged() {
+    return this.status === postStatusSchema.Values.FLAGGED;
+  }
+
+  // Actions
+  public async flag() {
+    if (!this.canBeFlagged)
+      throw new ForbiddenUserActionException('Impossible de flagger ce post.');
+
+    this.status = postStatusSchema.Values.FLAGGED;
+    return this.save();
+  }
+
+  public async unflag() {
+    if (!this.canBeUnflagged)
+      throw new ForbiddenUserActionException('Impossible de rétablir ce post.');
+    this.status = postStatusSchema.Values.PUBLISHED;
+    return this.save();
   }
 }

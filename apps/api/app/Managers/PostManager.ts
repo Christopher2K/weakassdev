@@ -1,5 +1,7 @@
 import Database from '@ioc:Adonis/Lucid/Database';
+
 import { postStatusSchema } from '@weakassdev/shared/models';
+
 import Post from 'App/Models/Post';
 
 /**
@@ -37,4 +39,20 @@ export async function unarchiveAllUserPost({ userId }: { userId: string }) {
     .where('status', postStatusSchema.Values.ARCHIVED)
     .andWhere('authorId', userId)
     .returning('*');
+}
+
+/**
+ * Flag a post
+ * The post won't be visible to end users
+ */
+export function flagPost({ postId }: { postId: string }) {
+  return Post.query().update({ status: postStatusSchema.Values.FLAGGED }).where('id', postId);
+}
+
+/**
+ * Remove the flag on a specific post
+ * The post will be visible to end users
+ */
+export function unflagPost({ postId }: { postId: string }) {
+  return Post.query().update({ status: postStatusSchema.Values.PUBLISHED }).where('id', postId);
 }

@@ -1,4 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+
+import * as PostManager from 'App/Managers/PostManager';
+
 import { adminPostsDataSchema, adminPostDataSchema } from '@weakassdev/shared/validators';
 
 import Post from 'App/Models/Post';
@@ -31,6 +34,26 @@ export default class AdminPostsController {
 
     return inertia.render('Admin/Posts/Show', {
       post: adminPostDataSchema.parse(post.serialize()),
+      ui: {
+        showFlagButton: post.canBeFlagged,
+        showUnflagButton: post.canBeUnflagged,
+      },
     });
+  }
+
+  public async flag({ request, inertia, session }: HttpContextContract) {
+    const id = request.param('id');
+    await PostManager.flagPost({ postId: id });
+
+    session.flash('feedback', ['success', 'Post restreint.']);
+    return inertia.redirectBack();
+  }
+
+  public async unflag({ request, inertia, session }: HttpContextContract) {
+    const id = request.param('id');
+    await PostManager.unflagPost({ postId: id });
+
+    session.flash('feedback', ['success', 'Le post est de nouveau disponible.']);
+    return inertia.redirectBack();
   }
 }

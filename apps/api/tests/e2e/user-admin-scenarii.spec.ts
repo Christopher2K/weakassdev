@@ -1,7 +1,6 @@
 import { test } from '@japa/runner';
 
 import TestUtils from '@ioc:Adonis/Core/TestUtils';
-
 import UserFactory from 'Database/factories/UserFactory';
 
 import { AdminPage } from './pages/admin-page';

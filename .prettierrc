@@ -4,5 +4,6 @@
   "singleQuote": true,
   "trailingComma": "all",
   "printWidth": 100,
-  "htmlWhitespaceSensitivity": "ignore"
+  "htmlWhitespaceSensitivity": "ignore",
+  "proseWrap": "always"
 }
